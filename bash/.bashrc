@@ -47,7 +47,7 @@ export PATH="$PATH:."
 eval "$(thefuck --alias)"
 
 # NPM programs sourced from a non standard directory
-export PATH=~/.npm-global/bin:$PATH
+export PATH="~/.npm-global/bin:$PATH"
 
 # Make ls run after cd
 function cd {
