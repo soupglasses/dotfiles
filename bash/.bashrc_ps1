@@ -1,0 +1,42 @@
+# ~/.bashrc_ps1
+
+COLOR_PRIMARY="\033[38;5;49m"
+COLOR_SECONDARY="\033[38;5;99m"
+COLOR_TERTIARY="\033[38;5;220m"
+COLOR_GREY="\033[38;5;249m"
+COLOR_RESET="\033[0m"
+
+# Only show 3 latest directories
+PROMPT_DIRTRIM=3
+
+if [[ "$TERM" =~ 256color ]]; then
+	# Git integration by https://ljones.dev/blog/bash-git-prompt/
+	# Get current status of git repo
+	function parse_git_dirty {
+	  STATUS="$(git status 2> /dev/null)"
+	  if [[ $? -ne 0 ]]; then return; fi
+	  printf "["
+	  if echo ${STATUS} | grep -c "renamed:"         &> /dev/null; then printf ">"; else printf ""; fi
+	  if echo ${STATUS} | grep -c "branch is ahead:" &> /dev/null; then printf "!"; else printf ""; fi
+	  if echo ${STATUS} | grep -c "new file::"       &> /dev/null; then printf "+"; else printf ""; fi
+	  if echo ${STATUS} | grep -c "Untracked files:" &> /dev/null; then printf "?"; else printf ""; fi
+	  if echo ${STATUS} | grep -c "modified:"        &> /dev/null; then printf "*"; else printf ""; fi
+	  if echo ${STATUS} | grep -c "deleted:"         &> /dev/null; then printf "-"; else printf ""; fi
+	  printf "] ";
+	}
+
+	parse_git_branch() {
+	  # Long form
+	  git rev-parse --abbrev-ref HEAD 2> /dev/null
+	  # Short form
+	  #git rev-parse --abbrev-ref HEAD 2> /dev/null | sed -e 's/.*\/\(.*\)/\1/'
+	}
+	
+	GITSTATUS="\[$COLOR_GREY\]\$(parse_git_branch)\[$COLOR_SECONDARY\]\$(parse_git_dirty)\[$COLOR_RESET\]"
+	
+	PS1="\[$COLOR_PRIMARY\]\w $GITSTATUS\[$COLOR_GREY\]\$\[$COLOR_RESET\] "
+	export GREP_COLOR="38;5;49"
+else
+	export PS1="\[\033[01;96m\]\w\[\033[0m\] \$ "
+	export GREP_COLOR="01;96"
+fi

@@ -11,34 +11,20 @@ fi
 #Import aliases
 source $HOME/.bashrc_aliases
 
-# Personal PS1
-COLOR_RED="\033[38;5;160m"
-COLOR_YELLOW="\033[38;5;220m"
-COLOR_GREEN="\033[38;5;49m"
-COLOR_RESET="\033[0m"
-COLOR_GREY="\033[38;5;250m"
-
-PROMPT_DIRTRIM=2
-
-if [[ "$TERM" =~ 256color ]]; then
-	PS1="\[$COLOR_GREEN\]\w \[$COLOR_GREY\]\$\[$COLOR_RESET\] "
-	export GREP_COLOR="38;5;49"
-else
-	export PS1="\[\033[01;96m\]\w\[\033[0m\] \$ "
-	export GREP_COLOR="01;96"
-fi
+#Import PS1
+source $HOME/.bashrc_ps1
 
 # Set up history
 export HISTTIMEFORMAT="%h %d %H:%M:%S "
 export HISTSIZE=10000
-export HISTFILESIZE=1000000
+export HISTFILESIZE=100000
 export HISTCONTROL=ignoreboth
 export HISTIGNORE="ls:history:c:clear:l:pwd"
 shopt -s histappend
 PROMPT_COMMAND='history -a'
 
 # Make "cd" optional
-# shopt -s autocd
+shopt -s autocd
 
 # Remove need to use ./ on executable files
 export PATH="$PATH:."
@@ -53,4 +39,3 @@ export PATH="~/.npm-global/bin:$PATH"
 function cd {
 	builtin cd "$@" && ls
 }
-
