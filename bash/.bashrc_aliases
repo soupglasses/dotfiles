@@ -1,3 +1,5 @@
+# ~/.bashrc_aliases
+
 # I like colors
 alias ls='ls --group-directories-first --color'
 alias diff='diff --color=auto'
@@ -6,7 +8,6 @@ alias grep='grep --color=auto'
 # Simpler command names
 alias open='xdg-open'
 alias archnews='informant'
-alias up='cd ..'
 
 # The bad habit stopper
 alias rm='rm -i'
@@ -14,7 +15,9 @@ alias rm='rm -i'
 # Shorthands to commands
 alias c='clear'
 alias l='ls'
+alias g='g'
 alias q='exit'
 alias ll='ls -lh'
 alias la='ls -a'
 alias cd..='cd ..'
+alias up='cd ..'

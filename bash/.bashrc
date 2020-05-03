@@ -8,11 +8,21 @@ fi
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-#Import aliases
-source $HOME/.bashrc_aliases
+# Custom colors
+COLOR_PRIMARY="\033[38;5;49m"
+COLOR_SECONDARY="\033[38;5;99m"
+COLOR_TERTIARY="\033[38;5;220m"
+COLOR_GREY="\033[38;5;249m"
+COLOR_RESET="\033[0m"
 
-#Import PS1
+# Exports
+export EDITOR="vim"
+
+# Imports
+source $HOME/.dircolors
+source $HOME/.bashrc_aliases
 source $HOME/.bashrc_ps1
+source $HOME/.bashrc_bookmarks
 
 # Set up history
 export HISTTIMEFORMAT="%h %d %H:%M:%S "
@@ -28,6 +38,9 @@ shopt -s autocd
 
 # Remove need to use ./ on executable files
 export PATH="$PATH:."
+
+# Ability to run custom scripts
+export PATH="~/.scripts:$PATH"
 
 # Thefuck alias
 eval "$(thefuck --alias)"
