@@ -1,1 +1,1 @@
-watch -n0.2 sensors
+watch -n1.0 sensors

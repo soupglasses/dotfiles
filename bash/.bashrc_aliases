@@ -1,5 +1,7 @@
 # ~/.bashrc_aliases
 
+alias cp='rsync -ah --info=progress2'
+
 # I like colors
 alias ls='ls --group-directories-first --color'
 alias diff='diff --color=auto'
