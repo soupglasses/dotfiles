@@ -1,8 +1,6 @@
 # ~/.bashrc_aliases
 
-alias cp='rsync -ah --info=progress2'
-
-# I like colors
+# Add colors
 alias ls='ls --group-directories-first --color'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
@@ -10,16 +8,16 @@ alias grep='grep --color=auto'
 # Simpler command names
 alias open='xdg-open'
 alias archnews='informant'
+alias up='cd ..'
 
-# The bad habit stopper
+# Quality of life
+alias cp='rsync -ah --info=progress2'
 alias rm='rm -i'
+alias cd..='cd ..'
 
-# Shorthands to commands
+# Shorthands
 alias c='clear'
 alias l='ls'
-alias g='g'
 alias q='exit'
 alias ll='ls -lh'
 alias la='ls -a'
-alias cd..='cd ..'
-alias up='cd ..'
