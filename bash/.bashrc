@@ -36,17 +36,25 @@ PROMPT_COMMAND='history -a'
 # Make "cd" optional
 shopt -s autocd
 
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+
 # Remove need to use ./ on executable files
-export PATH="$PATH:."
+PATH="$PATH:."
 
 # Ability to run custom scripts
-export PATH="~/.scripts:$PATH"
+PATH="~/.scripts:$PATH"
+
+# NPM programs sourced from a non standard directory
+PATH="~/.npm-global/bin:$PATH"
+
+export PATH
 
 # Thefuck alias
 eval "$(thefuck --alias)"
-
-# NPM programs sourced from a non standard directory
-export PATH="~/.npm-global/bin:$PATH"
 
 # Make ls run after cd
 function cd {

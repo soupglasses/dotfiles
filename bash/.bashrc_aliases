@@ -9,7 +9,10 @@ alias grep='grep --color=auto'
 alias open='xdg-open'
 alias archnews='informant'
 alias up='cd ..'
+<<<<<<< HEAD
 alias optimize-png='find -iname "*.png" -print0 | xargs -0 -n 1 -P 7 optipng -preserve'
+=======
+>>>>>>> c169654491b2a9cc20cd3d7a72fa81d3dad861ec
 
 # Quality of life
 alias cp='rsync -ah --info=progress2'
