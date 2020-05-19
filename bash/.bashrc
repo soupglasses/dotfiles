@@ -17,6 +17,7 @@ COLOR_RESET="\033[0m"
 
 # Exports
 export EDITOR="vim"
+export GPG_TTY=$(tty)
 
 # Imports
 source $HOME/.dircolors
