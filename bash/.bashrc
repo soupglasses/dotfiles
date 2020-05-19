@@ -44,11 +44,9 @@ fi
 
 # Remove need to use ./ on executable files
 PATH="$PATH:."
-
 # Ability to run custom scripts
 PATH="~/.scripts:$PATH"
-
-# NPM programs sourced from a non standard directory
+# NPM sourced from a non standard directory
 PATH="~/.npm-global/bin:$PATH"
 
 export PATH
