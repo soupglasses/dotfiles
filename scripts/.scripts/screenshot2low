@@ -1,0 +1,10 @@
+#!/bin/bash
+SC_LOCATION="/home/${USER}/Pictures/Screenshots"
+
+pngquant -f "${SC_LOCATION}/latest.png" --output "${SC_LOCATION}/low.png"
+
+if [ $XDG_SESSION_TYPE = 'x11' ]; then
+  xclip -selection clipboard -t image/png -i "${SC_LOCATION}/low.png"
+else
+  wl-copy < "${SC_LOCATION}/low.png"
+fi
