@@ -27,5 +27,5 @@ set mark-symlinked-directories on
 Control-t: complete
 
 # Up/Down arrows to search history
-#"\e[A": history-search-backward
-#"\e[B": history-search-forward
+"\e[A": history-search-backward
+"\e[B": history-search-forward

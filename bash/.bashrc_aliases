@@ -1,5 +1,13 @@
 # ~/.bashrc_aliases
 
+# Quicker cd 
+alias cd='cd '
+alias ...='../..'
+alias ....='../../..'
+alias cd..='cd ..'
+alias cd...='cd ...'
+alias cd....='cd ....'
+
 # Add colors
 alias ls='ls --group-directories-first --color'
 alias diff='diff --color=auto'
@@ -8,7 +16,6 @@ alias grep='grep --color=auto'
 # Simpler command names
 alias open='xdg-open'
 alias archnews='informant'
-alias up='cd ..'
 alias optimize-png='find -iname "*.png" -print0 | xargs -0 -n 1 -P 7 optipng -preserve'
 
 # Quality of life
@@ -16,7 +23,6 @@ alias cat='bat -pp'
 alias find='fd'
 alias cp='rsync -ah --info=progress2'
 alias rm='rm -i'
-alias cd..='cd ..'
 
 # Shorthands
 alias v='vim'
