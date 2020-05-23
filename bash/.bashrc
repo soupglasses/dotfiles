@@ -23,7 +23,6 @@ export GPG_TTY=$(tty)
 source $HOME/.dircolors
 source $HOME/.bashrc_aliases
 source $HOME/.bashrc_ps1
-source $HOME/.bashrc_bookmarks
 
 # Set up history
 export HISTTIMEFORMAT="%h %d %H:%M:%S "

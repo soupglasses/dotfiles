@@ -12,11 +12,14 @@ alias up='cd ..'
 alias optimize-png='find -iname "*.png" -print0 | xargs -0 -n 1 -P 7 optipng -preserve'
 
 # Quality of life
+alias cat='bat -pp'
+alias find='fd'
 alias cp='rsync -ah --info=progress2'
 alias rm='rm -i'
 alias cd..='cd ..'
 
 # Shorthands
+alias v='vim'
 alias c='clear'
 alias l='ls'
 alias q='exit'

@@ -1,19 +1,31 @@
 # ~/.inputrc
-
 $include /etc/inputrc
-set completion-ignore-case on
+
+# Colors!
 set colored-stats on
+set colored-completion-prefix on
 
-# Display the list of matches when no further completion is possible
-set show-all-if-unmodified on
+# Stop annoying bell
+set bell-style none
 
-# Make Tab cycle between possible completions
-#TAB: menu-complete
-#"\e[Z": menu-complete-backward
+# Proper tab support in bash
+set completion-ignore-case on
+TAB: menu-complete
+"\e[Z": menu-complete-backward
 
-# Up/Down arrows to search history
-"\e[A": history-search-backward
-"\e[B": history-search-forward
+# Tab complete add common letters
+set show-all-if-ambiguous on
+#set show-all-if-unmodified on
+
+# Show list of possible completions
+set menu-complete-display-prefix on
+
+# Allow tab completion for symlinks
+set mark-symlinked-directories on
 
 # Make C-t display the list of possible completions
 Control-t: complete
+
+# Up/Down arrows to search history
+#"\e[A": history-search-backward
+#"\e[B": history-search-forward
