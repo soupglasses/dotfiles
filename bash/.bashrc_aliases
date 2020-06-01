@@ -9,25 +9,38 @@ alias cd...='cd ...'
 alias cd....='cd ....'
 
 # Add colors
-alias ls='ls --group-directories-first --color'
+alias ls='ls --group --color=auto'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
+alias ip='ip -color'
+alias lsblk='grc lsblk'
+alias ping='grc ping'
 
 # Simpler command names
+alias diskuse='dua interactive'
+alias ipinfo='ip -brief -color address'
+alias pep8='pycodestyle'
 alias open='xdg-open'
 alias archnews='informant'
 alias optimize-png='find -iname "*.png" -print0 | xargs -0 -n 1 -P 7 optipng -preserve'
 
+# Shortcuts to commonly edited files
+alias edvim='vim ~/.vimrc'
+alias edbash='vim ~/.bashrc'
+alias edalias='vim ~/.bashrc_aliases'
+alias edps1='vim ~/.bashrc_ps1'
+
 # Quality of life
+alias ping='ping -c 5'
 alias cat='bat -pp'
-alias find='fd'
 alias cp='rsync -ah --info=progress2'
 alias rm='rm -i'
 
 # Shorthands
-alias v='vim'
 alias c='clear'
 alias l='ls'
 alias q='exit'
 alias ll='ls -lh'
+alias lsl='ll'
 alias la='ls -a'
+alias lsa='la'
