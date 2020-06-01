@@ -9,13 +9,22 @@ SC_FILE="${SC_DIR}/${SC_CURRENT_TIME}.png"
 
 mkdir -p "${SC_DIR}"
 
-gnome-screenshot -a -f "${SC_FILE}"
+case $1 in
+    area)
+        gnome-screenshot -a -f "${SC_FILE}"
+        ;;
+    window)
+        gnome-screenshot -w -e shadow -f "${SC_FILE}"
+        ;;
+    screen)
+        gnome-screenshot -f "${SC_FILE}"
+esac
 
 if [ -f "${SC_FILE}" ]; then
-  if [ $XDG_SESSION_TYPE = 'x11' ]; then
-    xclip -selection clipboard -t image/png -i "${SC_FILE}"
-  else
-    wl-copy < "${SC_FILE}"
-  fi
-  ln -sf "${SC_FILE}" "${SC_LOCATION}/latest.png"
+    if [ $XDG_SESSION_TYPE = 'x11' ]; then
+        xclip -selection clipboard -t image/png -i "${SC_FILE}"
+    else
+        wl-copy < "${SC_FILE}"
+    fi
+    ln -sf "${SC_FILE}" "${SC_LOCATION}/latest.png"
 fi
