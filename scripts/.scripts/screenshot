@@ -14,7 +14,7 @@ case $1 in
         gnome-screenshot -a -f "${SC_FILE}"
         ;;
     window)
-        gnome-screenshot -w -e shadow -f "${SC_FILE}"
+        gnome-screenshot -w -f "${SC_FILE}"
         ;;
     screen)
         gnome-screenshot -f "${SC_FILE}"
