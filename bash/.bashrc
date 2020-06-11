@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 # If not running interactively, don't do anything
@@ -42,8 +42,8 @@ if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
 fi
 source "$fasd_cache"
 unset fasd_cache
-alias v='f -e $EDITOR' 
-alias o='a -e xdg-open' 
+alias v='f -e $EDITOR'
+alias o='a -e xdg-open'
 _fasd_bash_hook_cmd_complete v o
 
 # Fzf config
@@ -71,5 +71,5 @@ export PATH
 
 # Make ls run after cd
 function cd {
-	builtin cd "$@" && ls
+    builtin cd "$@" && ls
 }
