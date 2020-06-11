@@ -66,11 +66,12 @@ let g:python_highlight_all=1
 autocmd FileType python match Error /\%81v.\+/
 command Python ! clear; python %;
 
-" User defined commands
+" Save current file as root
 command W w !sudo tee "%" > /dev/null
 
 " Show hidden characters
 set listchars=nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<
+command Show set list!
 
 " Toggle Line80
 let g:line80=0
