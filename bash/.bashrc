@@ -5,6 +5,11 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
+# Enable programmable completion
+if [ -f /etc/bash_completion ]; then
+    source /etc/bash_completion
+fi
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -16,20 +21,20 @@ COLOR_GREY="\033[38;5;249m"
 COLOR_RESET="\033[0m"
 
 # Exports
-export EDITOR="vim"
+export EDITOR=vim
 export GPG_TTY=$(tty)
 
 eval "$(fasd --init auto)"
 
 # Imports
 source $HOME/.dircolors
-source $HOME/.bashrc_aliases
-source $HOME/.bashrc_ps1
+source $HOME/.bash_aliases
+source $HOME/.bash_ps1
 
 # Set up history
 export HISTTIMEFORMAT="%h %d %H:%M:%S "
 export HISTSIZE=10000
-export HISTFILESIZE=100000
+export HISTFILESIZE=10000
 export HISTCONTROL=ignoreboth
 export HISTIGNORE=""
 shopt -s histappend
@@ -51,21 +56,21 @@ if type rg &> /dev/null; then
     export FZF_DEFAULT_COMMAND='rg -L --files'
 fi
 
-# Make "cd" optional
-shopt -s autocd
-
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 
 # Remove need to use ./ on executable files
 PATH="$PATH:."
 # Ability to run custom scripts
-PATH="$PATH:~/.scripts"
+if [ -d "$HOME/.scripts" ]; then
+    PATH="$PATH:$HOME/.scripts"
+fi
 # NPM sourced from a non standard directory
-PATH="~/.npm-global/bin:$PATH"
+if [ -d "$HOME/.npm-global/bin" ]; then
+    PATH="~/.npm-global/bin:$PATH"
+fi
 
 export PATH
 

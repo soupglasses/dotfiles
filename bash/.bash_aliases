@@ -23,6 +23,7 @@ alias pep8='pycodestyle'
 alias open='xdg-open'
 alias archnews='informant'
 alias optimize-png='find -iname "*.png" -print0 | xargs -0 -n 1 -P 7 optipng -preserve'
+alias svim='sudoedit'
 
 # Shortcuts to commonly edited files
 alias edvim='vim ~/.vimrc'
@@ -31,6 +32,7 @@ alias edalias='vim ~/.bashrc_aliases'
 alias edps1='vim ~/.bashrc_ps1'
 
 # Quality of life
+alias yay='yay --pacman powerpill'
 alias ping='ping -c 5'
 alias cat='bat -pp'
 alias cp='rsync -ah --info=progress2'
