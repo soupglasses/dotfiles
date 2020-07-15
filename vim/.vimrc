@@ -23,6 +23,11 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
+" Polyglot Spessific
+let g:polyglot_disabled = ['python-compiler', 'python-indent', 'python']
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+
 " Styling
 syntax on
 set number
@@ -48,6 +53,7 @@ set encoding=utf-8
 set ttyfast
 set wrap
 set showcmd
+set mouse=a
 
 " Tabs
 set tabstop=4
@@ -60,11 +66,6 @@ set noshiftround
 set hlsearch
 set smartcase 
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-
-" Python Spessific
-let g:python_highlight_all=1
-autocmd FileType python match Error /\%81v.\+/
-command Python ! clear; python %;
 
 " Save current file as root
 command W w !sudo tee "%" > /dev/null

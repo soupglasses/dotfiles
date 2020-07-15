@@ -24,8 +24,6 @@ COLOR_RESET="\033[0m"
 export EDITOR=vim
 export GPG_TTY=$(tty)
 
-eval "$(fasd --init auto)"
-
 # Imports
 source $HOME/.dircolors
 source $HOME/.bash_aliases

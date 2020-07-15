@@ -1,4 +1,4 @@
-# ~/.bashrc_ps1
+# ~/.bash_ps1
 
 # Only show 3 latest directories
 PROMPT_DIRTRIM=3
