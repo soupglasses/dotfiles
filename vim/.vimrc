@@ -24,7 +24,7 @@ if (has("termguicolors"))
 endif
 
 " Polyglot Spessific
-let g:polyglot_disabled = ['python-compiler', 'python-indent', 'python']
+"let g:polyglot_disabled = ['python-compiler', 'python-indent', 'python']
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
 
