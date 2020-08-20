@@ -1,5 +1,5 @@
 #!/bin/bash
-SC_LOCATION="/home/${USER}/Pictures/Screenshots"
+SC_LOCATION="${HOME}/Pictures/Screenshots"
 SC_YEAR=$(date +%Y)
 SC_MONTH=$(date +"%m %B")
 SC_CURRENT_TIME="$(date +"%d %a %H:%M:%S")"

@@ -5,6 +5,11 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
+# Source secret enviorment variables
+if [ -f ~/.bash_secret ]; then
+    . ~/.bash_secret
+fi
+
 # Enable programmable completion
 if [ -f /etc/bash_completion ]; then
     source /etc/bash_completion

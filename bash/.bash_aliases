@@ -29,8 +29,8 @@ alias svim='sudoedit'
 # Shortcuts to commonly edited files
 alias edvim='vim ~/.vimrc'
 alias edbash='vim ~/.bashrc'
-alias edalias='vim ~/.bashrc_aliases'
-alias edps1='vim ~/.bashrc_ps1'
+alias edalias='vim ~/.bash_aliases'
+alias edps1='vim ~/.bash_ps1'
 
 # Quality of life
 #alias yay='yay --pacman powerpill'
@@ -49,3 +49,4 @@ alias lh='ll'
 alias la='ls -a'
 alias lha='ls -lha'
 alias py='python'
+alias ipy='ipython'
