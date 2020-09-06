@@ -28,9 +28,9 @@ if [[ "$TERM" =~ 256color ]]; then
 	
 	GITSTATUS="\[$COLOR_GREY\]\$(parse_git_branch)\[$COLOR_SECONDARY\]\$(parse_git_dirty)\[$COLOR_RESET\]"
 
-	export PS1="\[$COLOR_PRIMARY\]\w $GITSTATUS\[$COLOR_GREY\]\$\[$COLOR_RESET\] "
+	PS1="\[$COLOR_PRIMARY\]\w $GITSTATUS\[$COLOR_GREY\]\$\[$COLOR_RESET\] "
 	export GREP_COLOR="38;5;49"
 else
-	export PS1="\[\033[01;92m\]\w\[\033[0m\] \$ "
+	PS1="\[\033[01;92m\]\w\[\033[0m\] \$ "
 	export GREP_COLOR="01;96"
 fi

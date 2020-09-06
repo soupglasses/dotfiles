@@ -9,10 +9,11 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'joshdick/onedark.vim'
-Plugin 'sheerun/vim-polyglot'
 Plugin 'itchyny/lightline.vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'tpope/vim-surround'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-scripts/indentpython.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -22,11 +23,6 @@ filetype plugin indent on
 if (has("termguicolors"))
   set termguicolors
 endif
-
-" Polyglot Spessific
-"let g:polyglot_disabled = ['python-compiler', 'python-indent', 'python']
-let g:vim_markdown_conceal = 0
-let g:vim_markdown_conceal_code_blocks = 0
 
 " Styling
 syntax on
@@ -42,11 +38,21 @@ colorscheme onedark
 let g:lightline = {'colorscheme': 'onedark'}
 set noshowmode
 
-" Disable arrow keys
+" Disable arrow keys in normal mode
 noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
+
+" Split setup
+set splitbelow
+set splitright
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " QoL
 set encoding=utf-8
@@ -55,20 +61,29 @@ set wrap
 set showcmd
 set mouse=a
 
-" Tabs
+" Default tabs
 set tabstop=4
-set shiftwidth=4
 set softtabstop=4
-set expandtab
-set noshiftround
+set shiftwidth=4
+
+" Tabs for Python
+au BufNewFile,BufRead *.py set
+    \ tabstop=4
+    \ softtabstop=4
+    \ shiftwidth=4
+    \ expandtab
+    \ autoindent
+
+" Tabs for HTML, CSS and JS
+au BufNewFile,BufRead *.js, *.html, *.css set
+    \ tabstop=2
+    \ softtabstop=2
+    \ shiftwidth=2
 
 " Highlighting 
 set hlsearch
 set smartcase 
-nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-
-" Save current file as root
-command W w !sudo tee "%" > /dev/null
+nnoremap <silent> <Space> :nohlsearch<CR>
 
 " Show hidden characters
 set listchars=nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<

@@ -1,22 +1,20 @@
 # ~/.bashrc
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
-fi
-
-# Source secret enviorment variables
-if [ -f ~/.bash_secret ]; then
-    . ~/.bash_secret
-fi
-
-# Enable programmable completion
-if [ -f /etc/bash_completion ]; then
-    source /etc/bash_completion
-fi
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+# Source global definitions
+[ -f /etc/bashrc ] && . /etc/bashrc
+
+# Source secret enviorment variables
+[ -f ~/.bash_secret ] && . ~/.bash_secret
+
+# Enable programmable completion
+[ -f /etc/bash_completion ] && . /etc/bash_completion
+
+# Source fzf bash completion
+[ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
+[ -f /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
 
 # Custom colors
 COLOR_PRIMARY="\033[38;5;49m"
@@ -60,22 +58,22 @@ if type rg &> /dev/null; then
 fi
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
+    export PATH="$PATH:$HOME/.local/bin"
 fi
 
-# Remove need to use ./ on executable files
-PATH="$PATH:."
+# Disable CTRL-S
+stty -ixon
+
 # Ability to run custom scripts
-if [ -d "$HOME/.scripts" ]; then
-    PATH="$PATH:$HOME/.scripts"
-fi
+#if [ -d "$HOME/.scripts" ]; then
+#    PATH="$PATH:$HOME/.scripts"
+#fi
+
 # NPM sourced from a non standard directory
 if [ -d "$HOME/.npm-global/bin" ]; then
-    PATH="~/.npm-global/bin:$PATH"
+    export PATH="~/.npm-global/bin:$PATH"
 fi
-
-export PATH
 
 # Make ls run after cd
 function cd {
