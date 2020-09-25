@@ -1,5 +1,5 @@
 #!/bin/bash
-SC_LOCATION="/home/${USER}/Pictures/Screenshots"
+SC_LOCATION="${HOME}/Pictures/Screenshots"
 
 pngquant -f "${SC_LOCATION}/latest.png" --output "${SC_LOCATION}/low.png"
 

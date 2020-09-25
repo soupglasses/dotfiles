@@ -6,9 +6,6 @@
 # Source global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc
 
-# Source secret enviorment variables
-[ -f ~/.bash_secret ] && . ~/.bash_secret
-
 # Enable programmable completion
 [ -f /etc/bash_completion ] && . /etc/bash_completion
 
@@ -71,11 +68,22 @@ stty -ixon
 #fi
 
 # NPM sourced from a non standard directory
-if [ -d "$HOME/.npm-global/bin" ]; then
-    export PATH="~/.npm-global/bin:$PATH"
+if [ -d "/home/sofi/.npm-global/bin" ]; then
+    export PATH="/home/sofi/.npm-global/bin:$PATH"
 fi
+
+# Colored man pages
+function man {
+    LESS_TERMCAP_md=$'\e[01;34m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[00;47;30m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;33m' \
+    command man "$@"
+}
 
 # Make ls run after cd
 function cd {
-    builtin cd "$@" && ls
+    builtin cd "$@" && ls --group-directories-first
 }
