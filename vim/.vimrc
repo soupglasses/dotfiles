@@ -1,6 +1,5 @@
 " ~/.vimrc
 
-
 " Plugin Managment
 set nocompatible
 filetype off
