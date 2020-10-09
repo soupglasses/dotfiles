@@ -1,24 +1,16 @@
 # ~/.bashrc
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-# Source global definitions
+# Global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc
 
-# Enable programmable completion
-[ -f /etc/bash_completion ] && . /etc/bash_completion
+# If not running interactively, don't do anything more
+[[ $- != *i* ]] && return
 
-# Source fzf bash completion
+# Bash completion
+[ -f /etc/bash_completion ] && . /etc/bash_completion
+## Fzf bash completion
 [ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
-
-# Custom colors
-COLOR_PRIMARY="\033[38;5;49m"
-COLOR_SECONDARY="\033[38;5;99m"
-COLOR_TERTIARY="\033[38;5;220m"
-COLOR_GREY="\033[38;5;249m"
-COLOR_RESET="\033[0m"
 
 # Exports
 export EDITOR=vim
@@ -59,17 +51,17 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
     export PATH="$PATH:$HOME/.local/bin"
 fi
 
-# Disable CTRL-S
+# Disable annoying CTRL-S
 stty -ixon
 
 # Ability to run custom scripts
-#if [ -d "$HOME/.scripts" ]; then
-#    PATH="$PATH:$HOME/.scripts"
-#fi
+if [ -d "$HOME/.scripts" ]; then
+    PATH="$PATH:$HOME/.scripts"
+fi
 
 # NPM sourced from a non standard directory
 if [ -d "/home/sofi/.npm-global/bin" ]; then
-    export PATH="/home/sofi/.npm-global/bin:$PATH"
+    export PATH="$PATH:$HOME/.npm-global/bin"
 fi
 
 # Colored man pages

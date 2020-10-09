@@ -35,7 +35,7 @@ filetype plugin indent on
 " Styling
 syntax on
 set number
-set relativenumber
+"set relativenumber
 set cursorline
 set title
 set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)

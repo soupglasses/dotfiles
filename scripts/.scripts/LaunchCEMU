@@ -1,0 +1,7 @@
+#!/bin/bash
+export WINEPREFIX="/mnt/pool/games/Launchers/CEMU/wine"
+#for cemuhook
+export WINEDLLOVERRIDES="mscoree=;mshtml=;dbghelp.dll=n,b"
+
+cd /mnt/pool/games/Launchers/CEMU
+mesa_glthread=true __GL_THREADED_OPTIMIZATIONS=1 vblank_mode=0 WINEESYNC=1 gamemoderun wine Cemu.exe "$@"

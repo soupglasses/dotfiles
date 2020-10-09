@@ -1,5 +1,12 @@
 # ~/.bash_ps1
 
+# Custom colors
+COLOR_PRIMARY="\033[38;5;49m"
+COLOR_SECONDARY="\033[38;5;99m"
+COLOR_TERTIARY="\033[38;5;220m"
+COLOR_GREY="\033[38;5;249m"
+COLOR_RESET="\033[0m"
+
 # Only show 3 latest directories
 PROMPT_DIRTRIM=3
 

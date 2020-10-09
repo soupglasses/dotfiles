@@ -27,4 +27,7 @@ if [ -f "${SC_FILE}" ]; then
         wl-copy < "${SC_FILE}"
     fi
     ln -sf "${SC_FILE}" "${SC_LOCATION}/latest.png"
+	if [ -f "$SC_LOCATION/low.png" ]; then
+		'rm' "$SC_LOCATION/low.png"
+	fi
 fi
