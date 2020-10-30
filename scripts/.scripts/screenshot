@@ -10,6 +10,9 @@ SC_FILE="${SC_DIR}/${SC_CURRENT_TIME}.png"
 mkdir -p "${SC_DIR}"
 
 case $1 in
+	maim)
+		maim --select "${SC_FILE}"
+		;;
     area)
         gnome-screenshot -a -f "${SC_FILE}"
         ;;
