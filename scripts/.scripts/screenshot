@@ -11,7 +11,7 @@ mkdir -p "${SC_DIR}"
 
 case $1 in
 	maim)
-		maim --select "${SC_FILE}"
+		maim --select --bordersize=3 --hidecursor "${SC_FILE}"
 		;;
     area)
         gnome-screenshot -a -f "${SC_FILE}"
@@ -32,5 +32,8 @@ if [ -f "${SC_FILE}" ]; then
     ln -sf "${SC_FILE}" "${SC_LOCATION}/latest.png"
 	if [ -f "$SC_LOCATION/low.png" ]; then
 		'rm' "$SC_LOCATION/low.png"
+	fi
+	if [ -f "$HOME/.scripts/recently_used.py" ]; then
+		$HOME/.scripts/recently_used.py "${SC_FILE}"
 	fi
 fi
