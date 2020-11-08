@@ -10,7 +10,7 @@ COLOR_RESET="\033[0m"
 # Only show 3 latest directories
 PROMPT_DIRTRIM=3
 
-if [[ "$TERM" =~ 256color ]]; then
+if [[ "$TERM" =~ 256color || "$TERM" =~ xterm-kitty ]]; then
 	# Git integration by https://ljones.dev/blog/bash-git-prompt/
 	# Get current status of git repo
 	function parse_git_dirty {

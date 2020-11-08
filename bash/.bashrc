@@ -8,6 +8,8 @@
 
 # Bash completion
 [ -f /etc/bash_completion ] && . /etc/bash_completion
+## Kitty completion
+[ -x "$(command -v kitty)" ] && . <(kitty + complete setup bash)
 ## Fzf bash completion
 [ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
@@ -28,7 +30,7 @@ export HISTFILESIZE=10000
 export HISTCONTROL=ignoreboth
 export HISTIGNORE=""
 shopt -s histappend
-PROMPT_COMMAND='history -a'
+# 'history -a' handled in .bash_ps1
 
 # Fasd config
 fasd_cache="$HOME/.fasd-init-bash"
@@ -63,6 +65,35 @@ fi
 if [ -d "/home/sofi/.npm-global/bin" ]; then
     export PATH="$PATH:$HOME/.npm-global/bin"
 fi
+
+
+# Title
+case "$TERM" in
+xterm*|rxvt*)
+    PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/\~}\007"'
+
+    # Show the currently running command in the terminal title:
+    # http://www.davidpashley.com/articles/xterm-titles-with-bash.html
+    show_command_in_title_bar()
+    {
+        case "$BASH_COMMAND" in
+            *\033]0*|_fasd*|cd*|ls*|c|clear)
+                # The command is trying to set the title bar as well;
+                # this is most likely the execution of $PROMPT_COMMAND.
+                # In any case nested escapes confuse the terminal, so don't
+                # output them.
+                ;;
+            *)
+                echo -ne "\033]0;${BASH_COMMAND}\007"
+                ;;
+        esac
+    }
+    trap show_command_in_title_bar DEBUG
+    ;;
+*)
+    ;;
+esac
+
 
 # Colored man pages
 function man {

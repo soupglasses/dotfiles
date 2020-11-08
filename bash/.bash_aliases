@@ -26,7 +26,7 @@ alias svim='sudoedit'
 
 # Quality of life
 alias ping='ping -c 5'
-alias cat='bat -pp'
+alias cat='bat -pp --theme Dracula'
 alias fastcopy='rsync -ah --info=progress2'
 alias rm='rm -i'
 alias clear='clear -x'
