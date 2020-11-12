@@ -17,6 +17,7 @@
 # Exports
 export EDITOR=vim
 export GPG_TTY=$(tty)
+export PYTHONDONTWRITEBYTECODE=1
 
 # Imports
 source $HOME/.dircolors
