@@ -33,24 +33,26 @@ filetype plugin indent on
 
 
 " Styling
-syntax on
-set number
-"set relativenumber
-set cursorline
-set title
-set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)
-
-"" Theme setup
-set laststatus=2
-let g:onedark_terminal_italics = 1
-colorscheme onedark
-let g:lightline = {'colorscheme': 'onedark'}
-set noshowmode
-
-""" Use true 24bit color
+"" Use true 24bit color
 if (has("termguicolors"))
   set termguicolors
 endif
+
+"" Configuration
+syntax on
+set number
+set cursorline
+set title
+set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)
+set laststatus=2
+set noshowmode
+
+"" Theme setup
+let g:onedark_terminal_italics = 1
+let g:onedark_hide_endofbuffer = 1
+let g:onedark_termcolors=256
+let g:lightline = {'colorscheme': 'onedark'}
+colorscheme onedark
 
 
 " Plugin Configuration
@@ -80,10 +82,12 @@ au BufNewFile,BufRead *.py map <silent> <leader>b :TagbarOpenAutoClose<CR>
 au BufNewFile,BufRead *.md map <silent> <leader>c :TOC<CR>
 map <silent> <leader>e :Lex<CR>
 map <expr> <silent> <leader>l ":Loremipsum " . input('Loremipsum: ') . "<CR>"
+
 "" Show hidden characters
 set listchars=nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<
 command Show set list!
-" Toggle Line80
+
+"" Toggle Line80
 let g:line80=0
 function! ToggleLine80()
     if g:line80
@@ -102,30 +106,37 @@ command Line80 :call ToggleLine80()
 set encoding=utf-8
 set fileencoding=utf-8
 set fileformat=unix
+
 "" Better TUI experience
 set ttyfast
 set showcmd
 set mouse=a
 set wrap
+
 "" Code folding
 set foldmethod=indent
 set foldlevel=99
+
 "" Highlighting 
 set hlsearch
 set smartcase 
 nnoremap <silent> <Space> :nohlsearch<CR>
+
 "" Split setup
 set splitbelow
 set splitright
+
 """ Split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
 "" Default tabs
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+
 """ Tabs for Python
 au BufNewFile,BufRead *.py set
     \ tabstop=4
@@ -133,11 +144,13 @@ au BufNewFile,BufRead *.py set
     \ shiftwidth=4
     \ expandtab
     \ autoindent
+
 """ Tabs for HTML, CSS and JS
 au BufNewFile,BufRead *.js, *.html, *.css set
     \ tabstop=2
     \ softtabstop=2
     \ shiftwidth=2
+
 "" Bad habit killer
 """ Disable arrow keys in normal mode
 noremap <Up> <Nop>
