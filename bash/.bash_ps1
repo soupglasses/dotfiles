@@ -20,7 +20,7 @@ if [[ "$TERM" =~ 256color || "$TERM" =~ xterm-kitty ]]; then
 	  printf "["
 	  if echo ${STATUS} | grep -c "renamed"         &> /dev/null; then printf ">"; else printf ""; fi
 	  if echo ${STATUS} | grep -c "branch is ahead" &> /dev/null; then printf "!"; else printf ""; fi
-	  if echo ${STATUS} | grep -c "new file"       &> /dev/null; then printf "+"; else printf ""; fi
+	  if echo ${STATUS} | grep -c "new file"        &> /dev/null; then printf "+"; else printf ""; fi
 	  if echo ${STATUS} | grep -c "Untracked files" &> /dev/null; then printf "?"; else printf ""; fi
 	  if echo ${STATUS} | grep -c "modified"        &> /dev/null; then printf "*"; else printf ""; fi
 	  if echo ${STATUS} | grep -c "deleted"         &> /dev/null; then printf "-"; else printf ""; fi
@@ -35,9 +35,10 @@ if [[ "$TERM" =~ 256color || "$TERM" =~ xterm-kitty ]]; then
 	}
 	
 	GITSTATUS="\[$COLOR_GREY\]\$(parse_git_branch)\[$COLOR_SECONDARY\]\$(parse_git_dirty)\[$COLOR_RESET\]"
-	ERRSTATUS='$(exit=${PIPESTATUS[-1]##0};echo -e ${exit:+${COLOR_TERTIARY}})\$'
+	ERRCOLOR='$(exit=${PIPESTATUS[-1]%%?(0)?(130)};echo -e ${exit:+\[${COLOR_TERTIARY}\]})'
 
-	PS1="\[$COLOR_PRIMARY\]\w $GITSTATUS\[$COLOR_GREY\]$ERRSTATUS\[$COLOR_RESET\] "
+	PS1="\[$COLOR_PRIMARY\]\w $GITSTATUS\[$COLOR_GREY\]$ERRCOLOR\$\[$COLOR_RESET\] "
+	PS2="\[$COLOR_GREY\]>\[$COLOR_RESET\] "
 	export GREP_COLOR="38;5;49"
 else
 	PS1="\[\033[01;92m\]\w\[\033[0m\] \$ "
