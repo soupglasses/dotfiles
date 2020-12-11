@@ -14,16 +14,16 @@ Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'majutsushi/tagbar'
 Plugin 'vim-scripts/loremipsum'
-Plugin 'ludovicchabant/vim-gutentags'
 "" Themes & TUI
 Plugin 'joshdick/onedark.vim'
 Plugin 'itchyny/lightline.vim'
 "" Launguage spessiffic
 """ Python
-Plugin 'Vimjas/vim-python-pep8-indent'
-Plugin 'vim-python/python-syntax'
+Plugin 'python-mode/python-mode'
 """ HTML + CSS + JS
 Plugin 'pangloss/vim-javascript'
+""" SQL
+Plugin 'alcesleo/vim-uppercase-sql'
 """ Markdown
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
@@ -39,12 +39,14 @@ set number
 set cursorline
 set title
 set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)
+
 "" Theme setup
 set laststatus=2
 let g:onedark_terminal_italics = 1
 colorscheme onedark
 let g:lightline = {'colorscheme': 'onedark'}
 set noshowmode
+
 """ Use true 24bit color
 if (has("termguicolors"))
   set termguicolors
@@ -53,7 +55,8 @@ endif
 
 " Plugin Configuration
 "" Python
-let g:python_highlight_all = 1
+let g:pymode_options_colorcolumn = 0
+let g:pymode_rope_lookup_project = 1
 "" Markdown
 let g:pandoc#syntax#codeblocks#embeds#langs = ['bash', 'python', 'dockerfile']
 let g:pandoc#syntax#conceal#use = 0
@@ -62,9 +65,6 @@ let g:pandoc#spell#default_langs = ['en']
 let g:table_mode_corner='+'
 let g:table_mode_corner_corner='+'
 let g:table_mode_header_fillchar='='
-"" Gutentags
-let g:gutentags_ctags_exclude = ['.git','.mypy_cache','__pycache__']
-let g:gutentags_ctags_tagfile = '.git/tags'
 "" Netrw
 let g:netrw_banner = 0
 let g:netrw_list_hide = '^\.\.\=/\=$,.DS_Store,.idea,.git,__pycache__,venv,node_modules,*\.o,*\.pyc,.*\.swp'
