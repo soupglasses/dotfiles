@@ -1,4 +1,5 @@
 # ~/.bashrc
+# vi: ft=bash
 
 # Global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc
@@ -54,6 +55,9 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
     export PATH="$PATH:$HOME/.local/bin"
 fi
 
+# Fucking
+eval "$(thefuck --alias)"
+
 # Disable annoying CTRL-S
 stty -ixon
 # Setup shell options
@@ -69,6 +73,7 @@ if [ -d "/home/sofi/.npm-global/bin" ]; then
     export PATH="$PATH:$HOME/.npm-global/bin"
 fi
 
+# Prompt Command
 case "$TERM" in
 xterm*|rxvt*)
 	PROMPT_COMMAND="${PROMPT_COMMAND}; history -a; echo -ne \"\033]0;\${PWD/#\$HOME/\~}\007\""
@@ -94,7 +99,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
-
 
 # Colored man pages
 function man {

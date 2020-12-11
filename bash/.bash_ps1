@@ -1,9 +1,10 @@
 # ~/.bash_ps1
+# vi: ft=bash
 
 # Custom colors
 COLOR_PRIMARY="\033[38;5;49m"
 COLOR_SECONDARY="\033[38;5;99m"
-COLOR_TERTIARY="\033[38;5;220m"
+COLOR_TERTIARY="\033[38;5;222m"
 COLOR_GREY="\033[38;5;249m"
 COLOR_RESET="\033[0m"
 
@@ -34,8 +35,9 @@ if [[ "$TERM" =~ 256color || "$TERM" =~ xterm-kitty ]]; then
 	}
 	
 	GITSTATUS="\[$COLOR_GREY\]\$(parse_git_branch)\[$COLOR_SECONDARY\]\$(parse_git_dirty)\[$COLOR_RESET\]"
+	ERRSTATUS='$(exit=${PIPESTATUS[-1]##0};echo -e ${exit:+${COLOR_TERTIARY}})\$'
 
-	PS1="\[$COLOR_PRIMARY\]\w $GITSTATUS\[$COLOR_GREY\]\$\[$COLOR_RESET\] "
+	PS1="\[$COLOR_PRIMARY\]\w $GITSTATUS\[$COLOR_GREY\]$ERRSTATUS\[$COLOR_RESET\] "
 	export GREP_COLOR="38;5;49"
 else
 	PS1="\[\033[01;92m\]\w\[\033[0m\] \$ "

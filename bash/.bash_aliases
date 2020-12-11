@@ -1,4 +1,5 @@
 # ~/.bash_aliases
+# vi: ft=bash
 
 # Quicker cd 
 alias cd='cd '
