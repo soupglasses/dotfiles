@@ -7,8 +7,8 @@ COLOR_TERTIARY="\033[38;5;220m"
 COLOR_GREY="\033[38;5;249m"
 COLOR_RESET="\033[0m"
 
-# Only show 3 latest directories
-PROMPT_DIRTRIM=3
+# Only show 2 latest directories
+PROMPT_DIRTRIM=2
 
 if [[ "$TERM" =~ 256color || "$TERM" =~ xterm-kitty ]]; then
 	# Git integration by https://ljones.dev/blog/bash-git-prompt/

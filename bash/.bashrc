@@ -6,11 +6,12 @@
 # If not running interactively, don't do anything more
 [[ $- != *i* ]] && return
 
-# Bash completion
+# Completions
+## Bash
 [ -f /etc/bash_completion ] && . /etc/bash_completion
-## Kitty completion
+## Kitty
 [ -x "$(command -v kitty)" ] && . <(kitty + complete setup bash)
-## Fzf bash completion
+## Fzf
 [ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
 
@@ -26,12 +27,11 @@ source $HOME/.bash_ps1
 
 # Set up history
 export HISTTIMEFORMAT="%h %d %H:%M:%S "
-export HISTSIZE=10000
-export HISTFILESIZE=10000
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 export HISTCONTROL=ignoreboth
 export HISTIGNORE=""
 shopt -s histappend
-# 'history -a' handled in .bash_ps1
 
 # Fasd config
 fasd_cache="$HOME/.fasd-init-bash"
@@ -56,6 +56,8 @@ fi
 
 # Disable annoying CTRL-S
 stty -ixon
+# Setup shell options
+shopt -s globstar
 
 # Ability to run custom scripts
 if [ -d "$HOME/.scripts" ]; then
@@ -67,18 +69,16 @@ if [ -d "/home/sofi/.npm-global/bin" ]; then
     export PATH="$PATH:$HOME/.npm-global/bin"
 fi
 
-
-# Title
 case "$TERM" in
 xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/\~}\007"'
-
-    # Show the currently running command in the terminal title:
+	PROMPT_COMMAND="${PROMPT_COMMAND}; history -a; echo -ne \"\033]0;\${PWD/#\$HOME/\~}\007\""
+    
+	# Show the currently running command in the terminal title:
     # http://www.davidpashley.com/articles/xterm-titles-with-bash.html
     show_command_in_title_bar()
     {
         case "$BASH_COMMAND" in
-            *\033]0*|_fasd*|cd*|ls*|c|clear)
+            *\033]0*|_fasd*|cd*|ls*|clear*)
                 # The command is trying to set the title bar as well;
                 # this is most likely the execution of $PROMPT_COMMAND.
                 # In any case nested escapes confuse the terminal, so don't

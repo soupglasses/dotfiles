@@ -30,6 +30,8 @@ alias cat='bat -pp --theme Dracula'
 alias fastcopy='rsync -ah --info=progress2'
 alias rm='rm -i'
 alias clear='clear -x'
+alias cpy='PYTHONDONTWRITEBYTECODE=0 python'
+alias cipy='PYTHONDONTWRITEBYTECODE=0 ipython'
 
 # Shorthands
 alias c='clear'
