@@ -21,6 +21,8 @@ Plugin 'itchyny/lightline.vim'
 """ Python
 Plugin 'python-mode/python-mode'
 """ HTML + CSS + JS
+Plugin 'sheerun/html5.vim'
+Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
 """ SQL
 Plugin 'alcesleo/vim-uppercase-sql'
@@ -39,7 +41,6 @@ if (has("termguicolors"))
 endif
 
 "" Configuration
-syntax on
 set number
 set cursorline
 set title
@@ -48,6 +49,7 @@ set laststatus=2
 set noshowmode
 
 "" Theme setup
+syntax on
 let g:onedark_terminal_italics = 1
 let g:onedark_hide_endofbuffer = 1
 let g:onedark_termcolors=256
@@ -74,7 +76,8 @@ let g:netrw_hide = 1
 let g:netrw_browse_split = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 20
-
+"" Emmet
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " Commands
 "" Leader '\' commands
@@ -136,20 +139,26 @@ nnoremap <C-H> <C-W><C-H>
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set expandtab
 
 """ Tabs for Python
 au BufNewFile,BufRead *.py set
     \ tabstop=4
     \ softtabstop=4
     \ shiftwidth=4
-    \ expandtab
     \ autoindent
 
 """ Tabs for HTML, CSS and JS
-au BufNewFile,BufRead *.js, *.html, *.css set
+au BufNewFile,BufRead *.html set
     \ tabstop=2
     \ softtabstop=2
     \ shiftwidth=2
+
+au BufNewFile,BufRead *.css set
+    \ tabstop=2
+    \ softtabstop=2
+    \ shiftwidth=2
+
 
 "" Bad habit killer
 """ Disable arrow keys in normal mode

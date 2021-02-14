@@ -12,6 +12,7 @@ Plug 'vim-scripts/loremipsum'
 "" Themes & TUI
 Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
+Plug 'ghifarit53/tokyonight-vim'
 Plug 'itchyny/lightline.vim'
 "" Launguage Spessific
 """ Python
@@ -51,11 +52,17 @@ set hidden
 "" Lightline
 set noshowmode
 set laststatus=2
-let g:lightline = {'colorscheme' : 'onedark'}
 
 "" Colorscheme
-let g:one_allow_italics = 1
-colorscheme one
+""" Tokyo Night
+let g:lightline = {'colorscheme' : 'tokyonight'}
+let g:tokyonight_style = 'night' " night, storm
+let g:tokyonight_enable_italic = 1
+colorscheme tokyonight
+""" One
+"let g:lightline = {'colorscheme' : 'onedark'}
+"let g:one_allow_italics = 1
+"colorscheme one
 
 " Plugin Configuration
 "" Python
@@ -63,7 +70,7 @@ let g:pymode_options_colorcolumn = 0
 let g:pymode_rope_lookup_project = 1
 
 "" Markdown
-let g:pandoc#syntax#codeblocks#embeds#langs = ['bash', 'python', 'dockerfile']
+let g:pandoc#syntax#codeblocks#embeds#langs = ['sh', 'bash', 'python', 'dockerfile']
 let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#spell#default_langs = ['en']
 
@@ -118,6 +125,7 @@ set fileformat=unix
 set ttyfast
 set showcmd
 set mouse=a
+set clipboard=unnamedplus
 set wrap
 
 "" Code folding

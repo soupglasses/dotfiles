@@ -17,7 +17,7 @@
 [ -f /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
 
 # Exports
-export EDITOR=vim
+export EDITOR=nvim
 export GPG_TTY=$(tty)
 export PYTHONDONTWRITEBYTECODE=1
 
@@ -27,12 +27,14 @@ source $HOME/.bash_aliases
 source $HOME/.bash_ps1
 
 # Set up history
-export HISTTIMEFORMAT="%h %d %H:%M:%S "
-export HISTSIZE=100000
-export HISTFILESIZE=100000
-export HISTCONTROL=ignoreboth
-export HISTIGNORE=""
+HISTSIZE=100000
+HISTFILESIZE=100000
+HISTCONTROL=ignoreboth
+HISTIGNORE=""
+HISTTIMEFORMAT='%F %T '
 shopt -s histappend
+shopt -s cmdhist
+shopt -s lithist
 
 # Fasd config
 fasd_cache="$HOME/.fasd-init-bash"
@@ -53,6 +55,11 @@ fi
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
     export PATH="$PATH:$HOME/.local/bin"
+fi
+
+# Rust
+if ! [[ "$PATH" =~ "$HOME/.cargo/bin:" ]]; then
+    export PATH="$PATH:$HOME/.cargo/bin"
 fi
 
 # Fucking
@@ -83,7 +90,7 @@ xterm*|rxvt*)
     show_command_in_title_bar()
     {
         case "$BASH_COMMAND" in
-            *\033]0*|_fasd*|cd*|ls*|clear*)
+            *\033]0*|_fasd*|__fzf*|cd*|ls*|clear*)
                 # The command is trying to set the title bar as well;
                 # this is most likely the execution of $PROMPT_COMMAND.
                 # In any case nested escapes confuse the terminal, so don't
