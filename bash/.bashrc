@@ -9,12 +9,16 @@
 
 # Completions
 ## Bash
-[ -f /etc/bash_completion ] && . /etc/bash_completion
+[ -f /usr/share/bash-completion/bash_completion ] && \
+    . /usr/share/bash-completion/bash_completion
 ## Kitty
-[ -x "$(command -v kitty)" ] && . <(kitty + complete setup bash)
+[ -x "$(command -v kitty)" ] && \
+    . <(kitty + complete setup bash)
 ## Fzf
-[ -f /usr/share/fzf/key-bindings.bash ] && . /usr/share/fzf/key-bindings.bash
-[ -f /usr/share/fzf/completion.bash ] && . /usr/share/fzf/completion.bash
+[ -f /usr/share/fzf/key-bindings.bash ] && \
+    . /usr/share/fzf/key-bindings.bash
+[ -f /usr/share/fzf/completion.bash ] && \
+    . /usr/share/fzf/completion.bash
 
 # Exports
 export EDITOR=nvim
@@ -27,6 +31,7 @@ source $HOME/.bash_aliases
 source $HOME/.bash_ps1
 
 # Set up history
+HISTFILE=~/.bash_longhist
 HISTSIZE=100000
 HISTFILESIZE=100000
 HISTCONTROL=ignoreboth

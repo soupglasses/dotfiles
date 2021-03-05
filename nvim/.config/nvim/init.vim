@@ -18,6 +18,8 @@ Plug 'itchyny/lightline.vim'
 """ Python
 Plug 'python-mode/python-mode'
 Plug 'raimon49/requirements.txt.vim'
+""" TOML
+Plug 'cespare/vim-toml'
 """ HTML + CSS + JS
 Plug 'sheerun/html5.vim'
 Plug 'mattn/emmet-vim'
