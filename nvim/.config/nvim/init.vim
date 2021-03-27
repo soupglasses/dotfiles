@@ -10,6 +10,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/loremipsum'
 "" Themes & TUI
+Plug 'chriskempson/base16-vim'
 Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
 Plug 'ghifarit53/tokyonight-vim'
@@ -20,6 +21,8 @@ Plug 'python-mode/python-mode'
 Plug 'raimon49/requirements.txt.vim'
 """ TOML
 Plug 'cespare/vim-toml'
+""" C, C++
+Plug 'octol/vim-cpp-enhanced-highlight'
 """ HTML + CSS + JS
 Plug 'sheerun/html5.vim'
 Plug 'mattn/emmet-vim'
@@ -37,9 +40,11 @@ call plug#end()
 if (empty($TMUX))
   if (has("nvim"))
 	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    let base16colorspace=256
   endif
   if (has("termguicolors"))
     set termguicolors
+    let base16colorspace=256
   endif
 endif
 
@@ -64,7 +69,10 @@ colorscheme tokyonight
 """ One
 "let g:lightline = {'colorscheme' : 'onedark'}
 "let g:one_allow_italics = 1
-"colorscheme one
+"colorscheme onedark
+""" Base16-dark
+"colorscheme base16-onedark
+
 
 " Plugin Configuration
 "" Python
