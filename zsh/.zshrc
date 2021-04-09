@@ -4,9 +4,6 @@
 # --- Basic Setup ---
 unsetopt autocd beep extendedglob
 bindkey -e
-## Prompt
-PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f %# '
-RPROMPT='%(?..%F{red}%?)'
 ## Defaults
 EDITOR=nvim
 
@@ -30,6 +27,12 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 autoload -Uz compinit
 compinit
 
+# Prompt
+## Git
+source ~/.zsh/plugins/gitstatus.zsh
+## Prompt
+PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f %# '
+RPROMPT='%(?.$GITSTATUS_PROMPT.%F{red}%?)'
 
 # --- Custom Completions ---
 ## Kitty
@@ -58,6 +61,8 @@ fi
 
 
 # --- Colors ---
+## File Colors
+source $HOME/.dircolors
 ## GRC Coloration
 if [[ -r /etc/grc.zsh ]]; then
     source /etc/grc.zsh
