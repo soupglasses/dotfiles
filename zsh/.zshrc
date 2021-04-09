@@ -4,7 +4,6 @@
 # --- Basic Setup ---
 unsetopt autocd beep extendedglob
 bindkey -e
-## Defaults
 EDITOR=nvim
 
 
@@ -13,7 +12,7 @@ HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
 SAVEHIST=100000
 setopt share_history append_history inc_append_history extended_history
-setopt hist_ignore_dups hist_reduce_blanks 
+setopt hist_ignore_dups hist_reduce_blanks hist_verify 
 ## Arrow bindings
 bindkey "^[[A" up-line-or-search
 bindkey "^[[B" down-line-or-search 
@@ -27,12 +26,14 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}
 autoload -Uz compinit
 compinit
 
-# Prompt
-## Git
-source ~/.zsh/plugins/gitstatus.zsh
+
+# --- Prompt ---
+## Git integration
+source ~/.zsh/git-status.zsh
 ## Prompt
 PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f %# '
 RPROMPT='%(?.$GITSTATUS_PROMPT.%F{red}%?)'
+
 
 # --- Custom Completions ---
 ## Kitty
