@@ -1,15 +1,17 @@
-# Defaults
+# ~/.zshrc
+# vi: ft=zsh
+
+# --- Basic Setup ---
 unsetopt autocd beep extendedglob
 bindkey -e
-
-# Prompt
+## Prompt
 PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f %# '
 RPROMPT='%(?..%F{red}%?)'
-
-# Defaults
+## Defaults
 EDITOR=nvim
 
-# History
+
+# --- History ---
 HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
 SAVEHIST=100000
@@ -19,14 +21,17 @@ setopt hist_ignore_dups hist_reduce_blanks
 bindkey "^[[A" up-line-or-search
 bindkey "^[[B" down-line-or-search 
 
-# Completions
-## Configuration
+
+# --- Zsh Completions ---
 zstyle :compinstall filename '/home/sofi/.zshrc'
-### Case insensitive path-completion 
+## Case insensitive path-completion 
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 ## Compinstall
 autoload -Uz compinit
 compinit
+
+
+# --- Custom Completions ---
 ## Kitty
 if [ -x "$(command -v kitty)" ]; then
     kitty + complete setup zsh | source /dev/stdin
@@ -48,7 +53,7 @@ if [ -x "$(command -v fzf)" ]; then
 fi
 
 
-# Colors
+# --- Colors ---
 ## GRC Coloration
 if [[ -r /etc/grc.zsh ]]; then
     source /etc/grc.zsh
@@ -65,7 +70,8 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ip='ip -color'
 
-# Aliases
+
+# --- Aliases ---
 ## Simpler Use
 alias open='xdg-open'
 alias svim='sudoedit'
@@ -82,7 +88,9 @@ alias q='exit'
 alias py='python'
 alias ipy='ipython'
 
-# Make ls run after cd
+
+# --- Other Setup ---
+## Make ls run after cd
 function cd {
     builtin cd "$@" && ls
 }
