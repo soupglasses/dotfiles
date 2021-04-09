@@ -21,6 +21,10 @@ case $1 in
         ;;
     screen)
         gnome-screenshot -f "${SC_FILE}"
+        ;;
+    delay)
+        gnome-screenshot --delay=1 -f "${SC_FILE}"
+        ;;
 esac
 
 if [ -f "${SC_FILE}" ]; then
