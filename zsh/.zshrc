@@ -51,6 +51,10 @@ fi
 if [ -x "$(command -v fzf)" ]; then
     source /usr/share/fzf/shell/key-bindings.zsh
 fi
+## Userland bin
+if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
+    export PATH="$PATH:$HOME/.local/bin"
+fi
 
 
 # --- Colors ---
