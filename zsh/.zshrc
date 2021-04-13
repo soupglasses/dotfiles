@@ -1,6 +1,7 @@
 # ~/.zshrc
 # vi: ft=zsh
 
+
 # --- Basic Setup ---
 unsetopt autocd beep extendedglob
 bindkey -e
@@ -39,6 +40,7 @@ RPROMPT='%(?.$GITSTATUS_PROMPT.%F{red}%?)'
 ## Kitty
 if [ -x "$(command -v kitty)" ]; then
     kitty + complete setup zsh | source /dev/stdin
+    alias ssh="TERM=xterm-256color ssh"
 fi
 ## Fasd
 if [ -x "$(command -v fasd)" ]; then
@@ -54,6 +56,11 @@ fi
 ## Fzf
 if [ -x "$(command -v fzf)" ]; then
     source /usr/share/fzf/shell/key-bindings.zsh
+    export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    --color=dark
+    --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
+    --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef
+    '
 fi
 ## Userland bin
 if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
@@ -91,7 +98,6 @@ alias ping='ping -c 5'
 alias fastcopy='rsync -ah --info=progress2'
 alias rm='rm -i'
 alias clear='clear -x'
-alias ssh='TERM=xterm-256color ssh'
 ## Shorthands
 alias c='clear'
 alias q='exit'
@@ -103,4 +109,9 @@ alias ipy='ipython'
 ## Make ls run after cd
 function cd {
     builtin cd "$@" && ls
+}
+## Allow for autocd after making a new directory.
+function mkdircd {
+    mkdir -p -- "$1" &&
+        cd -- "$1"
 }
