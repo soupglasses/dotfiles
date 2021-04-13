@@ -4,7 +4,6 @@
 call plug#begin('~/.vim/plugged')
 "" QoL
 Plug 'tpope/vim-sensible'
-Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'majutsushi/tagbar'
@@ -24,10 +23,7 @@ Plug 'cespare/vim-toml'
 """ C, C++
 Plug 'octol/vim-cpp-enhanced-highlight'
 """ HTML + CSS + JS
-Plug 'sheerun/html5.vim'
 Plug 'mattn/emmet-vim'
-Plug 'shmargum/vim-sass-colors'
-Plug 'pangloss/vim-javascript'
 """ SQL
 Plug 'alcesleo/vim-uppercase-sql'
 """ Markdown
