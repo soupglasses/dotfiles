@@ -78,7 +78,7 @@ if [[ -r /etc/grc.zsh ]]; then
 fi
 ## Cat/Bat Colors
 if [ -x "$(command -v bat)" ]; then
-    alias bat='bat --theme Dracula'
+    alias bat='bat --theme TwoDark'
     alias cat='bat -pp'
 fi
 ## Generic Commands

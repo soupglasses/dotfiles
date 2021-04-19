@@ -58,16 +58,16 @@ set laststatus=2
 
 "" Colorscheme
 """ Tokyo Night
-let g:lightline = {'colorscheme' : 'tokyonight'}
-let g:tokyonight_style = 'night' " night, storm
-let g:tokyonight_enable_italic = 1
-colorscheme tokyonight
+"let g:lightline = {'colorscheme' : 'tokyonight'}
+"let g:tokyonight_style = 'night' " night, storm
+"let g:tokyonight_enable_italic = 1
+"colorscheme tokyonight
 """ One
-"let g:lightline = {'colorscheme' : 'onedark'}
-"let g:one_allow_italics = 1
+let g:lightline = {'colorscheme' : 'onedark'}
+let g:one_allow_italics = 1
 "colorscheme onedark
 """ Base16-dark
-"colorscheme base16-onedark
+colorscheme base16-onedark
 
 
 " Plugin Configuration
