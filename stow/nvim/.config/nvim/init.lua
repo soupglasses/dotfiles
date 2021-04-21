@@ -10,50 +10,50 @@
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 
 -- Recompile plugins when init.lua changes
 vim.api.nvim_exec([[
-  augroup Packer
-    autocmd!
-    autocmd BufWritePost init.lua PackerCompile
-  augroup end
+    augroup Packer
+        autocmd!
+        autocmd BufWritePost init.lua PackerCompile
+    augroup end
 ]], false)
 
 
 -- Packer setup
 local use = require('packer').use
 require('packer').startup(function()
-  -- Package manager
-  use 'wbthomason/packer.nvim'
-  -- Theme inspired by VSCode TokyoNight
-  use 'folke/tokyonight.nvim'
-  -- Blazing fast statusline
-  use {
-    'hoob3rt/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
-  -- Git diffs in the sign column
-  use 'airblade/vim-gitgutter'
-  -- Add indentation guides
-  use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
-  -- Collection of configurations for the built-in LSP client
-  use 'neovim/nvim-lspconfig'
-  -- Easy install of language servers
-  use 'kabouzeid/nvim-lspinstall'
-  -- Treesitter highlighting
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  -- Color previews for commands
-  use 'norcalli/nvim-colorizer.lua'
+    -- Package manager
+    use 'wbthomason/packer.nvim'
+    -- Theme inspired by VSCode TokyoNight
+    use 'folke/tokyonight.nvim'
+    -- Blazing fast statusline
+    use {
+        'hoob3rt/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
+    -- Git diffs in the sign column
+    use 'airblade/vim-gitgutter'
+    -- Add indentation guides
+    use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
+    -- Collection of configurations for the built-in LSP client
+    use 'neovim/nvim-lspconfig'
+    -- Easy install of language servers
+    use 'kabouzeid/nvim-lspinstall'
+    -- Treesitter highlighting
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    -- Color previews for commands
+    use 'norcalli/nvim-colorizer.lua'
 end)
 
 
 -- Colorscheme
 vim.o.termguicolors = true
 vim.g.tokyonight_style = 'storm'
-vim.g.tokyonight_sidebars = { "quickfix", "__vista__", "terminal" }
+vim.g.tokyonight_sidebars = { "quickfix", "__vista__" }
 vim.cmd 'colorscheme tokyonight'
 
 
@@ -67,37 +67,37 @@ vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 
 -- Web devicons
 require'nvim-web-devicons'.setup {
-  default = true;
+    default = true;
 }
 
 -- Lualine
 require('lualine').setup {
-  options = {
-    section_separators = '',
-    component_separators = '',
-    theme = 'tokyonight'
-  }
+    options = {
+        section_separators = '',
+        component_separators = '',
+        theme = 'tokyonight'
+    }
 }
 
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
-  highlight = {
-    enable = true
-  }
+    ensure_installed = "maintained",
+    highlight = {
+        enable = true
+    }
 }
 
 
 -- Colorizer
 require 'colorizer'.setup {
-  'css',
-  'scss',
-  'sass',
-  'javascript',
-  html = {
-    mode = 'foreground'
-  }
+    'css',
+    'scss',
+    'sass',
+    'javascript',
+    html = {
+        mode = 'foreground'
+    }
 }
 
 
@@ -107,30 +107,30 @@ require'lspinstall'.setup()
 -- LSP
 local nvim_lsp = require('lspconfig')
 local on_attach = function(_client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  local opts = { noremap=true, silent=true }
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+    local opts = { noremap=true, silent=true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 -- -- Enable language servers
 local servers = require'lspinstall'.installed_servers()
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
+    nvim_lsp[lsp].setup { on_attach = on_attach }
 end
 -- -- Map :Format to vim.lsp.buf.formatting()
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
@@ -147,7 +147,21 @@ vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', { noremap = true
 vim.api.nvim_set_keymap('n', '<C-l>', ':bnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-h>', ':bprevious<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>q', ':Bdelete<CR>', { noremap = true })
-
+-- -- ALT+{h,j,k,l} to navigate windows
+vim.api.nvim_set_keymap('t', '<A-h>', '<C-\\><C-N><C-w>h', { noremap = true })
+vim.api.nvim_set_keymap('t', '<A-j>', '<C-\\><C-N><C-w>j', { noremap = true })
+vim.api.nvim_set_keymap('t', '<A-k>', '<C-\\><C-N><C-w>k', { noremap = true })
+vim.api.nvim_set_keymap('t', '<A-l>', '<C-\\><C-N><C-w>l', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-h>', '<C-\\><C-N><C-w>h', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-j>', '<C-\\><C-N><C-w>j', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-k>', '<C-\\><C-N><C-w>k', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-l>', '<C-\\><C-N><C-w>l', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>h', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>j', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>k', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>l', { noremap = true })
+-- -- Terminal allow ESC to exit
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
 
 -- Vim options
 -- -- Global
@@ -163,6 +177,7 @@ vim.o.ignorecase = true       -- By default ignore case on search
 vim.o.smartcase = true        -- Make search case sensetive on capital in search
 vim.o.updatetime = 300        -- Speed up update times for plugins
 vim.o.splitbelow = true       -- Vertical splits below the current window
+vim.o.splitright = true       -- Horizontal splits to the right of current window
 vim.o.title = true            -- Enable title
 vim.o.titlestring = [[%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)]]
 -- -- Window
@@ -184,5 +199,5 @@ vim.cmd('command Show set list!')
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 -- -- Hide line numbers in terminal windows
 vim.api.nvim_exec([[
-   au BufEnter term://* setlocal nonumber
+    au BufEnter term://* setlocal nonumber
 ]], false)

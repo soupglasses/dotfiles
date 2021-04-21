@@ -75,6 +75,7 @@ source $HOME/.dircolors
 if [[ -r /etc/grc.zsh ]]; then
     source /etc/grc.zsh
     unalias ls
+    unalias make
 fi
 ## Cat/Bat Colors
 if [ -x "$(command -v bat)" ]; then
