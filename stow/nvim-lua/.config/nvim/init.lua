@@ -3,6 +3,7 @@
 --    | | '_ \| | __| | | | | |/ _` |
 --    | | | | | | |_ _| | |_| | (_| |
 --    |_|_| |_|_|\__(_)_|\__,_|\__,_|
+--
 
 
 -- Install packer if not already installed
@@ -34,8 +35,6 @@ require('packer').startup(function()
     'hoob3rt/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
-  -- Add glyphs support with colors
-  use 'kyazdani42/nvim-web-devicons'
   -- Git diffs in the sign column
   use 'airblade/vim-gitgutter'
   -- Add indentation guides
@@ -58,9 +57,18 @@ vim.g.tokyonight_sidebars = { "quickfix", "__vista__", "terminal" }
 vim.cmd 'colorscheme tokyonight'
 
 
+-- Gitgutter
+vim.g.gitgutter_map_keys = 0
+
+
 -- Indent blankline
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 
+
+-- Web devicons
+require'nvim-web-devicons'.setup {
+  default = true;
+}
 
 -- Lualine
 require('lualine').setup {
@@ -144,6 +152,7 @@ vim.api.nvim_set_keymap('n', '<Leader>q', ':Bdelete<CR>', { noremap = true })
 -- Vim options
 -- -- Global
 vim.o.laststatus = 2          -- Always show the statusline
+vim.o.showmode = false        -- Disable the `-- INSERT --`
 vim.o.hlsearch = true         -- Highlight all matches
 vim.o.incsearch = true        -- Show incremental matches
 vim.o.inccommand = 'nosplit'  -- Incremental live completion
