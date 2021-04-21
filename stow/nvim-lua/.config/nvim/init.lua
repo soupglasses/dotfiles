@@ -1,3 +1,9 @@
+--     _       _ _     _             
+--    (_)_ __ (_) |_  | |_   _  __ _ 
+--    | | '_ \| | __| | | | | |/ _` |
+--    | | | | | | |_ _| | |_| | (_| |
+--    |_|_| |_|_|\__(_)_|\__,_|\__,_|
+
 
 -- Install packer if not already installed
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -5,6 +11,7 @@ local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.n
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
+
 
 -- Recompile plugins when init.lua changes
 vim.api.nvim_exec([[
@@ -20,8 +27,15 @@ local use = require('packer').use
 require('packer').startup(function()
   -- Package manager
   use 'wbthomason/packer.nvim'
-  -- Theme inspired by Atom
-  use 'joshdick/onedark.vim'
+  -- Theme inspired by VSCode TokyoNight
+  use 'folke/tokyonight.nvim'
+  -- Blazing fast statusline
+  use {
+    'hoob3rt/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+  -- Add glyphs support with colors
+  use 'kyazdani42/nvim-web-devicons'
   -- Git diffs in the sign column
   use 'airblade/vim-gitgutter'
   -- Add indentation guides
@@ -32,11 +46,30 @@ require('packer').startup(function()
   use 'kabouzeid/nvim-lspinstall'
   -- Treesitter highlighting
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  -- Color previews for commands
+  use 'norcalli/nvim-colorizer.lua'
 end)
+
+
+-- Colorscheme
+vim.o.termguicolors = true
+vim.g.tokyonight_style = 'storm'
+vim.g.tokyonight_sidebars = { "quickfix", "__vista__", "terminal" }
+vim.cmd 'colorscheme tokyonight'
 
 
 -- Indent blankline
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
+
+
+-- Lualine
+require('lualine').setup {
+  options = {
+    section_separators = '',
+    component_separators = '',
+    theme = 'tokyonight'
+  }
+}
 
 
 -- Treesitter
@@ -46,6 +79,19 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   }
 }
+
+
+-- Colorizer
+require 'colorizer'.setup {
+  'css',
+  'scss',
+  'sass',
+  'javascript',
+  html = {
+    mode = 'foreground'
+  }
+}
+
 
 -- LSPInstall
 require'lspinstall'.setup()
@@ -95,12 +141,6 @@ vim.api.nvim_set_keymap('n', '<C-h>', ':bprevious<CR>', { noremap = true, silent
 vim.api.nvim_set_keymap('n', '<Leader>q', ':Bdelete<CR>', { noremap = true })
 
 
--- Colorscheme
-vim.o.termguicolors = true
-vim.g.onedark_terminal_italics = 2
-vim.cmd 'colorscheme onedark'
-
-
 -- Vim options
 -- -- Global
 vim.o.laststatus = 2          -- Always show the statusline
@@ -133,3 +173,7 @@ vim.o.listchars = 'nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<'
 vim.cmd('command Show set list!')
 -- -- Y yank until the end of line
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
+-- -- Hide line numbers in terminal windows
+vim.api.nvim_exec([[
+   au BufEnter term://* setlocal nonumber
+]], false)

@@ -10,10 +10,10 @@ Plug 'majutsushi/tagbar'
 Plug 'vim-scripts/loremipsum'
 "" Themes & TUI
 Plug 'chriskempson/base16-vim'
-Plug 'rakr/vim-one'
+"Plug 'rakr/vim-one'
 Plug 'joshdick/onedark.vim'
 Plug 'ghifarit53/tokyonight-vim'
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 "" Launguage Spessific
 """ Python
 Plug 'python-mode/python-mode'
@@ -58,16 +58,16 @@ set laststatus=2
 
 "" Colorscheme
 """ Tokyo Night
-"let g:lightline = {'colorscheme' : 'tokyonight'}
-"let g:tokyonight_style = 'night' " night, storm
-"let g:tokyonight_enable_italic = 1
-"colorscheme tokyonight
-""" One
-let g:lightline = {'colorscheme' : 'onedark'}
-let g:one_allow_italics = 1
+let g:lightline = {'colorscheme' : 'tokyonight'}
+let g:tokyonight_style = 'night' " night, storm
+let g:tokyonight_enable_italic = 1
+colorscheme tokyonight
+""" one
+"let g:lightline = {'colorscheme' : 'onedark'}
+"let g:one_allow_italics = 1
 "colorscheme onedark
 """ Base16-dark
-colorscheme base16-onedark
+"colorscheme base16-onedark
 
 
 " Plugin Configuration
@@ -131,7 +131,7 @@ set fileformat=unix
 set ttyfast
 set showcmd
 set mouse=a
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 set wrap
 
 "" Code folding
