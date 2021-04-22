@@ -1,3 +1,0 @@
-[submodule "stow/zsh/.zsh/plugins/git-status"]
-	path = stow/zsh/.zsh/plugins/git-status
-	url = https://github.com/romkatv/gitstatus

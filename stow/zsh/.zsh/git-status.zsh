@@ -1,6 +1,11 @@
 # Simple Zsh prompt with Git status.
 
-local GITSTATUS_DIR=$HOME/.zsh/plugins/git-status
+local GITSTATUS_DIR=$HOME/.zsh/git-status
+
+# Check if directory exists
+if [ ! -d $GITSTATUS_DIR ]; then
+    git clone https://github.com/romkatv/gitstatus $GITSTATUS_DIR
+fi
 
 # Source gitstatus.plugin.zsh from $GITSTATUS_DIR or from the same directory
 # in which the current script resides if the variable isn't set.
