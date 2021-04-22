@@ -30,12 +30,13 @@ compinit
 
 # --- Prompt ---
 ## Prompt
-PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f %# '
+PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f %(?..%F{red}E%? )%# '
 ## Git integration
 if [ -x "$(command -v git)" ]; then
     source ~/.zsh/git-status.zsh
-    RPROMPT='%(?.$GITSTATUS_PROMPT.%F{red}%?)'
+    PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f ${GITSTATUS_PROMPT}${GITSTATUS_PROMPT:+ }%(?..%F{red}E%? )%f%# '
 fi
+
 ## Setup Xterm title hooks
 autoload -Uz add-zsh-hook
 

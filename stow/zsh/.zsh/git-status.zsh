@@ -1,6 +1,6 @@
 # Simple Zsh prompt with Git status.
 
-local GITSTATUS_DIR=$HOME/.zsh/git-status
+local GITSTATUS_DIR=$HOME/.zsh/plugins/git-status
 
 # Check if directory exists
 if [ ! -d $GITSTATUS_DIR ]; then
