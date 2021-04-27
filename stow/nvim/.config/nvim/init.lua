@@ -1,10 +1,3 @@
---     _       _ _     _             
---    (_)_ __ (_) |_  | |_   _  __ _ 
---    | | '_ \| | __| | | | | |/ _` |
---    | | | | | | |_ _| | |_| | (_| |
---    |_|_| |_|_|\__(_)_|\__,_|\__,_|
---
-
 
 -- Install packer if not already installed
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -45,7 +38,7 @@ require('packer').startup(function()
     use 'kabouzeid/nvim-lspinstall'
     -- Treesitter highlighting
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    -- Color previews for commands
+    -- Show the colors for color codes
     use 'norcalli/nvim-colorizer.lua'
 end)
 
