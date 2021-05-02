@@ -96,6 +96,14 @@ if [[ -r /etc/grc.zsh ]]; then
 fi
 ## Cat/Bat Colors
 if [ -x "$(command -v bat)" ]; then
+    BAT_CONFIG_DIR="$(bat --config-dir)/themes"
+    if [ ! -f "$BAT_CONFIG_DIR/Enki-Tokyo-Night.tmTheme" ]; then
+        mkdir -p "$BAT_CONFIG_DIR"
+        curl "https://raw.githubusercontent.com/enkia/enki-theme/master/scheme/Enki-Tokyo-Night.tmTheme" \
+            -o "$BAT_CONFIG_DIR/Enki-Tokyo-Night.tmTheme"
+        \bat cache --build
+    fi
+    unset BAT_CONFIG_DIR
     alias bat='bat --theme Enki-Tokyo-Night --style header,changes,numbers'
     alias cat='bat -pp'
 fi
