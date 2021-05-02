@@ -56,7 +56,7 @@ vim.g.gitgutter_map_keys = 0
 
 -- Indent blankline
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
-
+vim.g.indent_blankline_show_trailing_blankline_indent = false
 
 -- Web devicons
 require'nvim-web-devicons'.setup {
@@ -78,7 +78,7 @@ require'nvim-treesitter.configs'.setup {
     ensure_installed = "maintained",
     highlight = {
         enable = true
-    }
+    },
 }
 
 
