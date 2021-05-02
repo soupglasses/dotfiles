@@ -87,6 +87,8 @@ fi
 # --- Colors ---
 ## File Colors
 source $HOME/.dircolors
+## Color tab completion
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ## GRC Coloration
 if [[ -r /etc/grc.zsh ]]; then
     source /etc/grc.zsh
@@ -94,7 +96,7 @@ if [[ -r /etc/grc.zsh ]]; then
 fi
 ## Cat/Bat Colors
 if [ -x "$(command -v bat)" ]; then
-    alias bat='bat --theme TwoDark'
+    alias bat='bat --theme Enki-Tokyo-Night --style header,changes,numbers'
     alias cat='bat -pp'
 fi
 ## Generic Commands
@@ -112,6 +114,7 @@ alias svim='sudoedit'
 alias ipinfo='ip -breif -color address'
 alias ping='ping -c 5'
 alias fastcopy='rsync -ah --info=progress2'
+alias ssh-copy='rsync -ah --info=progress2'
 alias rm='rm -i'
 alias clear='clear -x'
 ## Shorthands
