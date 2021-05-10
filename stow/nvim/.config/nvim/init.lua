@@ -35,13 +35,14 @@ require('packer').startup(function()
     -- Collection of configurations for the built-in LSP client
     use 'neovim/nvim-lspconfig'
     -- Easy install of language servers
-    -- use 'kabouzeid/nvim-lspinstall'
+    -- use 'kabouzeid/nvim-lspinstall'  -- Disabled due to segfault issues
     -- Auto completion plugin
     use 'hrsh7th/nvim-compe'
     -- Treesitter highlighting
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     -- Show the colors for color codes
     use 'norcalli/nvim-colorizer.lua'
+    use 'thinca/vim-quickrun'
 end)
 
 
@@ -74,7 +75,6 @@ require('lualine').setup {
     }
 }
 
-
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
     ensure_installed = "maintained",
@@ -82,7 +82,6 @@ require'nvim-treesitter.configs'.setup {
         enable = true
     },
 }
-
 
 -- Colorizer
 require 'colorizer'.setup {
@@ -95,10 +94,13 @@ require 'colorizer'.setup {
     }
 }
 
--- LSPInstall
--- require'lspinstall'.setup()
+-- QuickRun
+vim.api.nvim_set_keymap('n', '<F2>', ':QuickRun<CR>', { noremap=true, silent=true })
 
 -- LSP
+-- -- LSPInstall
+-- require'lspinstall'.setup()
+-- -- LSP Config
 local nvim_lsp = require('lspconfig')
 local on_attach = function(_client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -121,9 +123,9 @@ local on_attach = function(_client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
+-- -- LSP Python
 nvim_lsp.pyright.setup{
-    cmd = { ".npm-global/bin/pyright-langserver", "--stdio" },
-    filetypes = { "python" },
+    cmd = { "/home/sofi/.npm-global/bin/pyright-langserver", "--stdio" },
     on_attach = on_attach,
     settings = {
         python = {
@@ -131,22 +133,31 @@ nvim_lsp.pyright.setup{
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
                 diagnosticSeverityOverrides = {
-                    reportUnusedImport = "warning"
                 }
             }
         }
+    },
+    handlers = {
+        ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+            virtual_text = false,
+            signs = true,
+            underline = true,
+            update_in_insert = false
+        })
     }
 }
+
 -- -- Enable language servers
 -- local servers = require'lspinstall'.installed_servers()
 -- for _, lsp in ipairs(servers) do
 --     config = { on_attach = on_attach }
 --     nvim_lsp[lsp].setup(config)
 -- end
--- -- Map :Format to vim.lsp.buf.formatting()
+
+-- -- LSP - Map :Format to vim.lsp.buf.formatting()
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 
--- Compe
+-- -- LSP Compe
 vim.o.completeopt = "menuone,noselect"
 require'compe'.setup {
     enabled = true;
@@ -172,7 +183,7 @@ require'compe'.setup {
         ultisnips = false;
     };
 }
--- -- Set up default shortcuts
+-- -- -- Set up default shortcuts
     local opts = { silent=true, expr=true }
     vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-CR>', 'compe#complete()', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'i', '<CR>', 'compe#confirm("<CR>")', opts)
@@ -180,7 +191,7 @@ require'compe'.setup {
     vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-f>', 'compe#scroll({ "delta": +4 })', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-d>', 'compe#scroll({ "delta": -4 })', opts)
 
--- -- Navigate completion menu
+-- -- -- Navigate completion menu
     local t = function(str)
       return vim.api.nvim_replace_termcodes(str, true, true, true)
     end
@@ -193,10 +204,6 @@ require'compe'.setup {
             return false
         end
     end
- 
-    -- Use (s-)tab to:
-    --- move to prev/next item in completion menuone
-    --- jump to prev/next snippet's placeholder
     _G.tab_complete = function()
       if vim.fn.pumvisible() == 1 then
         return t "<C-n>"
