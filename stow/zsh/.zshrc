@@ -5,7 +5,9 @@
 # --- Basic Setup ---
 unsetopt autocd beep extendedglob
 bindkey -e
-EDITOR=nvim
+export EDITOR=nvim
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONBREAKPOINT=ipdb.set_trace
 
 
 # --- History ---
@@ -82,6 +84,10 @@ fi
 if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
     export PATH="$PATH:$HOME/.local/bin"
 fi
+## Rust bin
+if ! [[ "$PATH" =~ "$HOME/.cargo/bin:" ]]; then
+    export PATH = "$PATH:$HOME/.cargo/bin"
+fi
 
 
 # --- Colors ---
@@ -90,10 +96,10 @@ source $HOME/.dircolors
 ## Color tab completion
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ## GRC Coloration
-if [[ -r /etc/grc.zsh ]]; then
-    source /etc/grc.zsh
-    unalias ls make
-fi
+#if [[ -r /etc/grc.zsh ]]; then
+#    source /etc/grc.zsh
+#    unalias ls make gcc
+#fi
 ## Cat/Bat Colors
 if [ -x "$(command -v bat)" ]; then
     BAT_CONFIG_DIR="$(bat --config-dir)/themes"
