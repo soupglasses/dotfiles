@@ -1,4 +1,3 @@
-
 -- Install packer if not already installed
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -49,12 +48,13 @@ end)
 -- Colorscheme
 vim.o.termguicolors = true
 vim.g.tokyonight_style = 'storm'
-vim.g.tokyonight_sidebars = { "quickfix", "__vista__" }
+vim.g.tokyonight_sidebars = { "quickfix", "quickrun", "qf", "vista_kind", "terminal", "packer" }
 vim.cmd 'colorscheme tokyonight'
 
 
 -- Gitgutter
 vim.g.gitgutter_map_keys = 0
+vim.g.gitgutter_sign_priority = 1 
 
 
 -- Indent blankline
@@ -95,13 +95,17 @@ require 'colorizer'.setup {
 }
 
 -- QuickRun
-vim.api.nvim_set_keymap('n', '<F2>', ':QuickRun<CR>', { noremap=true, silent=true })
+vim.g.quickrun_config = {}
+
+vim.api.nvim_set_keymap('n', '<F2>', ':QuickRun -mode n<CR>', { noremap=true, silent=true })
+vim.api.nvim_set_keymap('v', '<F2>', ':QuickRun -mode v<CR>', { noremap=true, silent=true })
 
 -- LSP
 -- -- LSPInstall
 -- require'lspinstall'.setup()
 -- -- LSP Config
 local nvim_lsp = require('lspconfig')
+local lspconfig = require'lspconfig'
 local on_attach = function(_client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -124,27 +128,37 @@ local on_attach = function(_client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 -- -- LSP Python
+local root_files = {
+  'setup.py',
+  'pyproject.toml',
+  'setup.cfg',
+  'requirements.txt',
+  '.git',
+}
+
 nvim_lsp.pyright.setup{
     cmd = { "/home/sofi/.npm-global/bin/pyright-langserver", "--stdio" },
     on_attach = on_attach,
+    root_dir = function(filename)
+          return lspconfig.util.root_pattern(unpack(root_files))(filename) or
+                 lspconfig.util.path.dirname(filename)
+        end;
     settings = {
         python = {
             analysis = {
                 autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
-                diagnosticSeverityOverrides = {
-                }
+                useLibraryCodeForTypes = true
             }
         }
     },
-    handlers = {
-        ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-            virtual_text = false,
-            signs = true,
-            underline = true,
-            update_in_insert = false
-        })
-    }
+   handlers = {
+       ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+           virtual_text = false,
+           signs = true,
+           underline = true,
+           update_in_insert = false
+       })
+   }
 }
 
 -- -- Enable language servers
@@ -183,7 +197,7 @@ require'compe'.setup {
         ultisnips = false;
     };
 }
--- -- -- Set up default shortcuts
+-- -- Set up default shortcuts
     local opts = { silent=true, expr=true }
     vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-CR>', 'compe#complete()', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'i', '<CR>', 'compe#confirm("<CR>")', opts)
@@ -191,7 +205,7 @@ require'compe'.setup {
     vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-f>', 'compe#scroll({ "delta": +4 })', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-d>', 'compe#scroll({ "delta": -4 })', opts)
 
--- -- -- Navigate completion menu
+-- -- Navigate completion menu
     local t = function(str)
       return vim.api.nvim_replace_termcodes(str, true, true, true)
     end
@@ -285,6 +299,8 @@ vim.bo.smartindent = true     -- Make indenting smart
 vim.wo.colorcolumn = "99999"
 
 -- Extras
+-- -- Run python code
+vim.cmd("autocmd filetype python nnoremap <F3> :w <bar> :vsplit term://python %<CR> i")
 -- -- Show hidden characters
 vim.o.listchars = 'nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<'
 vim.cmd('command Show set list!')
