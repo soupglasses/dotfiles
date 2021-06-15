@@ -17,7 +17,6 @@ gsettings set org.gnome.nautilus.preferences search-filter-time-type 'last_modif
 gsettings set org.gnome.desktop.input-sources mru-sources [('xkb', 'no+nodeadkeys'), ('xkb', 'us+colemak_dh')]
 gsettings set org.gnome.desktop.input-sources per-window false
 gsettings set org.gnome.desktop.input-sources sources [('xkb', 'no+nodeadkeys'), ('xkb', 'us+colemak_dh')]
-gsettings set org.gnome.desktop.input-sources xkb-options ['ctrl:swapcaps']
 
 # Keyboard settings
 gsettings set org.gnome.desktop.wm.keybindings maximize ['<Super>w']
