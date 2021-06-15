@@ -1,3 +1,3 @@
 # Neovim
 
-![Screenshot of Neovim config](https://gitlab.com/imsofi/dotfiles/stow/nvim/EXAMPLES/neovim.png)
+![Screenshot of Neovim config](https://gitlab.com/imsofi/dotfiles/-/raw/master/stow/nvim/EXAMPLES/neovim.png)
