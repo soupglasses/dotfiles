@@ -88,7 +88,7 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
 fi
 ## Rust bin
 if ! [[ "$PATH" =~ "$HOME/.cargo/bin:" ]]; then
-    export PATH = "$PATH:$HOME/.cargo/bin"
+    export PATH="$PATH:$HOME/.cargo/bin"
 fi
 
 
