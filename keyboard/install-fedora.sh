@@ -5,4 +5,6 @@ sudo dnf install -y interception-tools dual-function-keys &&
 
 sudo mkdir -p /etc/interception &&
 
-. ./apply.sh
+. ./apply.sh &&
+
+sudo systemctl enable udevmon
