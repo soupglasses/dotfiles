@@ -6,8 +6,10 @@
 unsetopt autocd beep extendedglob
 bindkey -e
 export EDITOR=nvim
+export MANPAGER='nvim +Man!'
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONBREAKPOINT=ipdb.set_trace
+export WEECHAT_HOME="$HOME/.config/weechat"
 
 
 # --- History ---

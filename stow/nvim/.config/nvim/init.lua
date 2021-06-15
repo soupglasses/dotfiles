@@ -44,10 +44,9 @@ require('packer').startup(function()
     use 'thinca/vim-quickrun'
 end)
 
-
 -- Colorscheme
 vim.o.termguicolors = true
-vim.g.tokyonight_style = 'storm'
+vim.g.tokyonight_style = 'storm' -- night / storm
 vim.g.tokyonight_sidebars = { "quickfix", "quickrun", "qf", "vista_kind", "terminal", "packer" }
 vim.cmd 'colorscheme tokyonight'
 
@@ -58,7 +57,9 @@ vim.g.gitgutter_sign_priority = 1
 
 
 -- Indent blankline
-vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
+vim.g.indent_blankline_buftype_exclude = { 'terminal', 'man', 'help', 'nofile' }
+vim.g.indent_blankline_filetype_exclude = { 'man', 'help' }
+vim.g.indent_blankline_bufname_exclude = { 'man', 'help' }
 vim.g.indent_blankline_show_trailing_blankline_indent = false
 
 -- Web devicons
@@ -96,13 +97,10 @@ require 'colorizer'.setup {
 
 -- QuickRun
 vim.g.quickrun_config = {}
-
 vim.api.nvim_set_keymap('n', '<F2>', ':QuickRun -mode n<CR>', { noremap=true, silent=true })
 vim.api.nvim_set_keymap('v', '<F2>', ':QuickRun -mode v<CR>', { noremap=true, silent=true })
 
 -- LSP
--- -- LSPInstall
--- require'lspinstall'.setup()
 -- -- LSP Config
 local nvim_lsp = require('lspconfig')
 local lspconfig = require'lspconfig'
@@ -127,7 +125,7 @@ local on_attach = function(_client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
--- -- LSP Python
+-- LSP Python
 local root_files = {
   'setup.py',
   'pyproject.toml',
@@ -140,8 +138,8 @@ nvim_lsp.pyright.setup{
     cmd = { "/home/sofi/.npm-global/bin/pyright-langserver", "--stdio" },
     on_attach = on_attach,
     root_dir = function(filename)
-          return lspconfig.util.root_pattern(unpack(root_files))(filename) or
-                 lspconfig.util.path.dirname(filename)
+          -- return lspconfig.util.root_pattern(unpack(root_files))(filename) or
+          return lspconfig.util.path.dirname(filename)
         end;
     settings = {
         python = {
@@ -161,8 +159,10 @@ nvim_lsp.pyright.setup{
    }
 }
 
+-- -- LSPInstall
+-- require'lspinstall'.setup()
 -- -- Enable language servers
--- local servers = require'lspinstall'.installed_servers()
+-- local servers = { 'pyright' }
 -- for _, lsp in ipairs(servers) do
 --     config = { on_attach = on_attach }
 --     nvim_lsp[lsp].setup(config)
@@ -285,6 +285,7 @@ vim.o.splitbelow = true       -- Vertical splits below the current window
 vim.o.splitright = true       -- Horizontal splits to the right of current window
 vim.o.title = true            -- Enable title
 vim.o.titlestring = [[%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)]]
+vim.o.scrolloff = 7           -- Have 5 lines of padding at top & bottom
 -- -- Window
 vim.wo.number = true          -- Show line numbers
 vim.wo.cursorline = true      -- Highlight current line
@@ -293,6 +294,7 @@ vim.wo.signcolumn='yes'       -- Always show the sign column
 vim.bo.expandtab = true       -- Convert tabs to spaces
 vim.bo.shiftwidth = 4         -- Number of spaces to indicate a tab TODO
 vim.bo.tabstop = 4            -- Number of spaces to insert for tab TODO
+vim.bo.softtabstop = 4        -- TODO
 vim.bo.smartindent = true     -- Make indenting smart
 
 -- HACK: work-around for https://github.com/lukas-reineke/indent-blankline.nvim/issues/59
