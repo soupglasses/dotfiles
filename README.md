@@ -11,7 +11,7 @@ git clone https://gitlab.com/imsofi/dotfiles/ ~/.dotfiles
 cd ~/.dotfiles/stow
 ```
 
-Then you can use `stow --verbose --stow --ignore=README.md --ignore=EXAMPLES --target=$HOME $FOLDER` to install any of them.
+Then you can use `stow --verbose --stow --target=$HOME $FOLDER` to install any of them.
 
 ## Removing Stow Files
 
