@@ -46,7 +46,7 @@ end)
 
 -- Colorscheme
 vim.o.termguicolors = true
-vim.g.tokyonight_style = 'storm' -- night / storm
+vim.g.tokyonight_style = 'night' -- night / storm
 vim.g.tokyonight_sidebars = { "quickfix", "quickrun", "qf", "vista_kind", "terminal", "packer" }
 vim.cmd 'colorscheme tokyonight'
 
