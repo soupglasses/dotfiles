@@ -270,6 +270,7 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
 
 -- Vim options
 -- -- Global
+vim.o.undofile = true         -- Persistent undo history
 vim.o.laststatus = 2          -- Always show the statusline
 vim.o.showmode = false        -- Disable the `-- INSERT --`
 vim.o.hlsearch = true         -- Highlight all matches
