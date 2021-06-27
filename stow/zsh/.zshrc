@@ -9,6 +9,7 @@ export EDITOR=nvim
 export MANPAGER='nvim +Man!'
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONBREAKPOINT=ipdb.set_trace
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 export WEECHAT_HOME="$HOME/.config/weechat"
 
 
@@ -34,11 +35,11 @@ compinit
 
 # --- Prompt ---
 ## Prompt
-PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f %(?..%F{red}E%? )%# '
+PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~) %(?..%F{red}E%? )%f%# '
 ## Git integration
 if [ -x "$(command -v git)" ]; then
     source ~/.zsh/git-status.zsh
-    PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f ${GITSTATUS_PROMPT}${GITSTATUS_PROMPT:+ }%(?..%F{red}E%? )%f%# '
+    PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f ${GITSTATUS_PROMPT}${GITSTATUS_PROMPT:+ }${VIRTUAL_ENV:+"%F{magenta}env "}%(?..%F{red}E%? )%f%# '
 fi
 ## Setup Xterm title hooks
 autoload -Uz add-zsh-hook
