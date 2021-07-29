@@ -139,6 +139,7 @@ alias c='clear'
 alias q='exit'
 alias py='python'
 alias ipy='ipython'
+alias lg='lazygit'
 
 
 # --- Other Setup ---

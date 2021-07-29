@@ -30,11 +30,11 @@ require('packer').startup(function()
     -- Git diffs in the sign column
     use 'airblade/vim-gitgutter'
     -- Add indentation guides
-    use { 'lukas-reineke/indent-blankline.nvim', branch="lua" }
+    use 'lukas-reineke/indent-blankline.nvim'
     -- Collection of configurations for the built-in LSP client
     use 'neovim/nvim-lspconfig'
     -- Easy install of language servers
-    -- use 'kabouzeid/nvim-lspinstall'  -- Disabled due to segfault issues
+    use 'kabouzeid/nvim-lspinstall'
     -- Auto completion plugin
     use 'hrsh7th/nvim-compe'
     -- Treesitter highlighting
@@ -42,6 +42,8 @@ require('packer').startup(function()
     -- Show the colors for color codes
     use 'norcalli/nvim-colorizer.lua'
     use 'thinca/vim-quickrun'
+    -- Git blame
+    use 'f-person/git-blame.nvim'
 end)
 
 -- Colorscheme
@@ -54,6 +56,14 @@ vim.cmd 'colorscheme tokyonight'
 -- Gitgutter
 vim.g.gitgutter_map_keys = 0
 vim.g.gitgutter_sign_priority = 1 
+
+
+-- Git blamer
+vim.g.gitblame_enabled = 0
+vim.g.gitblame_date_format = '%r'
+vim.g.gitblame_message_template = '    <author> - <date> - <summary>'
+vim.g.gitblame_highlight_group = "Question"
+vim.cmd("command! Blame GitBlameToggle")
 
 
 -- Indent blankline
@@ -70,6 +80,9 @@ require'nvim-web-devicons'.setup {
 -- Lualine
 require('lualine').setup {
     options = {
+        -- Fix for https://github.com/kabouzeid/nvim-lspinstall/issues/39
+        disabled_filetypes = {'toggleterm', 'terminal'},
+        -- 
         section_separators = '',
         component_separators = '',
         theme = 'tokyonight'
@@ -78,7 +91,7 @@ require('lualine').setup {
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = "maintained",
+    ensure_installed = "all",
     highlight = {
         enable = true
     },
@@ -138,8 +151,7 @@ nvim_lsp.pyright.setup{
     cmd = { "/home/sofi/.npm-global/bin/pyright-langserver", "--stdio" },
     on_attach = on_attach,
     root_dir = function(filename)
-          -- return lspconfig.util.root_pattern(unpack(root_files))(filename) or
-          return lspconfig.util.path.dirname(filename)
+           return lspconfig.util.root_pattern(unpack(root_files))(filename) or lspconfig.util.path.dirname(filename)
         end;
     settings = {
         python = {
@@ -160,9 +172,9 @@ nvim_lsp.pyright.setup{
 }
 
 -- -- LSPInstall
--- require'lspinstall'.setup()
--- -- Enable language servers
--- local servers = { 'pyright' }
+require'lspinstall'.setup()
+-- Enable language servers
+-- local servers = {}
 -- for _, lsp in ipairs(servers) do
 --     config = { on_attach = on_attach }
 --     nvim_lsp[lsp].setup(config)
@@ -302,6 +314,22 @@ vim.bo.smartindent = true     -- Make indenting smart
 vim.wo.colorcolumn = "99999"
 
 -- Extras
+-- -- Toggle Line80
+vim.api.nvim_exec([[
+let g:line80=0
+function! ToggleLine80()
+    if g:line80
+        set colorcolumn=0 
+        let g:line80=0
+    else
+        set colorcolumn=80
+        let g:line80=1
+    endif
+endfunction
+command Line80 :call ToggleLine80()
+]], false)
+-- -- Set Colorcolumn for git commits
+vim.cmd("autocmd filetype gitcommit set colorcolumn=72")
 -- -- Run python code
 vim.cmd("autocmd filetype python nnoremap <F3> :w <bar> :vsplit term://python %<CR> i")
 -- -- Show hidden characters
