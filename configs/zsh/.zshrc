@@ -11,12 +11,14 @@ export PYTHONDONTWRITEBYTECODE=1
 export PYTHONBREAKPOINT=ipdb.set_trace
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export WEECHAT_HOME="$HOME/.config/weechat"
+export VAGRANT_DEFAULT_PROVIDER=virtualbox
+export TERM=xterm-256color
 
 
 # --- History ---
 HISTFILE=~/.zsh_histfile
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=100_000
+SAVEHIST=100_000
 setopt share_history append_history inc_append_history extended_history
 setopt hist_ignore_dups hist_reduce_blanks hist_verify 
 ## Arrow bindings
@@ -84,12 +86,16 @@ if [ -x "$(command -v fzf)" ]; then
     '
 fi
 ## Userland bin
-if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
+if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
     export PATH="$PATH:$HOME/.local/bin"
 fi
 ## Rust bin
-if ! [[ "$PATH" =~ "$HOME/.cargo/bin:" ]]; then
+if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]; then
     export PATH="$PATH:$HOME/.cargo/bin"
+fi
+## Dotnet bin
+if ! [[ "$PATH" =~ "$HOME/.dotnet/tools" ]]; then
+    export PATH="$PATH:/home/sofi/.dotnet/tools"
 fi
 
 
@@ -98,11 +104,6 @@ fi
 source $HOME/.dircolors
 ## Color tab completion
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-## GRC Coloration
-#if [[ -r /etc/grc.zsh ]]; then
-#    source /etc/grc.zsh
-#    unalias ls make gcc
-#fi
 ## Cat/Bat Colors
 if [ -x "$(command -v bat)" ]; then
     BAT_CONFIG_DIR="$(bat --config-dir)/themes"
@@ -130,16 +131,22 @@ alias svim='sudoedit'
 ## QoL
 alias ipinfo='ip -breif -color address'
 alias ping='ping -c 5'
-alias fastcopy='rsync -ah --info=progress2'
 alias ssh-copy='rsync -ah --info=progress2'
 alias rm='rm -i'
 alias clear='clear -x'
 ## Shorthands
+alias clip='xclip -sel clip'
 alias c='clear'
 alias q='exit'
 alias py='python'
 alias ipy='ipython'
 alias lg='lazygit'
+## Multi-dot expansion
+## TODO: Figure out a programatic method to do this
+##       that also doesnt break fasd.
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
 
 
 # --- Other Setup ---
