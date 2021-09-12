@@ -12,3 +12,7 @@ mangement scripts to help install/remove them.
 This is my custom keyboard remapping solution. It allows me to rebind keys on any
 linux laptop. An example is turning Capslock into both an ESC and a CTRL key at
 the same time.
+
+## setup/
+
+My Ansible scripts for configuring new installs of my computer.
