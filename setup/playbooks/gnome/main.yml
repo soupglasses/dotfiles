@@ -1,0 +1,72 @@
+---
+- hosts: localhost
+
+  tasks:
+  - name: Set window button layout
+    community.general.dconf:
+      key: "/org/gnome/desktop/wm/preferences/button-layout"
+      value: "'appmenu:minimize,maximize,close'"
+
+  - name: Set mouse acceleration profile to flat
+    community.general.dconf:
+      key: "/org/gnome/desktop/peripherals/mouse/accel-profile"
+      value: "'flat'"
+
+  - name: Set clock format to 12h
+    community.general.dconf:
+      key: "/org/gnome/desktop/interface/clock-format"
+      value: "'12h'"
+      
+  - name: Set weekday to true
+    community.general.dconf:
+      key: "/org/gnome/desktop/interface/clock-show-weekday"
+      value: "true"
+
+  - name: Set calendar to show weekdates
+    community.general.dconf:
+      key: "/org/gnome/desktop/calendar/show-weekdate"
+      value: "true"
+
+  - name: Set dark theme
+    community.general.dconf:
+      key: "/org/gnome/desktop/interface/gtk-theme"
+      value: "'Adwaita-dark'"
+
+  - name: Set nautilus search preferences
+    community.general.dconf:
+      key: "/org/gnome/nautilus/preferences/search-filter-time-type"
+      value: "'last_modified'"
+
+  - name: Set default keyboard layouts
+    community.general.dconf:
+      key: "/org/gnome/desktop/input-sources/sources"
+      value: "[('xkb', 'no+nodeadkeys'), ('xkb', 'us+colemak_dh')]"
+
+  - name: Window manager keybindings
+    community.general.dconf:
+      key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+      value: "{{ item.value }}"
+    with_items:
+      - { key: "maximize",                      value: "['<Super>w']" }
+      - { key: "unmaximize",                    value: "['<Super>s']" }
+      - { key: "switch-windows",                value: "['<Alt>Tab']" }
+      - { key: "switch-windows-backward",       value: "['<Shift><Alt>Tab']" }
+      - { key: "switch-applications",           value: "@as []" }
+      - { key: "switch-applications-backward",  value: "@as []" }
+
+  - name: Mutter keybindings
+    community.general.dconf:
+      key: "/org/gnome/mutter/keybindings/{{ item.key }}"
+      value: "{{ item.value }}"
+    with_items:
+      - { key: "toggle-tiled-left",   value: "['<Super>a']" }
+      - { key: "toggle-tiled-right",  value: "['<Super>d']" }
+
+  - name: Shell keybindings
+    community.general.dconf:
+      key: "/org/gnome/shell/keybindings/{{ item.key }}"
+      value: "{{ item.value }}"
+    with_items:
+      - { key: "toggle-application-view",  value: "@as []" }
+      - { key: "toggle-overview",          value: "@as []" }
+

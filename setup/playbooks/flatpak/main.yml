@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  connection: local
+
+  tasks:
+  - name: Install Flatpaks
+    community.general.flatpak:
+      name:
+        - chat.delta.desktop
+        - com.github.tchx84.Flatseal
+        - com.spotify.Client
+        - org.signal.Signal
+        - io.freetubeapp.FreeTube
+        - com.belmoussaoui.Obfuscate

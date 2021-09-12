@@ -1,0 +1,6 @@
+---
+- import_playbook: playbooks/fedora/main.yml
+- import_playbook: playbooks/dnf/main.yml
+- import_playbook: playbooks/flatpak/main.yml
+- import_playbook: playbooks/gnome/main.yml
+- import_playbook: playbooks/nvim/main.yml
