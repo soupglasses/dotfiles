@@ -45,7 +45,7 @@
   - name: Window manager keybindings
     community.general.dconf:
       key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
-      value: "{{ item.value }}"
+      value: "{{ item.value | string }}"
     with_items:
       - { key: "maximize",                      value: "['<Super>w']" }
       - { key: "unmaximize",                    value: "['<Super>s']" }
@@ -57,7 +57,7 @@
   - name: Mutter keybindings
     community.general.dconf:
       key: "/org/gnome/mutter/keybindings/{{ item.key }}"
-      value: "{{ item.value }}"
+      value: "{{ item.value | string }}"
     with_items:
       - { key: "toggle-tiled-left",   value: "['<Super>a']" }
       - { key: "toggle-tiled-right",  value: "['<Super>d']" }
@@ -65,7 +65,7 @@
   - name: Shell keybindings
     community.general.dconf:
       key: "/org/gnome/shell/keybindings/{{ item.key }}"
-      value: "{{ item.value }}"
+      value: "{{ item.value | string }}"
     with_items:
       - { key: "toggle-application-view",  value: "@as []" }
       - { key: "toggle-overview",          value: "@as []" }
