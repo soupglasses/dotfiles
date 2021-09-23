@@ -40,7 +40,6 @@ require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   -- Show the colors for color codes
   use 'norcalli/nvim-colorizer.lua'
-  use 'thinca/vim-quickrun'
   -- Git blame
   use 'f-person/git-blame.nvim'
   -- Emmet
@@ -127,11 +126,6 @@ vim.g.user_emmet_update_tag = '<C-y>u'
 vim.g.user_emmet_togglecomment_key = '<C-y>/'
 vim.g.user_emmet_codepretty_key = '<C-y>c'
 
--- QuickRun
-vim.g.quickrun_config = {}
-vim.api.nvim_set_keymap('n', '<F2>', ':QuickRun -mode n<CR>', { noremap=true, silent=true })
-vim.api.nvim_set_keymap('v', '<F2>', ':QuickRun -mode v<CR>', { noremap=true, silent=true })
-
 -- LSP
 -- -- LSP Config
 local nvim_lsp = require('lspconfig')
@@ -209,6 +203,8 @@ require'ionide'.setup{
     debounce_text_changes = 150,
   }
 }
+
+vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>t', '<cmd>fsharp#showTooltip()<CR>', { noremap=true, silent=true })
 
 -- -- LSPInstall
 require'lspinstall'.setup()
@@ -389,7 +385,7 @@ command Line80 :call ToggleLine80()
 -- -- Set Colorcolumn for git commits
 vim.cmd("autocmd filetype gitcommit set colorcolumn=72")
 -- -- Run python code
-vim.cmd("autocmd filetype python nnoremap <F3> :w <bar> :vsplit term://python %<CR> i")
+vim.cmd("autocmd filetype python nnoremap <F3> :w <bar> :split term://python %<CR> i")
 -- -- Show hidden characters
 vim.o.listchars = 'nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<'
 vim.cmd('command Show set list!')
