@@ -1,0 +1,36 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  handlers:
+  - name: restart udevmon
+    systemd: name=udevmon.service state=restarted
+
+  tasks:
+  - name: Enable Copr for Interception Tools
+    community.general.copr:
+      host: copr.fedorainfracloud.org
+      name: fszymanski/interception-tools
+      state: enabled
+
+  - name: Install Interception Tools
+    dnf: name="interception-tools,dual-function-keys"
+
+  - name: Start and enable udevmon service
+    systemd: name=udevmon.service state=started enabled=yes
+
+  - name: Ensure interception folder exists
+    file:
+      path: /etc/interception
+      state: directory
+      mode: '0755'
+
+  - name: Copy current keyboard configurations
+    copy:
+      src: ~/.dotfiles/keyboard/configs/
+      dest: /etc/interception
+      owner: root
+      group: root
+      mode: '0644'
+    notify: restart udevmon
