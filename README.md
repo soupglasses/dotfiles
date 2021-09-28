@@ -17,7 +17,7 @@ Clone the repo to your computer, I prefer it to be located in `~/.dotfiles`.
 Which can be done with the following commands:
 
 ```bash
-git clone https://gitlab.com/imsofi/dotfiles ~/.dotfiles && \
+git clone git@git.sr.ht:~sofi/dotfiles ~/.dotfiles && \
 cd ~/.dotfiles/configs
 ```
 
