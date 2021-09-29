@@ -1,3 +1,7 @@
+-- vim:fileencoding=utf-8:ft=lua:foldmethod=marker
+
+-- Packer {{{
+-- -- Setup {{{
 -- Install packer if not already installed
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
@@ -12,9 +16,8 @@ vim.api.nvim_exec([[
     autocmd BufWritePost init.lua PackerCompile
   augroup end
 ]], false)
-
-
--- Packer setup
+-- }}}
+-- -- Install Plugins {{{
 local use = require('packer').use
 require('packer').startup(function()
   -- Package manager
@@ -53,55 +56,55 @@ require('packer').startup(function()
   -- Ansible
   use 'pearofducks/ansible-vim'
 end)
+-- -- }}}
+-- }}}
 
--- Colorscheme
+-- Configuration {{{
+-- -- Colorscheme {{{
 vim.o.termguicolors = true
 vim.g.tokyonight_style = 'night' -- night / storm
 vim.g.tokyonight_sidebars = { "quickfix", "quickrun", "qf", "vista_kind", "terminal", "packer" }
 vim.cmd 'colorscheme tokyonight'
+-- -- }}}
+-- -- Global {{{
+vim.o.undofile = true         -- Persistent undo history
+vim.o.laststatus = 2          -- Always show the statusline
+vim.o.showmode = false        -- Disable the `-- INSERT --`
+vim.o.hlsearch = true         -- Highlight all matches
+vim.o.incsearch = true        -- Show incremental matches
+vim.o.inccommand = 'nosplit'  -- Incremental live completion
+vim.o.hidden = true           -- Do not save when switching buffers
+vim.o.mouse = 'a'             -- Enable mouse mode
+vim.o.breakindent = true      -- Allow for cleanly wrapped indentation
+vim.o.ignorecase = true       -- By default ignore case on search
+vim.o.smartcase = true        -- Make search case sensetive on capital in search
+vim.o.updatetime = 300        -- Speed up update times for plugins
+vim.o.splitbelow = true       -- Vertical splits below the current window
+vim.o.splitright = true       -- Horizontal splits to the right of current window
+vim.o.title = true            -- Enable title
+vim.o.titlestring = [[%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)]]
+vim.o.scrolloff = 7           -- Have 5 lines of padding at top & bottom
+-- -- }}}
+-- -- Window {{{
+vim.wo.number = true          -- Show line numbers
+vim.wo.cursorline = true      -- Highlight current line
+vim.wo.signcolumn='yes'       -- Always show the sign column
+-- -- }}}
+-- -- Buffer {{{
+vim.bo.expandtab = true       -- Convert tabs to spaces
+vim.bo.shiftwidth = 4         -- Number of spaces to indicate a tab
+vim.bo.tabstop = 4            -- Number of spaces to insert for tab
+vim.bo.softtabstop = 4        -- Number of spaces for soft tabs
+vim.bo.smartindent = true     -- Make indenting smart
+-- -- }}}
+-- -- File spessific {{{
+vim.cmd "autocmd FileType html setlocal ts=2 sw=2 sts=2"
+vim.cmd "autocmd FileType lua setlocal ts=2 sw=2 sts=2"
+-- -- }}}
+-- }}}
 
--- Gitgutter
-vim.g.gitgutter_map_keys = 0
-vim.g.gitgutter_sign_priority = 1
-
--- Git blamer
-vim.g.gitblame_enabled = 0
-vim.g.gitblame_date_format = '%r'
-vim.g.gitblame_message_template = '    <author> - <date> - <summary>'
-vim.g.gitblame_highlight_group = "Question"
-vim.cmd("command! Blame GitBlameToggle")
-
--- Indent blankline
-vim.g.indent_blankline_buftype_exclude = { 'terminal', 'man', 'help', 'nofile' }
-vim.g.indent_blankline_filetype_exclude = { 'man', 'help' }
-vim.g.indent_blankline_bufname_exclude = { 'man', 'help' }
-vim.g.indent_blankline_show_trailing_blankline_indent = false
-
--- Web devicons
-require'nvim-web-devicons'.setup {
-  default = true;
-}
-
--- Lualine
-require('lualine').setup {
-  options = {
-    -- Fix for https://github.com/kabouzeid/nvim-lspinstall/issues/39
-    disabled_filetypes = {'toggleterm', 'terminal'},
-    section_separators = '',
-    component_separators = '',
-    theme = 'tokyonight'
-  }
-}
-
--- Treesitter
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
-  highlight = {
-    enable = true
-  },
-}
-
--- Colorizer
+-- Plugin Configuration {{{
+-- Colorizer {{{
 require 'colorizer'.setup {
   'css',
   'scss',
@@ -111,23 +114,67 @@ require 'colorizer'.setup {
     mode = 'foreground'
   }
 }
-
-vim.cmd [[
-augroup filetypedetect
-  au BufRead,BufNewFile Vagrantfile setfiletype ruby
-augroup END
-]]
-
--- Emmet
+-- }}}
+-- Emmet {{{
 vim.g.user_emmet_mode = 'inv'
 vim.g.user_emmet_expandabbr_key = '<C-y>,'
 vim.g.user_emmet_expandword_key = '<C-y;'
 vim.g.user_emmet_update_tag = '<C-y>u'
 vim.g.user_emmet_togglecomment_key = '<C-y>/'
 vim.g.user_emmet_codepretty_key = '<C-y>c'
+-- }}}
+-- Git blame {{{
+vim.g.gitblame_enabled = 0
+vim.g.gitblame_date_format = '%r'
+vim.g.gitblame_message_template = '    <author> - <date> - <summary>'
+vim.g.gitblame_highlight_group = "Question"
+vim.cmd("command! Blame GitBlameToggle")
+-- }}}
+-- Gitgutter {{{
+vim.g.gitgutter_map_keys = 0
+vim.g.gitgutter_sign_priority = 1
+-- }}}
+-- Indent blankline {{{
+vim.g.indent_blankline_buftype_exclude = { 'terminal', 'man', 'help', 'nofile' }
+vim.g.indent_blankline_filetype_exclude = { 'man', 'help' }
+vim.g.indent_blankline_bufname_exclude = { 'man', 'help' }
+vim.g.indent_blankline_show_trailing_blankline_indent = false
+-- }}}
+-- Lualine {{{
+require('lualine').setup {
+  options = {
+    -- Fix for https://github.com/kabouzeid/nvim-lspinstall/issues/39
+    disabled_filetypes = {'toggleterm', 'terminal'},
+    section_separators = '',
+    component_separators = '',
+    theme = 'tokyonight'
+  }
+}
+-- }}}
+-- Treesitter {{{
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all",
+  highlight = {
+    enable = true
+  },
+}
+-- }}}
+-- Vagrant {{{
+vim.cmd [[
+augroup filetypedetect
+  au BufRead,BufNewFile Vagrantfile setfiletype ruby
+augroup END
+]]
+-- }}}
+-- Web devicons {{{
+require'nvim-web-devicons'.setup {
+  default = true;
+}
+-- }}}
+-- }}}
 
--- LSP
--- -- LSP Config
+-- LSP {{{
+-- -- LSP Config {{{
 local nvim_lsp = require('lspconfig')
 local lspconfig = require'lspconfig'
 local on_attach = function(_client, bufnr)
@@ -151,7 +198,8 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
-
+-- -- }}}
+-- -- Python Settings {{{
 local py_settings = {
   analysis = {
     autoSearchPaths = true,
@@ -166,8 +214,8 @@ local py_settings = {
 --         update_in_insert = false
 --     })
 -- }
-
--- Configure lua language server for neovim development
+-- -- }}}
+-- -- Lua Settings {{{
 local lua_settings = {
   Lua = {
     runtime = {
@@ -188,12 +236,13 @@ local lua_settings = {
     },
   }
 }
-
+-- -- }}}
+-- -- Yaml Settings {{{
 local yaml_settings = {
   filetypes = { "yaml", }
 }
-
--- Fsharp config
+-- -- }}}
+-- -- Fsharp Settings {{{
 vim.g["fsharp#fsautocomplete_command"] = { 'dotnet', 'fsautocomplete', '--background-service-enabled' }
 vim.g["fsharp#lsp_auto_setup"] = 0
 
@@ -205,8 +254,8 @@ require'ionide'.setup{
 }
 
 vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>t', '<cmd>fsharp#showTooltip()<CR>', { noremap=true, silent=true })
-
--- -- LSPInstall
+-- -- }}}
+-- -- LSP Install {{{
 require'lspinstall'.setup()
 -- Enable language servers
 local servers = { "bash", "python", "lua" }
@@ -229,11 +278,11 @@ for _, server in ipairs(servers) do
   end
   nvim_lsp[server].setup(config)
 end
-
--- -- LSP - Map :Format to vim.lsp.buf.formatting()
+-- -- }}}
+-- -- :Format to vim.lsp.buf.formatting() {{{
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
-
--- -- LSP Compe
+-- -- }}}
+-- -- LSP Compe {{{
 vim.o.completeopt = "menuone,noselect"
 require'compe'.setup {
   enabled = true;
@@ -259,15 +308,16 @@ require'compe'.setup {
     ultisnips = false;
   };
 }
--- -- Set up default shortcuts
+-- -- -- Set up default shortcuts {{{
   local opts = { silent=true, expr=true }
   vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-CR>', 'compe#complete()', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'i', '<CR>', 'compe#confirm("<CR>")', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-e>', 'compe#close("<C-e>")', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-f>', 'compe#scroll({ "delta": +4 })', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-d>', 'compe#scroll({ "delta": -4 })', opts)
+-- -- -- }}}
 
--- -- Navigate completion menu
+-- -- -- Navigate completion menu {{{
   local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
@@ -301,20 +351,25 @@ require'compe'.setup {
   vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
   vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
   vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- -- -- }}}
+-- -- }}}
+-- }}}
 
-
--- Configuration
--- -- Remap space as leader key
+-- Keyboard Mapping {{{
+-- -- Remap space to leader {{{
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
--- -- Clear search
+-- -- }}}
+-- -- Clear search {{{
 vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', { noremap = true, silent = true })
--- -- Switch buffers
+-- -- }}}
+-- -- Switch buffers {{{
 vim.api.nvim_set_keymap('n', '<C-l>', ':bnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-h>', ':bprevious<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>q', ':Bdelete<CR>', { noremap = true })
--- -- ALT+{h,j,k,l} to navigate windows
+-- -- }}}
+-- -- ALT+{h,j,k,l} to navigate windows {{{
 vim.api.nvim_set_keymap('t', '<A-h>', '<C-\\><C-N><C-w>h', { noremap = true })
 vim.api.nvim_set_keymap('t', '<A-j>', '<C-\\><C-N><C-w>j', { noremap = true })
 vim.api.nvim_set_keymap('t', '<A-k>', '<C-\\><C-N><C-w>k', { noremap = true })
@@ -327,48 +382,14 @@ vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>h', { noremap = true })
 vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>j', { noremap = true })
 vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>k', { noremap = true })
 vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>l', { noremap = true })
--- -- Terminal allow ESC to exit
+-- -- }}}
+-- -- Terminal allow ESC to exit {{{
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
+-- -- }}}
+-- }}}
 
--- Vim options
--- -- Global
-vim.o.undofile = true         -- Persistent undo history
-vim.o.laststatus = 2          -- Always show the statusline
-vim.o.showmode = false        -- Disable the `-- INSERT --`
-vim.o.hlsearch = true         -- Highlight all matches
-vim.o.incsearch = true        -- Show incremental matches
-vim.o.inccommand = 'nosplit'  -- Incremental live completion
-vim.o.hidden = true           -- Do not save when switching buffers
-vim.o.mouse = 'a'             -- Enable mouse mode
-vim.o.breakindent = true      -- Allow for cleanly wrapped indentation
-vim.o.ignorecase = true       -- By default ignore case on search
-vim.o.smartcase = true        -- Make search case sensetive on capital in search
-vim.o.updatetime = 300        -- Speed up update times for plugins
-vim.o.splitbelow = true       -- Vertical splits below the current window
-vim.o.splitright = true       -- Horizontal splits to the right of current window
-vim.o.title = true            -- Enable title
-vim.o.titlestring = [[%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)]]
-vim.o.scrolloff = 7           -- Have 5 lines of padding at top & bottom
--- -- Window
-vim.wo.number = true          -- Show line numbers
-vim.wo.cursorline = true      -- Highlight current line
-vim.wo.signcolumn='yes'       -- Always show the sign column
--- -- Buffer
-vim.bo.expandtab = true       -- Convert tabs to spaces
-vim.bo.shiftwidth = 4         -- Number of spaces to indicate a tab
-vim.bo.tabstop = 4            -- Number of spaces to insert for tab
-vim.bo.softtabstop = 4        -- Number of spaces for soft tabs
-vim.bo.smartindent = true     -- Make indenting smart
-
-vim.cmd "autocmd FileType html setlocal ts=2 sw=2 sts=2"
-vim.cmd "autocmd FileType lua setlocal ts=2 sw=2 sts=2"
-
-
--- HACK: work-around for https://github.com/lukas-reineke/indent-blankline.nvim/issues/59
-vim.wo.colorcolumn = "99999"
-
--- Extras
--- -- Toggle Line80
+-- Extras {{{
+-- -- Toggle Line80 {{{
 vim.api.nvim_exec([[
 let g:line80=0
 function! ToggleLine80()
@@ -382,16 +403,27 @@ function! ToggleLine80()
 endfunction
 command Line80 :call ToggleLine80()
 ]], false)
--- -- Set Colorcolumn for git commits
+-- }}}
+-- -- Set Colorcolumn for git commits {{{
 vim.cmd("autocmd filetype gitcommit set colorcolumn=72")
--- -- Run python code
+-- -- }}}
+-- -- Run python code {{{
 vim.cmd("autocmd filetype python nnoremap <F3> :w <bar> :split term://python %<CR> i")
--- -- Show hidden characters
+-- -- }}}
+-- -- Show hidden characters {{{
 vim.o.listchars = 'nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<'
 vim.cmd('command Show set list!')
--- -- Y yank until the end of line
+-- -- }}}
+-- -- Y to yank until the end of line {{{
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
--- -- Hide line numbers in terminal windows
+-- -- }}}
+-- -- Hide line numbers in terminal windows {{{
 vim.api.nvim_exec([[
   au BufEnter term://* setlocal nonumber
 ]], false)
+-- -- }}}
+-- -- Hacks {{{
+-- HACK: work-around for https://github.com/lukas-reineke/indent-blankline.nvim/issues/59
+vim.wo.colorcolumn = "99999"
+-- -- }}}
+-- }}}
