@@ -48,9 +48,7 @@ require('packer').startup(function()
   -- Emmet
   use 'mattn/emmet-vim'
   -- Fsharp
-  use {
-    'ionide/Ionide-vim'
-  }
+  use 'ionide/Ionide-vim'
   -- Nginx Highlight
   use 'chr4/nginx.vim'
   -- Ansible
@@ -104,7 +102,7 @@ vim.cmd "autocmd FileType lua setlocal ts=2 sw=2 sts=2"
 -- }}}
 
 -- Plugin Configuration {{{
--- Colorizer {{{
+-- -- Colorizer {{{
 require 'colorizer'.setup {
   'css',
   'scss',
@@ -114,33 +112,33 @@ require 'colorizer'.setup {
     mode = 'foreground'
   }
 }
--- }}}
--- Emmet {{{
+-- -- }}}
+-- -- Emmet {{{
 vim.g.user_emmet_mode = 'inv'
 vim.g.user_emmet_expandabbr_key = '<C-y>,'
 vim.g.user_emmet_expandword_key = '<C-y;'
 vim.g.user_emmet_update_tag = '<C-y>u'
 vim.g.user_emmet_togglecomment_key = '<C-y>/'
 vim.g.user_emmet_codepretty_key = '<C-y>c'
--- }}}
--- Git blame {{{
+-- -- }}}
+-- -- Git blame {{{
 vim.g.gitblame_enabled = 0
 vim.g.gitblame_date_format = '%r'
 vim.g.gitblame_message_template = '    <author> - <date> - <summary>'
 vim.g.gitblame_highlight_group = "Question"
 vim.cmd("command! Blame GitBlameToggle")
--- }}}
--- Gitgutter {{{
+-- -- }}}
+-- -- Gitgutter {{{
 vim.g.gitgutter_map_keys = 0
 vim.g.gitgutter_sign_priority = 1
--- }}}
--- Indent blankline {{{
+-- -- }}}
+-- -- Indent blankline {{{
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'man', 'help', 'nofile' }
 vim.g.indent_blankline_filetype_exclude = { 'man', 'help' }
 vim.g.indent_blankline_bufname_exclude = { 'man', 'help' }
 vim.g.indent_blankline_show_trailing_blankline_indent = false
--- }}}
--- Lualine {{{
+-- -- }}}
+-- -- Lualine {{{
 require('lualine').setup {
   options = {
     -- Fix for https://github.com/kabouzeid/nvim-lspinstall/issues/39
@@ -150,33 +148,32 @@ require('lualine').setup {
     theme = 'tokyonight'
   }
 }
--- }}}
--- Treesitter {{{
+-- -- }}}
+-- -- Treesitter {{{
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
   highlight = {
     enable = true
   },
 }
--- }}}
--- Vagrant {{{
+-- -- }}}
+-- -- Vagrant {{{
 vim.cmd [[
 augroup filetypedetect
   au BufRead,BufNewFile Vagrantfile setfiletype ruby
 augroup END
 ]]
--- }}}
--- Web devicons {{{
+-- -- }}}
+-- -- Web devicons {{{
 require'nvim-web-devicons'.setup {
   default = true;
 }
+-- -- }}}
 -- }}}
--- }}}
 
 -- LSP {{{
 -- -- LSP Config {{{
 local nvim_lsp = require('lspconfig')
-local lspconfig = require'lspconfig'
 local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
