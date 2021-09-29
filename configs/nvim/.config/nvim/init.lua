@@ -53,6 +53,10 @@ require('packer').startup(function()
   use 'chr4/nginx.vim'
   -- Ansible
   use 'pearofducks/ansible-vim'
+  -- Null ls
+  use 'jose-elias-alvarez/null-ls.nvim'
+  -- Plenary
+  use 'nvim-lua/plenary.nvim'
 end)
 -- -- }}}
 -- }}}
@@ -149,6 +153,45 @@ require('lualine').setup {
   }
 }
 -- -- }}}
+-- -- Null ls {{{
+local null_ls = require('null-ls')
+local null_ls_helpers = require('null-ls.helpers')
+
+local function fmt_on_save(client)
+    if client.resolved_capabilities.document_formatting then
+        vim.api.nvim_command('autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()')
+    end
+end
+
+local format_filetypes = { 'text', 'sh', 'bash', 'zsh', 'yaml', 'toml', 'conf', 'python' }
+
+local trim_end_of_file = {
+  method = null_ls.methods.FORMATTING,
+  filetypes = format_filetypes,
+  generator = null_ls_helpers.formatter_factory({
+    command = 'awk',
+    args = { 'NF{print s $0; s=""; next} {s=s ORS}' },
+    to_stdin = true,
+  }),
+}
+
+local null_ls_sources = {
+  -- General
+  trim_end_of_file,
+  null_ls.builtins.formatting.trim_whitespace.with(format_filetypes),
+  -- Python
+  null_ls.builtins.formatting.isort,
+  null_ls.builtins.diagnostics.pylint,
+}
+
+null_ls.config({ sources = null_ls_sources })
+
+require('lspconfig')['null-ls'].setup({
+    on_attach = function(client)
+        fmt_on_save(client)
+    end,
+})
+-- -- }}}
 -- -- Treesitter {{{
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
@@ -391,7 +434,7 @@ vim.api.nvim_exec([[
 let g:line80=0
 function! ToggleLine80()
   if g:line80
-    set colorcolumn=0 
+    set colorcolumn=0
     let g:line80=0
   else
     set colorcolumn=80
