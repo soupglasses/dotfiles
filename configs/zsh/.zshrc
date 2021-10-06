@@ -1,8 +1,7 @@
 # ~/.zshrc
-# vi: ft=zsh
+# vi: ft=zsh:foldmethod=marker
 
-
-# --- Basic Setup ---
+# --- Basic Setup --- {{{
 unsetopt autocd beep extendedglob
 bindkey -e
 export EDITOR=nvim
@@ -13,29 +12,29 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export WEECHAT_HOME="$HOME/.config/weechat"
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export TERM=xterm-256color
+# }}}
 
-
-# --- History ---
+# --- History --- {{{
 HISTFILE=~/.zsh_histfile
 HISTSIZE=100_000
 SAVEHIST=100_000
 setopt share_history append_history inc_append_history extended_history
-setopt hist_ignore_dups hist_reduce_blanks hist_verify 
+setopt hist_ignore_dups hist_reduce_blanks hist_verify
 ## Arrow bindings
 bindkey "^[[A" up-line-or-search
-bindkey "^[[B" down-line-or-search 
+bindkey "^[[B" down-line-or-search
+### }}}
 
-
-# --- Zsh Completions ---
+# --- Zsh Completions --- {{{
 zstyle :compinstall filename '/home/sofi/.zshrc'
 ## Case insensitive path-completion 
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 ## Compinstall
 autoload -Uz compinit
 compinit
+# }}}
 
-
-# --- Prompt ---
+# --- Prompt --- {{{
 ## Prompt
 PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~) %(?..%F{red}E%? )%f%# '
 ## Git integration
@@ -57,9 +56,9 @@ if [[ "$TERM" == (alacritty*|gnome*|konsole*|putty*|rxvt*|screen*|tmux*|xterm*) 
 	add-zsh-hook -Uz precmd xterm_title_precmd
 	add-zsh-hook -Uz preexec xterm_title_preexec
 fi
+# }}}
 
-
-# --- Custom Completions ---
+# --- Custom Completions --- {{{
 ## Kitty
 if [ -x "$(command -v kitty)" ]; then
     kitty + complete setup zsh | source /dev/stdin
@@ -97,9 +96,9 @@ fi
 if ! [[ "$PATH" =~ "$HOME/.dotnet/tools" ]]; then
     export PATH="$PATH:/home/sofi/.dotnet/tools"
 fi
+# }}}
 
-
-# --- Colors ---
+# --- Colors --- {{{
 ## File Colors
 source $HOME/.dircolors
 ## Color tab completion
@@ -122,9 +121,9 @@ alias ls='ls --group --color=auto'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ip='ip -color'
+# }}}
 
-
-# --- Aliases ---
+# --- Aliases --- {{{
 ## Simpler Use
 alias open='xdg-open'
 alias svim='sudoedit'
@@ -147,9 +146,9 @@ alias lg='lazygit'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
+# }}}
 
-
-# --- Other Setup ---
+# --- Other Setup --- {{{
 ## Make ls run after cd
 function cd {
     builtin cd "$@" && ls
@@ -159,3 +158,4 @@ function mkdircd {
     mkdir -p -- "$1" &&
         cd -- "$1"
 }
+# }}}
