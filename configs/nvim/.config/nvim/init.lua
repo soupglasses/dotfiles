@@ -1,4 +1,4 @@
--- vim:fileencoding=utf-8:ft=lua:foldmethod=marker
+-- vim:ft=lua:foldmethod=marker
 
 -- Packer {{{
 -- -- Setup {{{
@@ -51,12 +51,12 @@ require('packer').startup(function()
   use 'ionide/Ionide-vim'
   -- Nginx Highlight
   use 'chr4/nginx.vim'
-  -- Ansible
-  use 'pearofducks/ansible-vim'
   -- Null ls
   use 'jose-elias-alvarez/null-ls.nvim'
   -- Plenary
   use 'nvim-lua/plenary.nvim'
+  -- Telescope
+  use 'nvim-telescope/telescope.nvim'
 end)
 -- -- }}}
 -- }}}
@@ -105,112 +105,36 @@ vim.cmd "autocmd FileType lua setlocal ts=2 sw=2 sts=2"
 -- -- }}}
 -- }}}
 
--- Plugin Configuration {{{
--- -- Colorizer {{{
-require 'colorizer'.setup {
-  'css',
-  'scss',
-  'sass',
-  'javascript',
-  html = {
-    mode = 'foreground'
-  }
-}
--- -- }}}
--- -- Emmet {{{
-vim.g.user_emmet_mode = 'inv'
-vim.g.user_emmet_expandabbr_key = '<C-y>,'
-vim.g.user_emmet_expandword_key = '<C-y;'
-vim.g.user_emmet_update_tag = '<C-y>u'
-vim.g.user_emmet_togglecomment_key = '<C-y>/'
-vim.g.user_emmet_codepretty_key = '<C-y>c'
+-- Keyboard Mapping {{{
+-- -- Remap space to leader {{{
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 -- -- }}}
--- -- Git blame {{{
-vim.g.gitblame_enabled = 0
-vim.g.gitblame_date_format = '%r'
-vim.g.gitblame_message_template = '    <author> - <date> - <summary>'
-vim.g.gitblame_highlight_group = "Question"
-vim.cmd("command! Blame GitBlameToggle")
+-- -- Clear search {{{
+vim.api.nvim_set_keymap('n', '<leader>h', ':set hlsearch!<CR>', { noremap = true, silent = true })
 -- -- }}}
--- -- Gitgutter {{{
-vim.g.gitgutter_map_keys = 0
-vim.g.gitgutter_sign_priority = 1
+-- -- Switch buffers {{{
+vim.api.nvim_set_keymap('n', '<C-l>', ':bnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-h>', ':bprevious<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>q', ':Bdelete<CR>', { noremap = true })
 -- -- }}}
--- -- Indent blankline {{{
-vim.g.indent_blankline_buftype_exclude = { 'terminal', 'man', 'help', 'nofile' }
-vim.g.indent_blankline_filetype_exclude = { 'man', 'help' }
-vim.g.indent_blankline_bufname_exclude = { 'man', 'help' }
-vim.g.indent_blankline_show_trailing_blankline_indent = false
+-- -- ALT+hjkl to navigate windows {{{
+vim.api.nvim_set_keymap('t', '<A-h>', '<C-\\><C-N><C-w>h', { noremap = true })
+vim.api.nvim_set_keymap('t', '<A-j>', '<C-\\><C-N><C-w>j', { noremap = true })
+vim.api.nvim_set_keymap('t', '<A-k>', '<C-\\><C-N><C-w>k', { noremap = true })
+vim.api.nvim_set_keymap('t', '<A-l>', '<C-\\><C-N><C-w>l', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-h>', '<C-\\><C-N><C-w>h', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-j>', '<C-\\><C-N><C-w>j', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-k>', '<C-\\><C-N><C-w>k', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-l>', '<C-\\><C-N><C-w>l', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>h', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>j', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>k', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>l', { noremap = true })
 -- -- }}}
--- -- Lualine {{{
-require('lualine').setup {
-  options = {
-    -- Fix for https://github.com/kabouzeid/nvim-lspinstall/issues/39
-    disabled_filetypes = {'toggleterm', 'terminal'},
-    section_separators = '',
-    component_separators = '',
-    theme = 'tokyonight'
-  }
-}
--- -- }}}
--- -- Null ls {{{
-local null_ls = require('null-ls')
-local null_ls_helpers = require('null-ls.helpers')
-
-local function fmt_on_save(client)
-    if client.resolved_capabilities.document_formatting then
-        vim.api.nvim_command('autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()')
-    end
-end
-
-local format_filetypes = { 'text', 'sh', 'bash', 'zsh', 'yaml', 'toml', 'conf', 'python' }
-
-local trim_end_of_file = {
-  method = null_ls.methods.FORMATTING,
-  filetypes = format_filetypes,
-  generator = null_ls_helpers.formatter_factory({
-    command = 'awk',
-    args = { 'NF{print s $0; s=""; next} {s=s ORS}' },
-    to_stdin = true,
-  }),
-}
-
-local null_ls_sources = {
-  -- General
-  trim_end_of_file,
-  null_ls.builtins.formatting.trim_whitespace.with(format_filetypes),
-  -- Python
-  null_ls.builtins.formatting.isort,
-  null_ls.builtins.diagnostics.pylint,
-}
-
-null_ls.config({ sources = null_ls_sources })
-
-require('lspconfig')['null-ls'].setup({
-    on_attach = function(client)
-        fmt_on_save(client)
-    end,
-})
--- -- }}}
--- -- Treesitter {{{
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
-  highlight = {
-    enable = true
-  },
-}
--- -- }}}
--- -- Vagrant {{{
-vim.cmd [[
-augroup filetypedetect
-  au BufRead,BufNewFile Vagrantfile setfiletype ruby
-augroup END
-]]
--- -- }}}
--- -- Web devicons {{{
-require'nvim-web-devicons'.setup {
-  default = true;
-}
+-- -- Terminal allow ESC to exit {{{
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
 -- -- }}}
 -- }}}
 
@@ -395,36 +319,107 @@ require'compe'.setup {
 -- -- }}}
 -- }}}
 
--- Keyboard Mapping {{{
--- -- Remap space to leader {{{
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+-- Plugin Configuration {{{
+-- -- Colorizer {{{
+require 'colorizer'.setup {
+  'css',
+  'scss',
+  'sass',
+  'javascript',
+  html = {
+    mode = 'foreground'
+  }
+}
+-- -- }}}
+-- -- Emmet {{{
+vim.g.user_emmet_mode = 'inv'
+vim.g.user_emmet_expandabbr_key = '<C-y>,'
+vim.g.user_emmet_expandword_key = '<C-y;'
+vim.g.user_emmet_update_tag = '<C-y>u'
+vim.g.user_emmet_togglecomment_key = '<C-y>/'
+vim.g.user_emmet_codepretty_key = '<C-y>c'
 -- -- }}}
--- -- Clear search {{{
-vim.api.nvim_set_keymap('n', '<Leader>h', ':set hlsearch!<CR>', { noremap = true, silent = true })
+-- -- Git blame {{{
+vim.g.gitblame_enabled = 0
+vim.g.gitblame_date_format = '%r'
+vim.g.gitblame_message_template = '    <author> - <date> - <summary>'
+vim.g.gitblame_highlight_group = "Question"
+vim.cmd("command! Blame GitBlameToggle")
 -- -- }}}
--- -- Switch buffers {{{
-vim.api.nvim_set_keymap('n', '<C-l>', ':bnext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-h>', ':bprevious<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>q', ':Bdelete<CR>', { noremap = true })
+-- -- Gitgutter {{{
+vim.g.gitgutter_map_keys = 0
+vim.g.gitgutter_sign_priority = 1
 -- -- }}}
--- -- ALT+{h,j,k,l} to navigate windows {{{
-vim.api.nvim_set_keymap('t', '<A-h>', '<C-\\><C-N><C-w>h', { noremap = true })
-vim.api.nvim_set_keymap('t', '<A-j>', '<C-\\><C-N><C-w>j', { noremap = true })
-vim.api.nvim_set_keymap('t', '<A-k>', '<C-\\><C-N><C-w>k', { noremap = true })
-vim.api.nvim_set_keymap('t', '<A-l>', '<C-\\><C-N><C-w>l', { noremap = true })
-vim.api.nvim_set_keymap('i', '<A-h>', '<C-\\><C-N><C-w>h', { noremap = true })
-vim.api.nvim_set_keymap('i', '<A-j>', '<C-\\><C-N><C-w>j', { noremap = true })
-vim.api.nvim_set_keymap('i', '<A-k>', '<C-\\><C-N><C-w>k', { noremap = true })
-vim.api.nvim_set_keymap('i', '<A-l>', '<C-\\><C-N><C-w>l', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-h>', '<C-w>h', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-j>', '<C-w>j', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-k>', '<C-w>k', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-l>', '<C-w>l', { noremap = true })
+-- -- Indent blankline {{{
+vim.g.indent_blankline_buftype_exclude = { 'terminal', 'man', 'help', 'nofile' }
+vim.g.indent_blankline_filetype_exclude = { 'man', 'help' }
+vim.g.indent_blankline_bufname_exclude = { 'man', 'help' }
+vim.g.indent_blankline_show_trailing_blankline_indent = false
 -- -- }}}
--- -- Terminal allow ESC to exit {{{
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
+-- -- Lualine {{{
+require('lualine').setup {
+  options = {
+    -- Fix for https://github.com/kabouzeid/nvim-lspinstall/issues/39
+    disabled_filetypes = {'toggleterm', 'terminal'},
+    section_separators = '',
+    component_separators = '',
+    theme = 'tokyonight'
+  }
+}
+-- -- }}}
+-- -- Null ls {{{
+local null_ls = require('null-ls')
+
+local function format_on_save(client)
+  if client.resolved_capabilities.document_formatting then
+    vim.api.nvim_command('autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()')
+  end
+end
+
+local format_filetypes = { 'text', 'sh', 'bash', 'zsh', 'yaml', 'toml', 'conf', 'python' }
+
+local null_ls_sources = {
+  -- General
+  null_ls.builtins.formatting.trim_newlines.with(format_filetypes),
+  null_ls.builtins.formatting.trim_whitespace.with(format_filetypes),
+  -- Python
+  null_ls.builtins.formatting.isort,
+  null_ls.builtins.diagnostics.pylint,
+}
+
+null_ls.config({ sources = null_ls_sources })
+
+require('lspconfig')['null-ls'].setup({
+  on_attach = function(client)
+    format_on_save(client)
+  end,
+})
+-- -- }}}
+-- -- Telescope {{{
+vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files()<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>', { noremap = true })
+-- -- }}}
+-- -- Treesitter {{{
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all",
+  highlight = {
+    enable = true
+  },
+}
+-- -- }}}
+-- -- Vagrant {{{
+vim.cmd [[
+augroup filetypedetect
+  au BufRead,BufNewFile Vagrantfile setfiletype ruby
+augroup END
+]]
+-- -- }}}
+-- -- Web devicons {{{
+require'nvim-web-devicons'.setup {
+  default = true;
+}
 -- -- }}}
 -- }}}
 
