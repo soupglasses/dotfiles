@@ -4,6 +4,8 @@
 
 My personalized Neovim configuration.
 
+[Go back to README](README.md)
+
 ## Requirements:
 
 - Neovim >=0.5.0
