@@ -2,7 +2,7 @@
 
 # /docs/neovim.md
 
-My personalized Neovim configuration.
+My personalized code editor (Neovim) configuration.
 
 [Go back to README](README.md)
 

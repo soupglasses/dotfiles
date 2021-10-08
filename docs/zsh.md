@@ -2,7 +2,7 @@
 
 # /docs/zsh.md
 
-My personalized zsh configuration.
+My personalized shell (zsh) configuration.
 
 [Go back to README](README.md)
 
