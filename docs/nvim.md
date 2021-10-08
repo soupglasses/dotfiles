@@ -1,4 +1,6 @@
-# Neovim configuration
+![Screenshot of Neovim](images/nvim.png)
+
+# /docs/neovim.md
 
 My personalized Neovim configuration.
 
