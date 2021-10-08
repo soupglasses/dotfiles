@@ -3,21 +3,16 @@
 My own personal repo containing my dotfiles plus extras.
 
 
-## Table of contents
+## **docs/**
 
-- [Editor - Neovim](docs/nvim.md)
-- [Shell - Zsh](docs/zsh.md)
-- [Terminal - Kitty](docs/kitty.md)
+Holds program spessific READMEs.
 
-
-## Help, i cant see code in my editor!
-
-Some files under this repo are organized with [Vim Folds](https://vim.fandom.com/wiki/Folding). Vim folds allows code to be grouped into logical sections, like a `Font` fold, or a `Keyboard Shortcuts` fold. These folds will give an overview by each folds name, letting you find important sections of a file quickly.
-
-If you have not used folds in vim before, its `zR` to open all folds, `zM` to close all folds. There is also `za` to toggle individual levels of folds.
+- [Editor: neovim](docs/nvim.md)
+- [Shell: zsh](docs/zsh.md)
+- [Terminal: kitty](docs/kitty.md)
 
 
-## configs/
+## **configs/**
 
 This folder holds my configuration files, (also called dotfiles) together with
 mangement scripts to help install/remove them.
@@ -54,8 +49,14 @@ Use `stow --delete --target=$HOME $FOLDER` to remove any installed stows.
 If you used `install.sh`, you can just use `remove.sh` to do the same
 automatically.
 
+### Help, i cant see code in my editor!
 
-## keyboard/
+Some files under this repo are organized with [Vim Folds](https://vim.fandom.com/wiki/Folding). Vim folds allows code to be grouped into logical sections, like a `Font` fold, or a `Keyboard Shortcuts` fold. These folds will give an overview by each folds name, letting you find important sections of a file quickly.
+
+If you have not used folds in vim before, its `zR` to open all folds, `zM` to close all folds. There is also `za` to toggle individual levels of folds.
+
+
+## **keyboard/**
 
 This is my custom keyboard remapping solution. It allows me to rebind keys like
 Capslock to become both ESC and CTRL depending on if i hold the key down or
@@ -98,7 +99,7 @@ be per keyboard.
 After configuring to your keyboard, you can run `apply.sh` as root to install it.
 
 
-## setup/
+## **setup/**
 
 My Ansible setup scripts to configure my computer. Mainly only for my own use currently.
 
