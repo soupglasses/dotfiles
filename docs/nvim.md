@@ -4,7 +4,7 @@
 
 My personalized code editor (Neovim) configuration.
 
-[Go back to README](README.md)
+[Go back to README](../README.md)
 
 ## Requirements:
 

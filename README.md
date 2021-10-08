@@ -2,6 +2,21 @@
 
 My own personal repo containing my dotfiles plus extras.
 
+
+## Table of contents
+
+- [Editor - Neovim](docs/nvim.md)
+- [Shell - Zsh](docs/zsh.md)
+- [Terminal - Kitty](docs/kitty.md)
+
+
+## Help, i cant see code in my editor!
+
+Some files under this repo are organized with [Vim Folds](https://vim.fandom.com/wiki/Folding). Vim folds allows code to be grouped into logical sections, like a `Font` fold, or a `Keyboard Shortcuts` fold. These folds will give an overview by each folds name, letting you find important sections of a file quickly.
+
+If you have not used folds in vim before, its `zR` to open all folds, `zM` to close all folds. There is also `za` to toggle individual levels of folds.
+
+
 ## configs/
 
 This folder holds my configuration files, (also called dotfiles) together with
@@ -38,6 +53,7 @@ Use `stow --delete --target=$HOME $FOLDER` to remove any installed stows.
 
 If you used `install.sh`, you can just use `remove.sh` to do the same
 automatically.
+
 
 ## keyboard/
 
@@ -80,6 +96,7 @@ for how to find out your keyboard id/name if you want to make your configuration
 be per keyboard.
 
 After configuring to your keyboard, you can run `apply.sh` as root to install it.
+
 
 ## setup/
 

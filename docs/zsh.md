@@ -4,7 +4,7 @@
 
 My personalized shell (zsh) configuration.
 
-[Go back to README](README.md)
+[Go back to README](../README.md)
 
 ## Whats special about it?
 
