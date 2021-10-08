@@ -20,4 +20,4 @@ Some highlights of whats being used:
 
 ## Source code
 
-Main configuration file: [init.lua](/configs/nvim/.config/nvim/init.lua)
+Main configuration file: [init.lua](../configs/nvim/.config/nvim/init.lua)
