@@ -48,7 +48,7 @@ require('packer').startup(function()
   -- Emmet
   use 'mattn/emmet-vim'
   -- Fsharp
-  use 'ionide/Ionide-vim'
+  -- use 'ionide/Ionide-vim'
   -- Nginx Highlight
   use 'chr4/nginx.vim'
   -- Null ls
@@ -102,6 +102,7 @@ vim.bo.smartindent = true     -- Make indenting smart
 -- -- File spessific {{{
 vim.cmd "autocmd FileType html setlocal ts=2 sw=2 sts=2"
 vim.cmd "autocmd FileType lua setlocal ts=2 sw=2 sts=2"
+vim.cmd "autocmd FileType nix setlocal ts=2 sw=2 sts=2"
 -- -- }}}
 -- }}}
 
@@ -207,22 +208,22 @@ local yaml_settings = {
 }
 -- -- }}}
 -- -- Fsharp Settings {{{
-vim.g["fsharp#fsautocomplete_command"] = { 'dotnet', 'fsautocomplete', '--background-service-enabled' }
-vim.g["fsharp#lsp_auto_setup"] = 0
-
-require'ionide'.setup{
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  }
-}
-
-vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>t', '<cmd>fsharp#showTooltip()<CR>', { noremap=true, silent=true })
+-- vim.g["fsharp#fsautocomplete_command"] = { 'dotnet', 'fsautocomplete', '--background-service-enabled' }
+-- vim.g["fsharp#lsp_auto_setup"] = 0
+--
+-- require'ionide'.setup{
+--   on_attach = on_attach,
+--   flags = {
+--     debounce_text_changes = 150,
+--   }
+-- }
+--
+-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>t', '<cmd>fsharp#showTooltip()<CR>', { noremap=true, silent=true })
 -- -- }}}
 -- -- LSP Install {{{
 require'lspinstall'.setup()
 -- Enable language servers
-local servers = { "bash", "python", "lua" }
+local servers = { "bash", "python", "lua", "ocamllsp" } -- "erlangls"
 for _, server in ipairs(servers) do
   local config = {
     on_attach = on_attach,
@@ -376,15 +377,15 @@ local function format_on_save(client)
   end
 end
 
-local format_filetypes = { 'text', 'sh', 'bash', 'zsh', 'yaml', 'toml', 'conf', 'python' }
+local format_filetypes = { 'sh', 'bash', 'zsh', 'yaml', 'toml', 'conf', 'python' }
 
 local null_ls_sources = {
   -- General
-  null_ls.builtins.formatting.trim_newlines.with(format_filetypes),
-  null_ls.builtins.formatting.trim_whitespace.with(format_filetypes),
+--  null_ls.builtins.formatting.trim_newlines.with(format_filetypes),
+--  null_ls.builtins.formatting.trim_whitespace.with(format_filetypes),
   -- Python
-  null_ls.builtins.formatting.isort,
-  null_ls.builtins.diagnostics.pylint,
+  null_ls.builtins.formatting.isort.with({ 'python' }),
+  null_ls.builtins.diagnostics.pylint.with({ 'python' }),
 }
 
 null_ls.config({ sources = null_ls_sources })
@@ -437,6 +438,21 @@ function! ToggleLine80()
   endif
 endfunction
 command Line80 :call ToggleLine80()
+]], false)
+-- }}}
+-- -- Toggle Line72 {{{
+vim.api.nvim_exec([[
+let g:line72=0
+function! ToggleLine72()
+  if g:line72
+    set colorcolumn=0
+    let g:line72=0
+  else
+    set colorcolumn=72
+    let g:line72=1
+  endif
+endfunction
+command Line72 :call ToggleLine72()
 ]], false)
 -- }}}
 -- -- Set Colorcolumn for git commits {{{
