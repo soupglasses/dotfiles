@@ -34,7 +34,10 @@ require('packer').startup(function()
   -- Add indentation guides
   use 'lukas-reineke/indent-blankline.nvim'
   -- Collection of configurations for the built-in LSP client
-  use 'neovim/nvim-lspconfig'
+  use {
+    'neovim/nvim-lspconfig',
+    commit = "10ad0cca1b83713ed98ed4cb7ea60f2ea8e55c49",
+  }
   -- Easy install of language servers
   use 'kabouzeid/nvim-lspinstall'
   -- Auto completion plugin
@@ -52,11 +55,17 @@ require('packer').startup(function()
   -- Nginx Highlight
   use 'chr4/nginx.vim'
   -- Null ls
-  use 'jose-elias-alvarez/null-ls.nvim'
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    commit = "179726d6eea1d6421bc7a4c7d3319cedd1e23984",
+  }
   -- Plenary
   use 'nvim-lua/plenary.nvim'
   -- Telescope
-  use 'nvim-telescope/telescope.nvim'
+  use {
+    'nvim-telescope/telescope.nvim',
+    commit = "f56222738b719f5ae94ed85fdf080690371da0b9",
+  }
 end)
 -- -- }}}
 -- }}}
