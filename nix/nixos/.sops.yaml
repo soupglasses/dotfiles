@@ -1,0 +1,9 @@
+keys:
+  - &sops age1j82shxk3sz976f77yrdttl00q7fwwxu9cjp8gucf4gktq698qq0qnrlqgw
+  - &laptop age1hheec8hcavnal9ayeqws349y79l8y0c5t8mcepq05gg5glgla4jqr6pgwt
+creation_rules:
+  - path_regex: laptop/secrets/[^/]+\.yaml$
+    key_groups:
+    - age:
+      - *sops
+      - *laptop
