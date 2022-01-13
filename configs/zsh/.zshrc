@@ -11,7 +11,6 @@ export PYTHONBREAKPOINT=ipdb.set_trace
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export WEECHAT_HOME="$HOME/.config/weechat"
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
-export TERM=xterm-256color
 export KERL_BUILD_BACKEND="git"
 export KERL_CONFIGURE_OPTIONS="--without-javac --with-dynamic-trace=systemtap"
 # }}}
