@@ -3,6 +3,26 @@ vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Fix for https://github.com/kovidgoyal/kitty/issues/4234
+vim.cmd [[
+  if $TERM == "xterm-kitty"
+    try
+      " undercurl support
+      let &t_Cs = "\e[4:3m"
+      let &t_Ce = "\e[4:0m"
+    catch
+    endtry
+    " Change the cursor in different modes
+    let &t_SI = "\e[5 q"
+    let &t_SR = "\e[3 q"
+    let &t_EI = "\e[1 q"
+    " vim hardcodes background color erase even if the terminfo file does
+    " not contain bce. This causes incorrect background rendering when
+    " using a color theme with a background color.
+    let &t_ut=''
+  endif
+]]
+
 -- Add keyboard shortcut to clear current search
 vim.api.nvim_set_keymap('n', '<leader>h', ':set hlsearch!<CR>', { noremap = true, silent = true })
 

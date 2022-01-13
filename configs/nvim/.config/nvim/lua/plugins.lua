@@ -22,10 +22,8 @@ return require("packer").startup(function()
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-    opt = true,
-    event = "BufRead",
     requires = {
-      "nvim-treesitter/nvim-treesitter-refactor",
+    --  "nvim-treesitter/nvim-treesitter-refactor",
     --  "nvim-treesitter/nvim-treesitter-textobjects",
     --  "RRethy/nvim-treesitter-textsubjects",
     },
@@ -34,10 +32,17 @@ return require("packer").startup(function()
     end,
   }
 
+  -- Spellchecking
+  use {
+    'lewis6991/spellsitter.nvim',
+    config = function()
+      require('spellsitter').setup()
+    end
+  }
+
   -- Core LSP
   use {
     "neovim/nvim-lspconfig",
-    event = "BufReadPre",
     requires = {
       "williamboman/nvim-lsp-installer",
       "jose-elias-alvarez/null-ls.nvim",
@@ -84,7 +89,6 @@ return require("packer").startup(function()
   -- Statusline
   use {
     "nvim-lualine/lualine.nvim",
-    event = "VimEnter",
     config = function()
       require("config.lualine")
     end,
@@ -93,12 +97,11 @@ return require("packer").startup(function()
   -- Git
   use {
     "lewis6991/gitsigns.nvim",
-    event = "BufReadPre",
     requires = {
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      require("config.gitsigns")
+      require("config.git_signs")
     end,
   }
 end)

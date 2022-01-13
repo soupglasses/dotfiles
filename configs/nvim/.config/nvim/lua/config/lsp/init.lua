@@ -68,4 +68,4 @@ local options = {
 }
 
 require("config.lsp.lspinstall").setup(servers, options)
-require("config.lsp.null-ls").setup(options)
+require("config.lsp.nullls").setup(options)

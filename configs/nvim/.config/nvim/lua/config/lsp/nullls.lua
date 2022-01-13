@@ -6,7 +6,7 @@ function M.setup(options)
   local nls = require("null-ls")
   nls.setup {
     debounce = 150,
-    save_after_format = false,
+    -- save_after_format = false,
     sources = {
       nls.builtins.formatting.trim_whitespace.with {
         filetypes = formattable_types,
