@@ -1,9 +1,0 @@
-- hosts: localhost
-
-  tasks:
-  - name: Ensure packer.nvim is present
-    git:
-      repo: https://github.com/wbthomason/packer.nvim
-      dest: ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-      # We let packer manage itself after initial installation
-      update: no

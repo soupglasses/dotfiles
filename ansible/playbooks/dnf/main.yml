@@ -11,6 +11,12 @@
     dnf: update_cache=yes
 
   tasks:
+  - name: Disable Software Search after Command Not Found
+    lineinfile:
+      path: /etc/PackageKit/CommandNotFound.conf
+      regexp: "^SoftwareSourceSearch="
+      line: "SoftwareSourceSearch=false"
+
   - name: Enable RPM Fusion
     dnf:
       name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm,https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"

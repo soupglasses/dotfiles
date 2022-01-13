@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  - name: Ensure stow is installed
+    dnf: name=stow
+
+  - name: Ensure dotfiles are installed
+    ansible.builtin.shell:
+      chdir: ../../../configs/
+      cmd: ./install.sh
+    register: shellout
+    changed_when: "shellout.stdout != ''"

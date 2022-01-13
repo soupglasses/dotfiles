@@ -15,10 +15,14 @@
       state: enabled
 
   - name: Install Interception Tools
-    dnf: name="interception-tools,dual-function-keys"
+    dnf: 
+      name: "interception-tools,dual-function-keys"
 
   - name: Start and enable udevmon service
-    systemd: name=udevmon.service state=started enabled=yes
+    systemd:
+      name: udevmon.service
+      state: started
+      enabled: yes
 
   - name: Ensure interception folder exists
     file:
