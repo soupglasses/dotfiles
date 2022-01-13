@@ -103,7 +103,7 @@ be per keyboard.
 After configuring to your keyboard, you can run `apply.sh` as root to install it.
 
 
-## **setup/**
+## **ansible/**
 
 My Ansible setup scripts to configure my computer. Mainly only for my own use currently.
 
