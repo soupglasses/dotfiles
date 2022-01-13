@@ -12,6 +12,8 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export WEECHAT_HOME="$HOME/.config/weechat"
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export TERM=xterm-256color
+export KERL_BUILD_BACKEND="git"
+export KERL_CONFIGURE_OPTIONS="--without-javac --with-dynamic-trace=systemtap"
 # }}}
 
 # --- History --- {{{
@@ -25,22 +27,13 @@ bindkey "^[[A" up-line-or-search
 bindkey "^[[B" down-line-or-search
 ### }}}
 
-# --- Zsh Completions --- {{{
-zstyle :compinstall filename '/home/sofi/.zshrc'
-## Case insensitive path-completion 
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
-## Compinstall
-autoload -Uz compinit
-compinit
-# }}}
-
 # --- Prompt --- {{{
 ## Prompt
-PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~) %(?..%F{red}E%? )%f%# '
+PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~) %(?..%F{red}E%? )%F{8}%#%f '
 ## Git integration
 if [ -x "$(command -v git)" ]; then
     source ~/.zsh/git-status.zsh
-    PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f ${GITSTATUS_PROMPT}${GITSTATUS_PROMPT:+ }${VIRTUAL_ENV:+"%F{magenta}env "}%(?..%F{red}E%? )%f%# '
+    PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f ${GITSTATUS_PROMPT}${GITSTATUS_PROMPT:+ }${VIRTUAL_ENV:+"%F{magenta}env "}%(?..%F{red}E%? )%F{248}%#%f '
 fi
 ## Setup Xterm title hooks
 autoload -Uz add-zsh-hook
@@ -58,13 +51,31 @@ if [[ "$TERM" == (alacritty*|gnome*|konsole*|putty*|rxvt*|screen*|tmux*|xterm*) 
 fi
 # }}}
 
-# --- Custom Completions --- {{{
-## Kitty
+# --- Zsh Completions --- {{{
+## Basic configuration {{{
+zstyle :compinstall filename '/home/sofi/.zshrc'
+### Case insensitive path-completion
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+## }}}
+## Custom Completions {{{
+### asdf completion
+if [[ -f "$HOME/.asdf/asdf.sh" ]]; then
+    . $HOME/.asdf/asdf.sh
+    fpath=(${ASDF_DIR}/completions $fpath)
+    export PATH=/home/sofi/.cache/rebar3/bin:$PATH
+fi
+## }}}
+## Install Completions {{{
+autoload -Uz compinit
+compinit
+## }}}
+## Post Completions {{{
+### Kitty
 if [ -x "$(command -v kitty)" ]; then
     kitty + complete setup zsh | source /dev/stdin
     alias ssh="TERM=xterm-256color ssh"
 fi
-## Fasd
+### Fasd
 if [ -x "$(command -v fasd)" ]; then
     fasd_cache="$HOME/.fasd-init-zsh"
     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
@@ -75,7 +86,7 @@ if [ -x "$(command -v fasd)" ]; then
     alias v='f -e $EDITOR'
     alias o='a -e xdg-open'
 fi
-## Fzf
+### Fzf
 if [ -x "$(command -v fzf)" ]; then
     source /usr/share/fzf/shell/key-bindings.zsh
     export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -84,19 +95,26 @@ if [ -x "$(command -v fzf)" ]; then
     --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef
     '
 fi
-## Userland bin
+### Kubectl
+if [ -x "$(command -v kubectl)" ]; then
+    source <(kubectl completion zsh)
+fi
+### Userland bin
 if ! [[ "$PATH" =~ "$HOME/.local/bin" ]]; then
     export PATH="$PATH:$HOME/.local/bin"
 fi
-## Rust bin
+### Rust bin
 if ! [[ "$PATH" =~ "$HOME/.cargo/bin" ]]; then
     export PATH="$PATH:$HOME/.cargo/bin"
 fi
-## Dotnet bin
+### Dotnet bin
 if ! [[ "$PATH" =~ "$HOME/.dotnet/tools" ]]; then
     export PATH="$PATH:/home/sofi/.dotnet/tools"
 fi
-# }}}
+### Ocaml opam
+test -r /home/sofi/.opam/opam-init/init.zsh && . /home/sofi/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+## }}}
+# }}}
 
 # --- Colors --- {{{
 ## File Colors
