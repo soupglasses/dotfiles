@@ -1,4 +1,5 @@
 dnf_packages:
+  - atool
   - fzf
   - git
   - gpg
