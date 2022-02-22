@@ -40,6 +40,17 @@ return require("packer").startup(function()
     end
   }
 
+  use {
+    "vim-pandoc/vim-pandoc-syntax",
+    config = function()
+      vim.cmd [[
+        augroup pandoc_syntax
+          au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+        augroup END
+      ]]
+    end,
+  }
+
   -- Core LSP
   use {
     "neovim/nvim-lspconfig",

@@ -4,7 +4,7 @@ local config = {
     disabled_filetypes = {"toggleterm", "terminal"},
     section_separators = "",
     component_separators = "",
-    theme = "tokyonight"
+    theme = "auto"
   },
 }
 
