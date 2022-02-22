@@ -1,5 +1,7 @@
 ---
 - import_playbook: playbooks/dnf/main.yml
+- import_playbook: playbooks/tuning/main.yml
+- import_playbook: playbooks/grc/main.yml
 - import_playbook: playbooks/keyboard/main.yml
 - import_playbook: playbooks/flatpak/main.yml
 - import_playbook: playbooks/gnome/main.yml

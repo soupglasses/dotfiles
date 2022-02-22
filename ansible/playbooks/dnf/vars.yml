@@ -3,7 +3,7 @@ dnf_packages:
   - fzf
   - git
   - gpg
-  - grc
+#  - grc
   - java-latest-openjdk
   - maim
   - neofetch

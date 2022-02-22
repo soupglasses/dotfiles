@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  - name: Install grc
+    yum:
+      name: https://download-ib01.fedoraproject.org/pub/fedora/linux/releases/34/Everything/x86_64/os/Packages/g/grc-1.11.3-6.fc34.noarch.rpm
+      state: present

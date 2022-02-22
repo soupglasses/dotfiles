@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  - name: Install CFS Zen tweaks
+    yum:
+      name: https://github.com/igo95862/cfs-zen-tweaks/releases/download/1.2.0/cfs-zen-tweaks-1.2.0-Linux.rpm
+      state: present
+
+  - name: Enable CFS Zen tweaks
+    systemd:
+      name: set-cfs-tweaks
+      enabled: yes

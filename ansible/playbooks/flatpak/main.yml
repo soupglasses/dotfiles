@@ -3,6 +3,13 @@
   connection: local
 
   tasks:
+  - name: Install Flathub repo 
+    community.general.flatpak_remote:
+      name: flathub
+      state: present
+      flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    become: yes
+
   - name: Install Flatpaks
     community.general.flatpak:
       name:

@@ -6,9 +6,9 @@
   vars_files:
     - vars.yml
 
-  pre_tasks:
-  - name: Update DNF Cache
-    dnf: update_cache=yes
+#  pre_tasks:
+#  - name: Update DNF Cache
+#    dnf: update_cache=yes
 
   tasks:
   - name: Disable Software Search after Command Not Found
