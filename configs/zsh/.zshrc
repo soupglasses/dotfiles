@@ -118,6 +118,58 @@ test -r /home/sofi/.opam/opam-init/init.zsh && . /home/sofi/.opam/opam-init/init
 # --- Colors --- {{{
 ## File Colors
 source $HOME/.dircolors
+## GRC
+if [[ -f "/etc/grc.zsh" ]]; then
+  # Supported commands
+  cmds=(
+    configure \
+    cvs \
+    df \
+    diff \
+    dig \
+    du \
+    free \
+    gmake \
+    ifconfig \
+    last \
+    ldap \
+    lsattr \
+    lsblk \
+    lsmod \
+    lsof \
+    lspci \
+    mount \
+    mtr \
+    netstat \
+    nmap \
+    ping \
+    ping6 \
+    ps \
+    pv \
+    semanageboolean \
+    semanagefcontext \
+    semanageuser \
+    sensors \
+    ss \
+    sysctl \
+    traceroute \
+    traceroute6 \
+    uptime \
+    wdiff \
+    whois \
+    iwconfig \
+  );
+
+  # Set alias for available commands.
+  for cmd in $cmds ; do
+    if (( $+commands[$cmd] )) ; then
+      alias $cmd="grc --colour=auto $(whence $cmd)"
+    fi
+  done
+
+  # Clean up variables
+  unset cmds cmd
+fi
 ## Color tab completion
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ## Cat/Bat Colors
@@ -134,6 +186,7 @@ if [ -x "$(command -v bat)" ]; then
     alias cat='bat -pp'
 fi
 ## Generic Commands
+alias tree='tree --dirsfirst'
 alias ls='ls --group --color=auto'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
