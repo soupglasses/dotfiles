@@ -8,10 +8,4 @@ local config = {
   },
 }
 
--- Attempt to load a matching lualine theme
-local name = vim.g.colors_name or ""
-local ok, _ = pcall(require, "lualine.themes." .. name)
-if ok then
-  config.options.theme = name
-end
 require("lualine").setup(config)
