@@ -1,8 +1,3 @@
--- Remap space to leader
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 -- Fix for https://github.com/kovidgoyal/kitty/issues/4234
 vim.cmd [[
   if $TERM == "xterm-kitty"
@@ -23,12 +18,6 @@ vim.cmd [[
   endif
 ]]
 
--- Add keyboard shortcut to clear current search
-vim.api.nvim_set_keymap('n', '<leader>h', ':set hlsearch!<CR>', { noremap = true, silent = true })
-
--- Allow terminal mode to be exited with ESC
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
-
 -- Make neovim recognize Vagrantfiles
 vim.cmd [[
 augroup filetypedetect
@@ -41,9 +30,6 @@ vim.cmd "autocmd filetype gitcommit set colorcolumn=72"
 
 -- Dirty hack to quickly run python code
 vim.cmd "autocmd filetype python nnoremap <F3> :w <bar> :split term://python %<CR> i"
-
--- Make `Y` yank to the end of the line
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 
 -- Hide line numbers in terminal windows
 vim.api.nvim_exec([[
@@ -79,5 +65,3 @@ function! ToggleLine72()
 endfunction
 command Line72 :call ToggleLine72()
 ]], false)
-
-

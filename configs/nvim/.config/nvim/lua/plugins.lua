@@ -89,6 +89,14 @@ return require("packer").startup(function()
     end,
   }
 
+  -- LSP tag overview
+  use {
+    "liuchengxu/vista.vim",
+    config = function()
+      require("config.vista")
+    end,
+  }
+
   -- Indentation Lines
   use {
     "lukas-reineke/indent-blankline.nvim",
