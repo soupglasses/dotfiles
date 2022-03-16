@@ -14,7 +14,7 @@ return require("packer").startup(function()
   use {
     "folke/tokyonight.nvim",
     config = function()
-      require("plugins.colorscheme")
+      require("plugins.tokyonight")
     end,
   }
 
