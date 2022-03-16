@@ -18,6 +18,9 @@ vim.cmd [[
   endif
 ]]
 
+-- HACK: workaround for https://github.com/lukas-reineke/indent-blankline.nvim/issues/59
+vim.wo.colorcolumn = "99999"
+
 -- Make neovim recognize Vagrantfiles
 vim.cmd [[
 augroup filetypedetect
