@@ -1,4 +1,4 @@
-require("config.lsp.diagnostics")
+require("plugins.lsp.diagnostics")
 
 local function on_attach(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -25,6 +25,8 @@ end
 
 local servers = {
   bashls = {},
+  rnix = {},
+  emmet_ls = {},
   pyright = {
     settings = {
       analysis = {
@@ -67,5 +69,5 @@ local options = {
   },
 }
 
-require("config.lsp.lspinstall").setup(servers, options)
-require("config.lsp.nullls").setup(options)
+require("plugins.lsp.lspinstall").setup(servers, options)
+require("plugins.lsp.nullls").setup(options)

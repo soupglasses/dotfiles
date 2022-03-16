@@ -14,7 +14,7 @@ return require("packer").startup(function()
   use {
     "folke/tokyonight.nvim",
     config = function()
-      require("config.colorscheme")
+      require("plugins.colorscheme")
     end,
   }
 
@@ -22,13 +22,8 @@ return require("packer").startup(function()
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-    requires = {
-    --  "nvim-treesitter/nvim-treesitter-refactor",
-    --  "nvim-treesitter/nvim-treesitter-textobjects",
-    --  "RRethy/nvim-treesitter-textsubjects",
-    },
     config = function()
-      require("config.treesitter")
+      require("plugins.treesitter")
     end,
   }
 
@@ -61,7 +56,7 @@ return require("packer").startup(function()
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      require("config.lsp")
+      require("plugins.lsp")
     end,
   }
 
@@ -69,7 +64,7 @@ return require("packer").startup(function()
   use {
     "L3MON4D3/LuaSnip",
     config = function()
-      require("config.lsp.snippets")
+      require("plugins.lsp.snippets")
     end,
   }
 
@@ -85,7 +80,7 @@ return require("packer").startup(function()
       "onsails/lspkind-nvim",
     },
     config = function()
-      require("config.lsp.completion")
+      require("plugins.lsp.completion")
     end,
   }
 
@@ -93,7 +88,7 @@ return require("packer").startup(function()
   use {
     "liuchengxu/vista.vim",
     config = function()
-      require("config.vista")
+      require("plugins.vista")
     end,
   }
 
@@ -101,7 +96,7 @@ return require("packer").startup(function()
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
-      require("config.indentline")
+      require("plugins.indentline")
     end,
   }
 
@@ -109,7 +104,7 @@ return require("packer").startup(function()
   use {
     "nvim-lualine/lualine.nvim",
     config = function()
-      require("config.lualine")
+      require("plugins.lualine")
     end,
   }
 
@@ -120,7 +115,7 @@ return require("packer").startup(function()
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      require("config.git_signs")
+      require("plugins.git_signs")
     end,
   }
 end)
