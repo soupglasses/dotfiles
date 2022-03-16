@@ -118,4 +118,13 @@ return require("packer").startup(function()
       require("plugins.gitsigns")
     end,
   }
+
+  -- Dashboard
+  use {
+    "goolord/alpha-nvim",
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function()
+      require("plugins.alpha")
+    end,
+  }
 end)
