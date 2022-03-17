@@ -28,12 +28,11 @@ bindkey "^[[B" down-line-or-search
 
 # --- Prompt --- {{{
 ## Prompt
-PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~) %(?..%F{red}E%? )%F{8}%#%f '
-## Git integration
-if [ -x "$(command -v git)" ]; then
-    source ~/.zsh/git-status.zsh
-    PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f ${GITSTATUS_PROMPT}${GITSTATUS_PROMPT:+ }${VIRTUAL_ENV:+"%F{magenta}env "}%(?..%F{red}E%? )%F{248}%#%f '
-fi
+source ~/.zsh/git-status.zsh
+source ~/.zsh/zsh-command-time.zsh
+
+setopt PROMPT_SUBST
+PROMPT='%F{blue}%(4~|%-1~/…/%2~|%3~)%f ${GITSTATUS_PROMPT}${GITSTATUS_PROMPT:+ }${VIRTUAL_ENV:+"%F{magenta}env "}%(?..%F{red}E%? )${ZSH_COMMAND_TIME:+"$(zsh_command_time) "}%F{248}%#%f '
 ## Setup Xterm title hooks
 autoload -Uz add-zsh-hook
 function xterm_title_precmd () {
