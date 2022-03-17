@@ -13,6 +13,7 @@ export WEECHAT_HOME="$HOME/.config/weechat"
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export KERL_BUILD_BACKEND="git"
 export KERL_CONFIGURE_OPTIONS="--without-javac --with-dynamic-trace=systemtap"
+export NIX_PATH="nixpkgs=https://github.com/NixOS/nixpkgs/archive/c2ab1f2380063a923c34ddc344a23dcd87ba939a.tar.gz"
 # }}}
 
 # --- History --- {{{
