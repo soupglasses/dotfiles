@@ -2,7 +2,7 @@
 vim.cmd "packadd packer.nvim"
 
 -- Auto compile packer on new changes in this file
-vim.cmd "autocmd BufWritePost plugins.lua PackerCompile"
+vim.cmd "autocmd BufWritePost config.lua PackerCompile"
 
 -- Setup packages
 local use = require("packer").use
@@ -14,7 +14,7 @@ return require("packer").startup(function()
   use {
     "folke/tokyonight.nvim",
     config = function()
-      require("plugins.tokyonight")
+      require("config.colorscheme")
     end,
   }
 
@@ -23,7 +23,7 @@ return require("packer").startup(function()
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     config = function()
-      require("plugins.treesitter")
+      require("config.treesitter")
     end,
   }
 
@@ -56,7 +56,7 @@ return require("packer").startup(function()
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      require("plugins.lsp")
+      require("config.lsp")
     end,
   }
 
@@ -64,7 +64,7 @@ return require("packer").startup(function()
   use {
     "L3MON4D3/LuaSnip",
     config = function()
-      require("plugins.lsp.snippets")
+      require("config.lsp.snippets")
     end,
   }
 
@@ -80,7 +80,7 @@ return require("packer").startup(function()
       "onsails/lspkind-nvim",
     },
     config = function()
-      require("plugins.lsp.completion")
+      require("config.lsp.completion")
     end,
   }
 
@@ -88,7 +88,7 @@ return require("packer").startup(function()
   use {
     "liuchengxu/vista.vim",
     config = function()
-      require("plugins.vista")
+      require("config.vista")
     end,
   }
 
@@ -96,7 +96,7 @@ return require("packer").startup(function()
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
-      require("plugins.indentline")
+      require("config.indentline")
     end,
   }
 
@@ -104,7 +104,7 @@ return require("packer").startup(function()
   use {
     "nvim-lualine/lualine.nvim",
     config = function()
-      require("plugins.lualine")
+      require("config.lualine")
     end,
   }
 
@@ -115,7 +115,7 @@ return require("packer").startup(function()
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      require("plugins.gitsigns")
+      require("config.gitsigns")
     end,
   }
 
@@ -124,7 +124,7 @@ return require("packer").startup(function()
     "goolord/alpha-nvim",
     requires = { 'kyazdani42/nvim-web-devicons' },
     config = function()
-      require("plugins.alpha")
+      require("config.alpha")
     end,
   }
 end)

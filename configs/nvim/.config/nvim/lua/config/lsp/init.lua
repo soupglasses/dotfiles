@@ -1,4 +1,4 @@
-require("plugins.lsp.diagnostics")
+require("config.lsp.diagnostics")
 
 local function on_attach(_, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -69,5 +69,5 @@ local options = {
   },
 }
 
-require("plugins.lsp.lspinstall").setup(servers, options)
-require("plugins.lsp.null_ls").setup(options)
+require("config.lsp.lspinstall").setup(servers, options)
+require("config.lsp.null_ls").setup(options)
