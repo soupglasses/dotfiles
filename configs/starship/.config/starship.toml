@@ -1,0 +1,276 @@
+add_newline = false
+format = """
+$username\
+$hostname\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$cobol\
+$container\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$env_var\
+$crystal\
+$custom\
+$sudo\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
+
+[directory]
+style = "blue"
+home_symbol = "~"
+read_only = " ro"
+truncation_symbol = "…/"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+#format = "on [$symbol$branch]($style) "
+format = "[$symbol$branch]($style) "
+style = "bright-green"
+symbol = ""
+
+[git_status]
+conflicted = "([~${count}](red) )"
+ahead = "([⇡${count}](green) )"
+behind = "([⇣${count}](green) )"
+diverged = "([⇡${ahead_count}⇣${behind_count}](green) )"
+up_to_date = ""
+untracked = "([?${count}](blue) )"
+stashed = "([*${count}](green) )"
+modified = "([!${count}](yellow) )"
+staged = "([+${count}](yellow) )"
+renamed = "([r${count}](yellow) )"
+deleted = "(([d${count}](yellow) )"
+style = "dimmed white"
+format = '([$all_status$ahead_behind]($style))'
+
+[nix_shell]
+style = "purple"
+symbol = "nix "
+
+[custom.virtualenv]
+command = 'printf "${VIRTUAL_ENV:+"venv"}"'
+description = "Shows when you are in a virtual environment"
+#format = "via [$output](purple)"
+format = "([$output](purple) )"
+when = 'true'
+shell = 'bash'
+disabled = false
+
+[sudo]
+#format = "as [$symbol]($style)"
+format = "[$symbol]($style)"
+style = "red"
+symbol = "sudo "
+disabled = false
+
+[cmd_duration]
+#format = "took [$duration]($style) "
+format = "[$duration]($style) "
+style = "yellow"
+min_time = 10_000
+
+[line_break]
+disabled = true
+
+[battery]
+full_symbol = ""
+charging_symbol = "⚡️ "
+discharging_symbol = ""
+disabled = false
+
+[[battery.display]]
+threshold = 10
+style = "red"
+
+[[battery.display]]
+threshold = 20
+style = "yellow"
+
+[status]
+format = "[$symbol$status]($style) "
+style = "red"
+symbol = "E"
+disabled = false
+
+[character]
+success_symbol = "[%%](dimmed white)"
+error_symbol = "[%%](dimmed white)"
+vicmd_symbol = "[V](green)"
+
+# Disabled Modules:
+
+[memory_usage]
+symbol = "memory "
+disabled = true
+
+[python]
+symbol = "py "
+disabled = true
+detect_extensions = []
+
+[aws]
+symbol = "aws "
+disabled = true
+
+[cobol]
+symbol = "cobol "
+disabled = true
+
+[conda]
+symbol = "conda "
+
+disabled = true
+[crystal]
+symbol = "cr "
+disabled = true
+
+[cmake]
+symbol = "cmake "
+disabled = true
+
+[dart]
+symbol = "dart "
+disabled = true
+
+[deno]
+symbol = "deno "
+disabled = true
+
+[dotnet]
+symbol = ".NET "
+disabled = true
+
+[docker_context]
+symbol = "docker "
+disabled = true
+
+[elixir]
+symbol = "exs "
+disabled = true
+
+[elm]
+symbol = "elm "
+disabled = true
+
+[golang]
+symbol = "go "
+disabled = true
+
+[hg_branch]
+symbol = "hg "
+disabled = true
+
+[java]
+symbol = "java "
+disabled = true
+
+[julia]
+symbol = "jl "
+disabled = true
+
+[kotlin]
+symbol = "kt "
+disabled = true
+
+[nodejs]
+symbol = "nodejs "
+disabled = true
+
+[nim]
+symbol = "nim "
+disabled = true
+
+[ocaml]
+symbol = "ml "
+disabled = true
+
+[package]
+symbol = "pkg "
+disabled = true
+
+[perl]
+symbol = "pl "
+disabled = true
+
+[php]
+symbol = "php "
+disabled = true
+
+[pulumi]
+symbol = "pulumi "
+disabled = true
+
+[purescript]
+symbol = "purs "
+disabled = true
+
+[ruby]
+symbol = "rb "
+disabled = true
+
+[rust]
+symbol = "rs "
+disabled = true
+
+[scala]
+symbol = "scala "
+disabled = true
+
+[swift]
+symbol = "swift "
+disabled = true

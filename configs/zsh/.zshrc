@@ -228,3 +228,5 @@ function mkdircd {
         cd -- "$1"
 }
 # }}}
+
+source <(/usr/bin/starship init zsh --print-full-init)
