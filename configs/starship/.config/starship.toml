@@ -1,73 +1,13 @@
 add_newline = false
-format = """
-$username\
-$hostname\
-$localip\
-$shlvl\
-$singularity\
-$kubernetes\
-$directory\
-$vcsh\
-$git_branch\
-$git_commit\
-$git_state\
-$git_metrics\
-$git_status\
-$hg_branch\
-$docker_context\
-$package\
-$cmake\
-$cobol\
-$container\
-$dart\
-$deno\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$golang\
-$helm\
-$java\
-$julia\
-$kotlin\
-$lua\
-$nim\
-$nodejs\
-$ocaml\
-$perl\
-$php\
-$pulumi\
-$purescript\
-$python\
-$rlang\
-$red\
-$ruby\
-$rust\
-$scala\
-$swift\
-$terraform\
-$vlang\
-$vagrant\
-$zig\
-$nix_shell\
-$conda\
-$memory_usage\
-$aws\
-$gcloud\
-$openstack\
-$azure\
-$env_var\
-$crystal\
-$custom\
-$sudo\
-$cmd_duration\
-$line_break\
-$jobs\
-$battery\
-$time\
-$status\
-$shell\
-$character"""
+format = "$directory$all$character"
+
+[username]
+disabled = true
+
+[hostname]
+ssh_only = true
+format = "([@$hostname]($style) )"
+style = "green"
 
 [directory]
 style = "blue"
@@ -78,7 +18,6 @@ truncation_length = 3
 truncate_to_repo = true
 
 [git_branch]
-#format = "on [$symbol$branch]($style) "
 format = "[$symbol$branch]($style) "
 style = "bright-green"
 symbol = ""
@@ -112,14 +51,12 @@ shell = 'bash'
 disabled = false
 
 [sudo]
-#format = "as [$symbol]($style)"
 format = "[$symbol]($style)"
-style = "red"
+style = "bright-red"
 symbol = "sudo "
 disabled = false
 
 [cmd_duration]
-#format = "took [$duration]($style) "
 format = "[$duration]($style) "
 style = "yellow"
 min_time = 10_000
@@ -129,8 +66,8 @@ disabled = true
 
 [battery]
 full_symbol = ""
-charging_symbol = "⚡️ "
-discharging_symbol = ""
+charging_symbol = "B"
+discharging_symbol = "!B"
 disabled = false
 
 [[battery.display]]
@@ -154,6 +91,10 @@ vicmd_symbol = "[V](green)"
 
 # Disabled Modules:
 
+[lua]
+symbol = "lua "
+disabled = true
+
 [memory_usage]
 symbol = "memory "
 disabled = true
@@ -175,6 +116,7 @@ disabled = true
 symbol = "conda "
 
 disabled = true
+
 [crystal]
 symbol = "cr "
 disabled = true
