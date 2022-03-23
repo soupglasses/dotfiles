@@ -19,9 +19,10 @@ vim.o.titlestring = [[%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)]]
 vim.o.listchars = "nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<"
 
 -- Window Spessific
-vim.wo.number = true     -- Show line numbers
-vim.wo.cursorline = true -- Highlight current line
-vim.wo.signcolumn='yes'  -- Always show the sign column
+vim.wo.number = true          -- Show line numbers
+vim.wo.relativenumber = true  -- Show relative numbers
+vim.wo.cursorline = true      -- Highlight current line
+vim.wo.signcolumn= 'yes'      -- Always show the sign column
 
 -- Buffer Spessific
 vim.bo.expandtab = true   -- Convert tabs to spaces
