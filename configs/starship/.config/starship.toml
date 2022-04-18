@@ -33,11 +33,12 @@ stashed = "([*${count}](green) )"
 modified = "([!${count}](yellow) )"
 staged = "([+${count}](yellow) )"
 renamed = "([r${count}](yellow) )"
-deleted = "(([d${count}](yellow) )"
+deleted = "([-${count}](yellow) )"
 style = "dimmed white"
 format = '([$all_status$ahead_behind]($style))'
 
 [nix_shell]
+format = "[$symbol$state]($style) "
 style = "purple"
 symbol = "nix "
 
@@ -51,9 +52,9 @@ shell = 'bash'
 disabled = false
 
 [sudo]
-format = "[$symbol]($style)"
+format = "[$symbol]($style) "
 style = "bright-red"
-symbol = "sudo "
+symbol = "sudo"
 disabled = false
 
 [cmd_duration]
@@ -90,6 +91,10 @@ error_symbol = "[%%](dimmed white)"
 vicmd_symbol = "[V](green)"
 
 # Disabled Modules:
+
+[vagrant]
+symbol = "vagrant "
+disabled = true
 
 [lua]
 symbol = "lua "
