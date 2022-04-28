@@ -1,4 +1,10 @@
-# Home-manager for legacy systems
+# Nix and Home-manager for legacy systems
+
+> Nix is a cross-platform package manager that utilizes a purely functional deployment model where software is installed into unique directories generated through cryptographic hashes. It is also the name of the tool's programming language. A package's hash takes into account the dependencies, which is claimed to eliminate dependency hell.[2] This package management model advertises more reliable, reproducible, and portable packages.  
+[https://en.wikipedia.org/wiki/Nix_(package_manager)](https://en.wikipedia.org/wiki/Nix_(package_manager))
+
+> Home manager provides a basic system for managing a user environment using the Nix package manager together with the Nix libraries found in Nixpkgs. It allows declarative configuration of user specific (non global) packages and dotfiles.  
+[https://github.com/nix-community/home-manager](https://github.com/nix-community/home-manager)
 
 ## Installation:
 
