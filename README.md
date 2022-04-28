@@ -10,6 +10,7 @@ Holds program spessific READMEs.
 - [Editor: neovim](docs/nvim.md)
 - [Shell: zsh](docs/zsh.md)
 - [Terminal: kitty](docs/kitty.md)
+- [Configuration: home-manager](home-manager/README.md)
 
 
 ## **configs/**
