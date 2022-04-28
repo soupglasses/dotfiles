@@ -22,15 +22,22 @@
     pkgs = import nixpkgs {
       inherit system;
       overlays = [
-        (final: prev: { home-manager = inputs.home-manager.packages.${prev.system}.home-manager; })
+        (final: prev: { home-manager = home-manager.packages.${prev.system}.home-manager; })
       ];
     };
+    lib = pkgs.lib;
   in {
-    homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-      inherit system username pkgs;
-      configuration = import ./home.nix;
-      homeDirectory = "/home/${username}";
-      stateVersion = "21.11";
+    # WORKAROUND: https://github.com/nix-community/home-manager/pull/2720
+    homeConfigurations.${username} = import "${home-manager}/modules" {
+      inherit pkgs;
+      check = true;
+      configuration = {
+        _module.args.pkgs = lib.mkForce pkgs;
+        _module.args.pkgs_i686 = lib.mkForce { };
+        imports = [ ./home.nix ];
+        home.homeDirectory = "/home/${username}";
+        home.username = "${username}";
+      };
     };
 
     devShell.${system} = pkgs.mkShell {
