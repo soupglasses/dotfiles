@@ -74,6 +74,9 @@ return require("packer").startup(function()
     },
   }
 
+  -- Editor config
+  use "editorconfig/editorconfig-vim"
+
   -- Dashboard
   use {
     "goolord/alpha-nvim",

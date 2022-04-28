@@ -17,6 +17,7 @@ require "config.indentline"
 -- Load extra features
 require "config.alpha"
 require "config.gitsigns"
+require "config.editorconfig"
 require "config.vista"
 
 -- Load preferences
