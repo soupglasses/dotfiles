@@ -68,15 +68,15 @@ disabled = true
 [battery]
 full_symbol = ""
 charging_symbol = "B"
-discharging_symbol = "!B"
+discharging_symbol = "B"
 disabled = false
 
 [[battery.display]]
-threshold = 10
+threshold = 15
 style = "red"
 
 [[battery.display]]
-threshold = 20
+threshold = 25
 style = "yellow"
 
 [status]
