@@ -227,6 +227,22 @@ function mkdircd {
     mkdir -p -- "$1" &&
         cd -- "$1"
 }
+## Allow copy/paste on both xorg and wayland.
+function copy {
+    if [ $XDG_SESSION_TYPE = 'x11' ]; then
+        xclip -selection clipboard
+    else
+        wl-copy
+    fi
+}
+function paste {
+    if [ $XDG_SESSION_TYPE = 'x11' ]; then
+        xclip -out -selection clipboard
+    else
+        wl-paste
+    fi
+}
 # }}}
 
+source /home/sofi/.nix-profile/etc/profile.d/nix.sh
 source <(/usr/bin/starship init zsh --print-full-init)
