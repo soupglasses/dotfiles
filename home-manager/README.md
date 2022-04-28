@@ -9,14 +9,14 @@ this script as backwards compatible as possible.
 
 #### Reccomended method
 
-Use a distribution-native packaged nix. It is currently more up to date than
-the official method of installing. It also ships with extra patches to help 
-running nix under other distributions. Especially for SELinux.
+Use a distribution packaged Nix. It is currently more up to date than
+the official methods for installing Nix. Plus it ships with extra patches to help 
+running nix nicely. Especially for SELinux-enabled distros.
 
-Follow the instructions on here:
+Follow the steps:
 [https://nix-community.github.io/nix-installers/](https://nix-community.github.io/nix-installers/).
 
-But it should be as easy as this, swapping out with your package manager
+TL;DR would be to run this command, swapping out with your package manager
 of choice:
 
 ```bash
@@ -29,41 +29,41 @@ You can ignore any warnings about nixbld accounts. It seems intentional.
 
 If you cannot follow the method above, maybe due to running an exotic
 operating system, or simply that the above option failed. You can follow the
-official installation instructions for installing Nix from 
+official instructions here:
 [https://nixos.org/download.html](https://nixos.org/download.html).
 
-Do be warned, this is a `.sh` install script and may mess up your system!
+Do be warned, this is an install script and may mess up your system!
 
 ### 2. Install home-manager 
 
-Whoa there partner! Slow down. I need to give you a genuine warning before
-we continue. This configuration is my own personal config, so simply copy 
-pasting the commands below will likely result in error messages and headaches.
+Now, I need to give you a warning before we continue. This configuration is
+my own personal thing, so you cannot simply copy-paste the next few
+commands, as it will likely result in error messages and headaches.
 
-Firstly you would need to change the `flake.nix` file. You will need to
-change the username variable to your account name.
+So first you need to change the `flake.nix` file. In here there will be a
+username variable you need to change to your username.
 
 ```nix
     username = "sofi";
 ```
 
-Then you will probably have to edit the `home.nix` file. This is
-[home-manager](https://github.com/nix-community/home-manager).
-It is our best alternative to create a declarative configuration on
-a non-NixOS based distribution.
+Next, you will probably have to edit the `home.nix` file. This is a
+[home-manager](https://github.com/nix-community/home-manager) configuration
+file. It helps helps you build a declarative configuration on a non-NixOS
+based distribution. But its also a nice to have on NixOS, but i will skip
+that for now.
 
-You should try to read trough its manual to get a gist of how it works,
-but essentially you need to make sure you let it manage your `bash`/`zsh`/`fish`
-configuration file. This should not be problematic, just move your
-config file away from its install location, and use the `initExtra` option to
-import it back in, using either bash's source `source ~/.dotfiles/.bashrc`,
-which would let you edit the config file without having to switch home-manager
-configurations. Or use `builtins.readFile ../.bashrc` which will read the file
-into its own generated file.
+I would reccomend you to read trough its manual first,
+but the main change would be to hook into your shell. Might sound scary at 
+first, but you will just move your config file away from its install location,
+then use the `initExtra` option to import it back in. Either using 
+your shell's source command: `source ~/.dotfiles/.bashrc`. Or use
+nix's builtin `builtins.readFile ../.bashrc` which will write in your file's
+contents into its own.
 
-But once these changes are done, you should be able to run `nix-shell` in this
-folder. This will download `nixUnstable` for flake support, and `home-manager`
-for you. Once its done, you can run:
+But once these changes are done, it should now be possible to run `nix-shell`.
+It will install `nixUnstable` for flake support together with `home-manager`
+for you. Once its complete, you can run:
 
 ```bash
 $ home-manager switch --flake .
