@@ -85,9 +85,9 @@ to. If you want to avoid mistakes, and learn how to keep your Nix Store so that
 it wont start to eat up all the space on your computer? I can reccomend reading
 about it now, and not learn about it later.
 
-Nix for Developers by Gianluca is a great introduction for those who just
-want to get to up to speed with its practical use:
-[https://gianarb.it/blog/nix-for-developers-sneaking-in-my-toolchain](https://gianarb.it/blog/nix-for-developers-sneaking-in-my-toolchain)
+"Nix in my development workflow" is a great introduction for those who just
+want to get to up to speed with practically using nix:
+[https://medium.com/@ejpcmac/about-using-nix-in-my-development-workflow-12422a1f2f4c](https://medium.com/@ejpcmac/about-using-nix-in-my-development-workflow-12422a1f2f4c)
 
 Then for those who are more interested in learning about Nix, i would reccomend 
 also looking at this meta resource with everything you should need to know:
