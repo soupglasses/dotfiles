@@ -86,8 +86,15 @@ it wont start to eat up all the space on your computer? I can reccomend reading
 about it now, and not learn about it later.
 
 "Nix in my development workflow" is a great introduction for those who just
-want to get to up to speed with practically using nix:
+want to get to up to speed with practically using nix.
+
+Do keep in mind that we are using home-manager to manage packages, and not
+`nix-env -i`. Plus, upgrades are handled with flakes `nix flake update` instead
+of `nix-channel --update`.
+
 [https://medium.com/@ejpcmac/about-using-nix-in-my-development-workflow-12422a1f2f4c](https://medium.com/@ejpcmac/about-using-nix-in-my-development-workflow-12422a1f2f4c)
+
+### Further reading
 
 Then for those who are more interested in learning about Nix, i would reccomend 
 also looking at this meta resource with everything you should need to know:
