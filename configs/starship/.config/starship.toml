@@ -38,9 +38,11 @@ style = "dimmed white"
 format = '([$all_status$ahead_behind]($style))'
 
 [nix_shell]
-format = "[$symbol$state]($style) "
+format = '[$symbol( $state)( \[$name\])]($style) '
 style = "purple"
-symbol = "nix "
+impure_msg = ""
+pure_msg = "pure"
+symbol = "nix"
 
 [custom.virtualenv]
 command = 'printf "${VIRTUAL_ENV:+"venv"}"'
