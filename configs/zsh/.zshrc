@@ -244,5 +244,4 @@ function paste {
 }
 # }}}
 
-source /home/sofi/.nix-profile/etc/profile.d/nix.sh
 source <(/usr/bin/starship init zsh --print-full-init)
