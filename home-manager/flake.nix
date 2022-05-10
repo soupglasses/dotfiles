@@ -1,17 +1,15 @@
 {
   description = "My personal dotfiles";
 
-  nixConfig.extra-experimental-features = "nix-command flakes";
-
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
     };
   };
 
@@ -27,13 +25,17 @@
     };
     lib = pkgs.lib;
   in {
-    # WORKAROUND: https://github.com/nix-community/home-manager/pull/2720
     homeConfigurations.${username} = import "${home-manager}/modules" {
       inherit pkgs;
       check = true;
       configuration = {
+        # Let us have a `inputs` argument inside of home-manager.
+        _module.args.inputs = inputs;
+
+        # WORKAROUND: https://github.com/nix-community/home-manager/pull/2720
         _module.args.pkgs = lib.mkForce pkgs;
         _module.args.pkgs_i686 = lib.mkForce { };
+
         imports = [ ./home.nix ];
         home.homeDirectory = "/home/${username}";
         home.username = "${username}";
