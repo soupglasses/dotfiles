@@ -36,7 +36,9 @@
         _module.args.pkgs = lib.mkForce pkgs;
         _module.args.pkgs_i686 = lib.mkForce { };
 
+        targets.genericLinux.enable = true;
         imports = [ ./home.nix ];
+
         home.homeDirectory = "/home/${username}";
         home.username = "${username}";
       };
