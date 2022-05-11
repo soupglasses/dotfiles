@@ -19,6 +19,12 @@
     username = "sofi";
     pkgs = import nixpkgs {
       inherit system;
+      config = {
+        allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+          "geogebra"
+        ];
+      };
+
       overlays = [
         (final: prev: { home-manager = home-manager.packages.${prev.system}.home-manager; })
       ];
@@ -36,7 +42,6 @@
         _module.args.pkgs = lib.mkForce pkgs;
         _module.args.pkgs_i686 = lib.mkForce { };
 
-        targets.genericLinux.enable = true;
         imports = [ ./home.nix ];
 
         home.homeDirectory = "/home/${username}";
