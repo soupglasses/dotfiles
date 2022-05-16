@@ -1,6 +1,10 @@
 {
   description = "My personal dotfiles";
 
+  nixConfig.extra-experimental-features = "nix-command flakes";
+  nixConfig.extra-substituters = "https://imsofi.cachix.org https://nix-community.cachix.org";
+  nixConfig.extra-trusted-public-keys = "imsofi.cachix.org-1:KsqZ5nGoUfMHwzCGFnmTLMukGp7Emlrz/OE9Izq/nEM= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     home-manager = {
@@ -10,6 +14,10 @@
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
+    };
+    imsofi-nur = {
+      url = "github:imsofi/nur-pkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -26,7 +34,8 @@
       };
 
       overlays = [
-        (final: prev: { home-manager = home-manager.packages.${prev.system}.home-manager; })
+        (final: prev: { home-manager = inputs.home-manager.packages.${prev.system}.home-manager; })
+        (final: prev: { ferium = inputs.imsofi-nur.packages.${prev.system}.ferium; })
       ];
     };
     lib = pkgs.lib;

@@ -36,6 +36,26 @@
         "type": "github"
       }
     },
+    "imsofi-nur": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1652691952,
+        "narHash": "sha256-vlZbXomvXTUYzSNLowdpNAVlQvZQiP3C8Ktc+t7/cPg=",
+        "owner": "imsofi",
+        "repo": "nur-pkgs",
+        "rev": "5456c2b8f7d002a4a7fb865c0b235ade67042ee6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "imsofi",
+        "repo": "nur-pkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1652133925,
@@ -55,6 +75,7 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "home-manager": "home-manager",
+        "imsofi-nur": "imsofi-nur",
         "nixpkgs": "nixpkgs"
       }
     }
