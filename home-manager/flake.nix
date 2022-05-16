@@ -36,6 +36,7 @@
       overlays = [
         (final: prev: { home-manager = inputs.home-manager.packages.${prev.system}.home-manager; })
         (final: prev: { ferium = inputs.imsofi-nur.packages.${prev.system}.ferium; })
+        (final: prev: import ./pkgs { pkgs = final; })
       ];
     };
     lib = pkgs.lib;
