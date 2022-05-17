@@ -40,7 +40,12 @@
   - name: Set default keyboard layouts
     community.general.dconf:
       key: "/org/gnome/desktop/input-sources/sources"
-      value: "[('xkb', 'no+nodeadkeys'), ('xkb', 'us+colemak_dh')]"
+      value: "[('xkb', 'no+nodeadkeys')]"
+
+  - name: Set default keyboard options
+    community.general.dconf:
+      key: "/org/gnome/desktop/input-sources/xkb-options"
+      value: "['lv3:ralt_switch', 'nbsp:none']"
 
   - name: Window manager keybindings
     community.general.dconf:
