@@ -37,7 +37,7 @@ Clone the repo to your computer, I prefer it to be located in `~/.dotfiles`.
 Which can be done with the following commands:
 
 ```bash
-git clone https://git.sr.ht/~sofi/dotfiles ~/.dotfiles && \
+git clone https://github.com/imsofi/dotfiles ~/.dotfiles && \
 cd ~/.dotfiles/configs
 ```
 
