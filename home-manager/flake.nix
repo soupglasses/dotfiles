@@ -19,9 +19,13 @@
       url = "github:imsofi/nur-pkgs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nur, ... }@inputs:
   let
     system = "x86_64-linux";
     username = "sofi";
@@ -37,6 +41,7 @@
         (final: prev: { home-manager = inputs.home-manager.packages.${prev.system}.home-manager; })
         (final: prev: { ferium = inputs.imsofi-nur.packages.${prev.system}.ferium; })
         (final: prev: import ./pkgs { pkgs = final; })
+        nur.overlay
       ];
     };
     lib = pkgs.lib;
@@ -52,7 +57,9 @@
         _module.args.pkgs = lib.mkForce pkgs;
         _module.args.pkgs_i686 = lib.mkForce { };
 
-        imports = [ ./home.nix ];
+        imports = [
+          ./home.nix
+        ];
 
         home.homeDirectory = "/home/${username}";
         home.username = "${username}";
