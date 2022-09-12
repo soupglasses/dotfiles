@@ -12,6 +12,7 @@ return require("packer").startup(function()
 
   -- Colorscheme
   use "folke/tokyonight.nvim"
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Syntax parsing
   use {

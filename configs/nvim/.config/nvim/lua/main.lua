@@ -10,7 +10,8 @@ require "config.lsp.snippets"
 require "config.lsp.completions"
 
 -- Load theme based
-require "config.tokyonight"
+-- require "config.tokyonight"
+require "config.catppuccin"
 require "config.lualine"
 require "config.indentline"
 
