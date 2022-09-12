@@ -3,21 +3,15 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    imsofi-nur = {
-      url = "github:imsofi/nur-pkgs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+    nixGL.url = "github:guibou/nixGL";
+    nixGL.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nur, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nur, nixGL, ... }@inputs:
   let
     system = "x86_64-linux";
     username = "sofi";
