@@ -15,28 +15,20 @@
   let
     system = "x86_64-linux";
     username = "sofi";
-
-    mkPkgs = system: extras: import nixpkgs {
-      inherit system;
-      overlays = [ nixGL.overlays.default nur.overlay ];
-    } // extras;
   in {
-    packages.${system} = import ./pkgs/all-packages.nix (mkPkgs system { });
-    overlays.extras = [ (final: prev: import ./pkgs/extra-packages.nix { pkgs = final; }) ];
-    overlays.nixgl = [ (final: prev: import ./pkgs/nixgl-packages.nix { pkgs = final; nixgl = nixGL.packages.${final.hostPlatform.system}; }) ];
+    packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
 
     homeConfigurations.${username} = import "${home-manager}/modules" rec {
-      pkgs = (mkPkgs system {
-        overlays = [ self.overlays.extras self.overlays.nixgl ];
-      });
+      pkgs = import nixpkgs { inherit system; };
       check = true;
       configuration = {
         # Let us have a `inputs` argument inside of home-manager.
         _module.args.inputs = inputs;
+        _module.args.system = system;
 
         # WORKAROUND: https://github.com/nix-community/home-manager/pull/2720
-        _module.args.pkgs = pkgs.lib.mkForce pkgs;
-        _module.args.pkgs_i686 = pkgs.lib.mkForce { };
+        _module.args.pkgs = nixpkgs.lib.mkForce pkgs;
+        _module.args.pkgs_i686 = nixpkgs.lib.mkForce { };
 
         imports = [
           ./home.nix
