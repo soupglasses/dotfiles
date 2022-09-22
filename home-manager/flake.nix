@@ -15,11 +15,18 @@
   let
     system = "x86_64-linux";
     username = "sofi";
+    my_pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      overlays = [ self.overlays.extra self.overlays.nixgld ];
+    };
   in {
     packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
+    overlays.extra = (final: prev: import ./pkgs/extra-packages.nix { pkgs = prev; });
+    overlays.nixgld = (final: prev: { nixgld = import ./pkgs/nixgl-packages.nix { pkgs = prev; nixgl = nixGL.packages.${prev.system}; }; });
 
     homeConfigurations.${username} = import "${home-manager}/modules" rec {
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = my_pkgs;
       check = true;
       configuration = {
         # Let us have a `inputs` argument inside of home-manager.
@@ -39,9 +46,7 @@
       };
     };
 
-    devShells.${system}.default = let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in pkgs.mkShell {
+    devShells.${system}.default = let pkgs = my_pkgs; in pkgs.mkShell {
       buildInputs = [
         inputs.home-manager.packages.${system}.home-manager
         pkgs.nixUnstable
