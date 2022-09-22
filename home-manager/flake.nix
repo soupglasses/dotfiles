@@ -3,10 +3,10 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nix-index-database.url = "github:Mic92/nix-index-database";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
     nixGL.url = "github:guibou/nixGL";
     nixGL.inputs.nixpkgs.follows = "nixpkgs";
   };
