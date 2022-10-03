@@ -18,7 +18,7 @@
     my_pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
-      overlays = [ self.overlays.extra self.overlays.nixgld ];
+      overlays = [ self.overlays.extra self.overlays.nixgld nixGL.overlays.default ];
     };
   in {
     packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
