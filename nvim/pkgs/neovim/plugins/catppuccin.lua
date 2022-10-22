@@ -1,3 +1,3 @@
-vim.g.catppuccin_flavour = "latte"
-require"catppuccin".setup({ transparent_background = true })
+vim.g.catppuccin_flavour = "mocha"
+require"catppuccin".setup({ transparent_background = false })
 vim.api.nvim_command "colorscheme catppuccin"

@@ -28,6 +28,10 @@ let
         plugin = nvim-lspconfig;
         config = "luafile ${./lspconfig.lua}";
       }
+      {
+        plugin = lsp_lines-nvim;
+        config = "luafile ${./lsplines.lua}";
+      }
     ];
     withNodeJs = true;
     extraRuntimeDeps = with pkgs; [
