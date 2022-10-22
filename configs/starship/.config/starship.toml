@@ -47,7 +47,6 @@ symbol = "nix"
 [custom.virtualenv]
 command = 'printf "${VIRTUAL_ENV:+"venv"}"'
 description = "Shows when you are in a virtual environment"
-#format = "via [$output](purple)"
 format = "([$output](purple) )"
 when = 'true'
 shell = 'bash'
@@ -158,6 +157,10 @@ disabled = true
 
 [golang]
 symbol = "go "
+disabled = true
+
+[haskell]
+symbol = "hs "
 disabled = true
 
 [hg_branch]
