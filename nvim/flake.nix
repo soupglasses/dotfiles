@@ -12,44 +12,8 @@
   } @ inputs:
     utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-      neovimBuilderWithDeps = pkgs.callPackage ./neovimBuilder.nix {
-        inherit (pkgs) lib buildLuarocksPackage callPackage vimUtils nodejs neovim-unwrapped bundlerEnv ruby python3Packages writeText wrapNeovimUnstable;
-        rubyPath = "${nixpkgs}/pkgs/applications/editors/neovim";
-      };
-
-      neovimConfig = neovimBuilderWithDeps.makeNeovimConfig {
-        customRC = "luafile ${./settings.lua}";
-        plugins = with pkgs.vimPlugins; [
-          {
-            plugin = nvim-treesitter.withPlugins (_: (
-              pkgs.lib.subtractLists (with pkgs.tree-sitter-grammars; [
-                tree-sitter-agda
-                tree-sitter-kotlin
-                tree-sitter-sql
-                tree-sitter-verilog
-              ])
-              pkgs.tree-sitter.allGrammars
-            ));
-            config = "luafile ${./tree-sitter.lua}";
-          }
-          {
-            plugin = catppuccin-nvim;
-            config = "luafile ${./catppuccin.lua}";
-          }
-          {
-            plugin = nvim-lspconfig;
-            config = "luafile ${./lspconfig.lua}";
-          }
-        ];
-        withNodeJs = true;
-        extraRuntimeDeps = with pkgs; [
-          rnix-lsp
-          nodePackages.pyright
-          sumneko-lua-language-server
-        ];
-      };
     in {
-      packages.neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig;
+      packages = import ./pkgs { inherit pkgs inputs; };
       checks = let
         nmt = pkgs.fetchFromGitLab {
           owner = "rycee";
