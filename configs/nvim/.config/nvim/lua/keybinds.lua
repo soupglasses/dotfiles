@@ -10,8 +10,28 @@ end
 map('', '<Space>', '<Nop>')
 vim.g.mapleader = ' '
 
--- Add keyboard shortcut to clear current search
-map('n', '<leader>c', ':nohl<CR>')
+-- Keep visual selection after indenting
+map('v', '<', '<gv')
+map('v', '>', '>gv')
+
+-- Move selected line / block of text in visual mode
+map('x', 'K', ':move \'<-2<CR>gv-gv')
+map('x', 'J', ':move \'>+1<CR>gv-gv')
+map('n', '<A-k>', ':move -2<CR>==')
+map('n', '<A-j>', ':move +<CR>==')
+
+-- Toggle highlights
+map('n', "<Leader>h", ":set hlsearch!<CR>")
+
+-- Emacs-like sol and eol
+map('n', '<C-e>', '$')
+map('n', '<C-a>', '0')
+map('i', '<C-e>', '<Esc>A')
+map('i', '<C-a>', '<Esc>I')
+map('i', '<M-f>', '<S-Right>')
+map('i', '<M-b>', '<S-left>')
+map('i', '<M-p>', '<Up>')
+map('i', '<M-n>', '<Down>')
 
 -- Make `Y` yank to the end of the line
 map('n', 'Y', 'y$')
