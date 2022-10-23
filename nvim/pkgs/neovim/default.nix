@@ -12,9 +12,12 @@ let
         plugin = nvim-treesitter.withPlugins (_: (
           pkgs.lib.subtractLists (with pkgs.tree-sitter-grammars; [
             tree-sitter-agda
+            tree-sitter-cuda
             tree-sitter-kotlin
             tree-sitter-sql
             tree-sitter-verilog
+            tree-sitter-ql-dbscheme
+            tree-sitter-fluent
           ])
           pkgs.tree-sitter.allGrammars
         ));
