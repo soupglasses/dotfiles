@@ -15,13 +15,15 @@ map_key('v', '<', '<gv')
 map_key('v', '>', '>gv')
 
 -- Move selected line / block of text in visual mode
-map_key('x', 'K', ':move \'<-2<CR>gv-gv')
-map_key('x', 'J', ':move \'>+1<CR>gv-gv')
-map_key('n', '<A-k>', ':move -2<CR>==')
-map_key('n', '<A-j>', ':move +<CR>==')
+map_key('x', '<M-j>', ':move \'>+1<CR>gv-gv')
+map_key('x', '<M-k>', ':move \'<-2<CR>gv-gv')
+map_key('n', '<M-j>', ':move +<CR>==')
+map_key('n', '<M-k>', ':move -2<CR>==')
 
 -- Clear search with <Esc>
 map_key('', '<Esc>', ':nohlsearch<Esc>')
+map_key('n', 'gw', '*N')
+map_key('x', 'gw', '*N')
 
 -- Emacs-like sol and eol
 map_key('n', '<C-e>', '$')
@@ -41,9 +43,6 @@ map_key('n', '<C-h>', '<C-w>h')
 map_key('n', '<C-j>', '<C-w>j')
 map_key('n', '<C-k>', '<C-w>k')
 map_key('n', '<C-l>', '<C-w>l')
-
--- Open a Terminal window with Ctrl + T
-map_key('n', '<C-t>', ':Term<CR>', { noremap = true })
 
 -- Allow terminal mode to be exited with ESC
 map_key('t', '<Esc>', '<C-\\><C-n>')
