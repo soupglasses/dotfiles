@@ -66,3 +66,8 @@ Look at youtube.
 
 # Handy links:
 - https://github.com/rockerBOO/awesome-neovim
+- https://github.com/nanotee/nvim-lua-guide
+- https://github.com/mhinz/vim-galore
+- https://github.com/folke/dot/blob/master/config/nvim/lua/config/options.lua
+- https://github.com/AstroNvim/AstroNvim/blob/main/lua/core/mappings.lua
+- https://github.com/LunarVim/Neovim-from-scratch/blob/master/lua/user/impatient.lua
