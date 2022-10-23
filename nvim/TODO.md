@@ -13,6 +13,16 @@ Would not require messing with `$PATH`.
 - https://github.com/jakehamilton/neovim/blob/c021f95a7ac55fab17784e94b9cf39a6302882b2/packages/neovim/lua/lspconfig.lua#L91
 - https://github.com/jakehamilton/neovim/blob/c021f95a7ac55fab17784e94b9cf39a6302882b2/packages/neovim/lua/config.nix#L71
 
+## Play with `hydra.nvim`
+- https://github.com/anuvyklack/hydra.nvim
+
+## Play with lsp status tools.
+- https://github.com/arkav/lualine-lsp-progress
+- https://github.com/nvim-lua/lsp-status.nvim
+
+## Work in a base-16 theme with `mini-base16`:
+- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-base16.md#features
+
 ## Get a modern lsp setup going.
 - Look into nvim-cmp.
 - Figure out what snippets are.
