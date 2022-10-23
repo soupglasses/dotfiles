@@ -1,4 +1,4 @@
-local function map(mode, lhs, rhs, opts)
+local function map_key(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
   if opts then
     options = vim.tbl_extend('force', options, opts)
@@ -7,46 +7,46 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- Remap space to leader
-map('', '<Space>', '<Nop>')
+map_key('', '<Space>', '<Nop>')
 vim.g.mapleader = ' '
 
 -- Keep visual selection after indenting
-map('v', '<', '<gv')
-map('v', '>', '>gv')
+map_key('v', '<', '<gv')
+map_key('v', '>', '>gv')
 
 -- Move selected line / block of text in visual mode
-map('x', 'K', ':move \'<-2<CR>gv-gv')
-map('x', 'J', ':move \'>+1<CR>gv-gv')
-map('n', '<A-k>', ':move -2<CR>==')
-map('n', '<A-j>', ':move +<CR>==')
+map_key('x', 'K', ':move \'<-2<CR>gv-gv')
+map_key('x', 'J', ':move \'>+1<CR>gv-gv')
+map_key('n', '<A-k>', ':move -2<CR>==')
+map_key('n', '<A-j>', ':move +<CR>==')
 
--- Toggle highlights
-map('n', "<Leader>h", ":set hlsearch!<CR>")
+-- Clear search with <Esc>
+map_key('', '<Esc>', ':nohlsearch<Esc>')
 
 -- Emacs-like sol and eol
-map('n', '<C-e>', '$')
-map('n', '<C-a>', '0')
-map('i', '<C-e>', '<Esc>A')
-map('i', '<C-a>', '<Esc>I')
-map('i', '<M-f>', '<S-Right>')
-map('i', '<M-b>', '<S-left>')
-map('i', '<M-p>', '<Up>')
-map('i', '<M-n>', '<Down>')
+map_key('n', '<C-e>', '$')
+map_key('n', '<C-a>', '0')
+map_key('i', '<C-e>', '<Esc>A')
+map_key('i', '<C-a>', '<Esc>I')
+map_key('i', '<M-f>', '<S-Right>')
+map_key('i', '<M-b>', '<S-left>')
+map_key('i', '<M-p>', '<Up>')
+map_key('i', '<M-n>', '<Down>')
 
 -- Make `Y` yank to the end of the line
-map('n', 'Y', 'y$')
+map_key('n', 'Y', 'y$')
 
 -- Move around splits using Ctrl + {h,j,k,l}
-map('n', '<C-h>', '<C-w>h')
-map('n', '<C-j>', '<C-w>j')
-map('n', '<C-k>', '<C-w>k')
-map('n', '<C-l>', '<C-w>l')
+map_key('n', '<C-h>', '<C-w>h')
+map_key('n', '<C-j>', '<C-w>j')
+map_key('n', '<C-k>', '<C-w>k')
+map_key('n', '<C-l>', '<C-w>l')
 
 -- Open a Terminal window with Ctrl + T
-map('n', '<C-t>', ':Term<CR>', { noremap = true })
+map_key('n', '<C-t>', ':Term<CR>', { noremap = true })
 
 -- Allow terminal mode to be exited with ESC
-map('t', '<Esc>', '<C-\\><C-n>')
+map_key('t', '<Esc>', '<C-\\><C-n>')
 
 -- Vista tag-viewer
-map('n', '<leader>m', ':Vista<CR>')
+map_key('n', '<leader>m', ':Vista<CR>')
