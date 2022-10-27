@@ -16,11 +16,8 @@ let
         vim.cmd [[let &packpath = &runtimepath]]
       EOF
 
-      luafile ${./settings.lua}
-      luafile ${./tree-sitter.lua}
-      luafile ${./plugins/catppuccin.lua}
-      luafile ${./lspconfig.lua}
-      luafile ${./lsplines.lua}
+      set runtimepath^=${./config}
+      luafile ${./config/init.lua}
     '';
     plugins = with pkgs.vimPlugins; [
       {
@@ -37,15 +34,9 @@ let
           pkgs.tree-sitter.allGrammars
         ));
       }
-      {
-        plugin = catppuccin-nvim;
-      }
-      {
-        plugin = nvim-lspconfig;
-      }
-      {
-        plugin = lsp_lines-nvim;
-      }
+      { plugin = catppuccin-nvim; }
+      { plugin = nvim-lspconfig; }
+      { plugin = lsp_lines-nvim; }
     ];
     withNodeJs = true;
     extraRuntimeDeps = with pkgs; [
