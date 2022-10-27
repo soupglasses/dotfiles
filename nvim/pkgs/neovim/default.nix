@@ -6,7 +6,22 @@ let
   };
 
   neovimConfig = neovimBuilderWithDeps.makeNeovimConfig {
-    customRC = "luafile ${./settings.lua}";
+    customRC = ''
+      lua << EOF
+        vim.opt.rtp:remove(table.concat({vim.call("stdpath", "data"), "site"}, "/"))
+        vim.opt.rtp:remove(table.concat({vim.call("stdpath", "data"), "site", "after"}, "/"))
+        vim.opt.rtp:remove(vim.call("stdpath", "config"))
+        vim.opt.rtp:remove(table.concat({vim.call("stdpath", "config"), "after"}, "/"))
+
+        vim.cmd [[let &packpath = &runtimepath]]
+      EOF
+
+      luafile ${./settings.lua}
+      luafile ${./tree-sitter.lua}
+      luafile ${./plugins/catppuccin.lua}
+      luafile ${./lspconfig.lua}
+      luafile ${./lsplines.lua}
+    '';
     plugins = with pkgs.vimPlugins; [
       {
         plugin = nvim-treesitter.withPlugins (_: (
@@ -21,19 +36,15 @@ let
           ])
           pkgs.tree-sitter.allGrammars
         ));
-        config = "luafile ${./tree-sitter.lua}";
       }
       {
         plugin = catppuccin-nvim;
-        config = "luafile ${./plugins/catppuccin.lua}";
       }
       {
         plugin = nvim-lspconfig;
-        config = "luafile ${./lspconfig.lua}";
       }
       {
         plugin = lsp_lines-nvim;
-        config = "luafile ${./lsplines.lua}";
       }
     ];
     withNodeJs = true;
