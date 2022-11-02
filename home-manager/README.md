@@ -1,7 +1,11 @@
-# Nix and Home-manager for legacy systems
+# Nix and Home-Manager for non-NixOS systems
+
+What is Nix?
 
 > Nix is a cross-platform package manager that utilizes a purely functional deployment model where software is installed into unique directories generated through cryptographic hashes. It is also the name of the tool's programming language. A package's hash takes into account the dependencies, which is claimed to eliminate dependency hell.[2] This package management model advertises more reliable, reproducible, and portable packages.  
 [https://en.wikipedia.org/wiki/Nix_(package_manager)](https://en.wikipedia.org/wiki/Nix_(package_manager))
+
+What is Home-Manager?
 
 > Home manager provides a basic system for managing a user environment using the Nix package manager together with the Nix libraries found in Nixpkgs. It allows declarative configuration of user specific (non global) packages and dotfiles.  
 [https://github.com/nix-community/home-manager](https://github.com/nix-community/home-manager)
@@ -11,40 +15,65 @@
 You will need a reasonably up to date nix install. I have attempted to make
 this script as backwards compatible as possible.
 
-### 1. Install nix
+### Install Nix - Reccomended method
 
-#### Reccomended method
-
-Use a distribution packaged Nix. It is currently more up to date than
-the official methods for installing Nix. Plus it ships with extra patches to help 
-running nix nicely. Especially for SELinux-enabled distros.
+I reccomend you use a distribution-spessific package for Nix. As it is currently
+more up to date than the official methods for installing Nix. Plus it ships with
+extra helpers to get nix running nicely under non-NixOS enviroments.
+This is especially true for SELinux-enabled distros like Fedora and CentOS.
 
 Follow the steps:
 [https://nix-community.github.io/nix-installers/](https://nix-community.github.io/nix-installers/).
 
-TL;DR would be to run this command, swapping out with your package manager
-of choice:
+In short, it would be to run the command below, swapping out with your package
+manager of choice:
 
 ```bash
 $ sudo dnf install ~/Downloads/nix-multi-user-x.x.x.rpm
 ```
 
-You can ignore any warnings about nixbld accounts. It seems intentional.
+You can safely ignore any warnings about `nixbld` accounts. It is just informing
+you that nix is creating its nix-build accounts. These get removed when you run
+`sudo dnf remove nix-multi-user`.
 
-#### Alternative method
+### Install Nix - Official method
 
 If you cannot follow the method above, maybe due to running an exotic
-operating system, or simply that the above option failed. You can follow the
+operating system that is not packaged above, you can follow the
 official instructions here:
 [https://nixos.org/download.html](https://nixos.org/download.html).
 
-Do be warned, this is an install script and may mess up your system!
+Do be warned, this is a `.sh` script you run as root! It may mess up your system!
+
+Once installed you will need to add this line into `~/.config/nix/nix.conf`,
+or `/etc/nix/nix.conf` if you want it to be system-wide.
+
+```bash
+# ~/.config/nix/nix.conf
+experimental-features = nix-command flakes
+```
+
+This will give you access to the modern `nix` commands (`nix build`/`nix run`),
+together with the `nix flake` subset of commands, which are for `flake.nix` and
+`flake.lock` files.
+
 
 ### 2. Install home-manager 
+
+ONLY FOLLOW THIS IF YOU WANT HOME-MANAGER, WHICH GIVES YOU A DECLERATIVE DOTFILE
+MANAGEMENT SETUP.
+
+Skip to the HOWTO section below if you just want to use nix for its package
+management.
+
+---
 
 Now, I need to give you a warning before we continue. This configuration is
 my own personal thing, so you cannot simply copy-paste the next few
 commands, as it will likely result in error messages and headaches.
+
+I would also reccomend you fork the project if you plan to keep this longer
+term.
 
 So first you need to change the `flake.nix` file. In here there will be a
 username variable you need to change to your username.
@@ -76,6 +105,40 @@ $ home-manager switch --flake .
 ```
 
 Congratulations, you are now nixing without NixOS!
+
+## HOWTO: Nix
+
+Nix downloads all its binaries to a location called `/nix/store`. So do not be afraid
+if you want to run packages you already have installed. Nix will not touch your
+normal system install.
+
+For example, you can run htop from `nixpkgs`, the default repository for nix packages.
+
+```
+nix run nixpkgs#htop`
+```
+
+Now watch closely, as you can watch it download `htop` as well as any dependencies it
+will need.
+
+TODO
+
+`nix develop`
+
+`nix build`
+
+`nix build -L`
+
+https://myme.no/posts/2022-01-16-nixos-the-ultimate-dev-environment.html#the-elevator-pitch
+
+`.#`
+
+Direnv
+
+`nix profile`
+
+nixpkgs search
+
 
 ## Reccomended reading:
 
