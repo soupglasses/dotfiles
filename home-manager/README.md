@@ -49,7 +49,7 @@ commands, as it will likely result in error messages and headaches.
 So first you need to change the `flake.nix` file. In here there will be a
 username variable you need to change to your username.
 
-```nix
+```
     username = "sofi";
 ```
 
