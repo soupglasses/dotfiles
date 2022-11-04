@@ -1,5 +1,5 @@
 require('my.settings')
-require('my.tree-sitter')
 require('my.catppuccin')
+require('my.tree-sitter')
 require('my.lspconfig')
 require('my.lsplines')
