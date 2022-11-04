@@ -43,6 +43,7 @@ let
       rnix-lsp
       nodePackages.pyright
       sumneko-lua-language-server
+      rust-analyzer
     ];
   };
 in
