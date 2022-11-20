@@ -139,6 +139,26 @@ Direnv
 
 nixpkgs search
 
+## Maintinence
+
+TODO. Flesh this out more.
+
+```bash
+# Show all weakly-linked GC-roots (f.x. result folders that should be manually deleted).
+ls -l /nix/var/nix/gcroots/auto/
+
+# Remove all home-manager generations
+home-manager expire-generations "-14 days"
+
+# Remove all previous profile generations.
+nix profile wipe-history
+
+# Garbage collect all non GC-root derivations.
+nix-collect-garbage
+
+# Unlink all previous generations and garbage collect (a handy all-in-one command).
+nix-collect-garbage -d
+```
 
 ## Reccomended reading:
 
