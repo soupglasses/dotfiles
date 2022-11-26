@@ -17,9 +17,12 @@ let
       EOF
 
       set runtimepath^=${./config}
-      luafile ${./config/init.lua}
+      set runtimepath+=${./config}/after
+      luafile ${./config}/init.lua
     '';
     plugins = with pkgs.vimPlugins; [
+      # Syntax
+      { plugin = vim-pandoc-syntax; }
       {
         plugin = nvim-treesitter.withPlugins (_: (
           pkgs.lib.subtractLists (with pkgs.tree-sitter-grammars; [
@@ -34,12 +37,26 @@ let
           pkgs.tree-sitter.allGrammars
         ));
       }
+      # Themes
       { plugin = catppuccin-nvim; }
+
+      # UI
+      { plugin = indent-blankline-nvim; }
+
+      # Dependencies
+      { plugin = plenary-nvim; } # For: null-ls-nvim
+
+      # LSP
       { plugin = nvim-lspconfig; }
-      { plugin = lsp_lines-nvim; }
+      { plugin = nvim-cmp; }
+      { plugin = cmp-nvim-lua; }
+      { plugin = cmp-nvim-lsp; }
+      { plugin = null-ls-nvim; }
     ];
     withNodeJs = true;
     extraRuntimeDeps = with pkgs; [
+      alejandra
+      deadnix
       rnix-lsp
       nodePackages.pyright
       sumneko-lua-language-server

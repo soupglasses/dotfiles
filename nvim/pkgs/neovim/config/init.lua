@@ -1,5 +1,4 @@
-require('my.settings')
-require('my.catppuccin')
-require('my.tree-sitter')
-require('my.lspconfig')
-require('my.lsplines')
+require('my.mappings')
+require('my.options')
+
+require('my.lsp')
