@@ -37,6 +37,9 @@ deleted = "([-${count}](yellow) )"
 style = "dimmed white"
 format = '([$all_status$ahead_behind]($style))'
 
+[jobs]
+symbol = "j"
+
 [nix_shell]
 format = '[$symbol( $state)( \[$name\])]($style) '
 style = "purple"
