@@ -41,7 +41,8 @@ format = '([$all_status$ahead_behind]($style))'
 symbol = "j"
 
 [nix_shell]
-format = '[$symbol( $state)( \[$name\])]($style) '
+#format = '[$symbol( $state)( \[$name\])]($style) '
+format = '[$symbol( $state)]($style) '
 style = "purple"
 impure_msg = ""
 pure_msg = "pure"
