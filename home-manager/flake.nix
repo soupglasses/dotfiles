@@ -2,16 +2,15 @@
   description = "My personal dotfiles";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "nixpkgs/nixos-22.11";
     nix-index-database.url = "github:Mic92/nix-index-database";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nur.url = "github:nix-community/NUR";
     nixGL.url = "github:guibou/nixGL";
     nixGL.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nur, nixGL, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixGL, ... }@inputs:
   let
     system = "x86_64-linux";
     username = "sofi";
