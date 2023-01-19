@@ -2,15 +2,16 @@
   description = "My personal dotfiles";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.11";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-22.11";
     nix-index-database.url = "github:Mic92/nix-index-database";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixGL.url = "github:guibou/nixGL";
-    nixGL.inputs.nixpkgs.follows = "nixpkgs";
+    nixGL.inputs.nixpkgs.follows = "nixpkgs-stable";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixGL, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nixGL, ... }@inputs:
   let
     system = "x86_64-linux";
     username = "sofi";
@@ -20,7 +21,7 @@
       overlays = [ self.overlays.extra self.overlays.nixgld nixGL.overlays.default ];
     };
   in {
-    packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
+    packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs-stable.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
     overlays.extra = (final: prev: import ./pkgs/extra-packages.nix { pkgs = prev; });
     overlays.nixgld = (final: prev: { nixgld = import ./pkgs/nixgl-packages.nix { pkgs = prev; nixgl = nixGL.packages.${prev.system}; }; });
 
