@@ -155,9 +155,13 @@ nix profile wipe-history
 
 # Garbage collect all non GC-root derivations.
 nix-collect-garbage
-
+```
+Or if you would like a quick "delete all" that will capture the worst offenders without having to worry too much:
+```bash
 # Unlink all previous generations and garbage collect (a handy all-in-one command).
 nix-collect-garbage -d
+# Clean up boot entries in systemd-boot/grub2.
+/run/current-system/bin/switch-to-configuration boot
 ```
 
 ## Reccomended reading:
