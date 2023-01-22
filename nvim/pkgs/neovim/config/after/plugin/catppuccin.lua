@@ -4,5 +4,12 @@ if not ok then
 end
 
 -- flavours => mocha, macchiato, frappe, latte
-catppuccin.setup { flavour = 'latte' }
+catppuccin.setup {
+  flavour = 'latte',
+  color_overrides = {
+    latte = {
+      base = "#ffffff"
+    }
+  }
+}
 vim.api.nvim_command 'colorscheme catppuccin'
