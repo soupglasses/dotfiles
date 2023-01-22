@@ -138,17 +138,23 @@
     withNodeJs = false;
     withPython3 = false;
     extraRuntimeDeps = with pkgs; [
+      # Generic
+      codespell
+      # Lua
+      stylua
+      # Nix
       alejandra
-      black
       deadnix
       statix
-      stylua
+      # Python
+      black
 
-      rnix-lsp
-      nodePackages.pyright
-      sumneko-lua-language-server
-      rust-analyzer
+      # LSP servers
       elixir_ls
+      nodePackages.pyright
+      rnix-lsp
+      rust-analyzer
+      sumneko-lua-language-server
     ];
   };
 in
