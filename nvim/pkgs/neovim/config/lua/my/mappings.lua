@@ -6,7 +6,15 @@ local map = require("util").map
 -- config, as any mappings created before you have set it will point to
 -- the previous (default) leader.
 vim.g.mapleader = " "
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = " "
+
+-- Disable default actions for <Space>
+map("n", "<Space>", "<Nop>")
+map("v", "<Space>", "<Nop>")
+
+-- Remap movement keys to deal with word wrap
+map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
+map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- Keep visual selection after indenting
 map("v", "<", "<gv")
