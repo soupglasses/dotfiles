@@ -38,10 +38,13 @@
 
       # LSP
       {plugin = nvim-lspconfig;}
+      {plugin = fidget-nvim;}
+      {plugin = null-ls-nvim;}
+
+      # Autocomplete
       {plugin = nvim-cmp;}
       {plugin = cmp-nvim-lua;}
       {plugin = cmp-nvim-lsp;}
-      {plugin = null-ls-nvim;}
     ];
     withRuby = false;
     withNodeJs = false;
