@@ -51,6 +51,8 @@
     extraRuntimeDeps = with pkgs; [
       # Generic
       codespell
+      # Elixir
+      elixir
       # Lua
       stylua
       # Nix

@@ -13,6 +13,8 @@ null_ls.setup({
     -- Generic
     diagnostics.codespell,
     diagnostics.trail_space,
+    -- Elixir
+    formatting.mix,
     -- Lua
     formatting.stylua,
     -- Nix
