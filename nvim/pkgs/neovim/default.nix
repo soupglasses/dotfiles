@@ -17,11 +17,12 @@
         vim.opt.rtp:remove(vim.call("stdpath", "config"))
         vim.opt.rtp:remove(table.concat({vim.call("stdpath", "config"), "after"}, "/"))
 
-        vim.cmd [[let &packpath = &runtimepath]]
-      EOF
+        -- Add in our user configuration
+        vim.opt.rtp:prepend("${./config}")
+        vim.opt.rtp:append(table.concat({"${./config}", "after"}, "/"))
 
-      set runtimepath^=${./config}
-      set runtimepath+=${./config}/after
+        vim.opt.packpath = vim.opt.rtp:get()
+      EOF
       luafile ${./config}/init.lua
     '';
     plugins = with pkgs.vimPlugins; [
@@ -34,9 +35,6 @@
 
       # UI
       {plugin = indent-blankline-nvim;}
-
-      # Dependencies
-      {plugin = plenary-nvim;} # For: null-ls-nvim
 
       # LSP
       {plugin = nvim-lspconfig;}
