@@ -10,14 +10,15 @@ vim.opt.hidden = true          -- Do not save when switching buffers
 vim.opt.mouse = 'a'            -- Enable mouse mode
 vim.opt.breakindent = true     -- Allow for cleanly wrapped indentation
 vim.opt.ignorecase = true      -- By default ignore case on search
-vim.opt.smartcase = true       -- Make search case sensetive on capital in search
-vim.opt.updatetime = 300       -- Speed up update times for plugins
+vim.opt.smartcase = true       -- Make search case sensitive on capital in search
+vim.opt.updatetime = 250       -- Speed up update times for plugins
 vim.opt.splitbelow = true      -- Vertical splits below the current window
 vim.opt.splitright = true      -- Horizontal splits to the right of current window
 vim.opt.title = true           -- Enable title
 vim.opt.scrolloff = 7          -- Have 5 lines of padding at top & bottom
 vim.opt.titlestring = [[%t%( %M%)%( (%{expand("%:~:.:h")})%)%( %a%)]]
 vim.opt.listchars = "nbsp:_,tab:>-,trail:.,extends:>,precedes:<"
+vim.opt.completeopt = "menuone,noselect"
 
 -- Window Spessific
 vim.opt.number = true          -- Show line numbers
