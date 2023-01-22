@@ -141,7 +141,6 @@
       alejandra
       black
       deadnix
-      nodePackages.prettier
       statix
       stylua
 
@@ -149,6 +148,7 @@
       nodePackages.pyright
       sumneko-lua-language-server
       rust-analyzer
+      elixir_ls
     ];
   };
 in
