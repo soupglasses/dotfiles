@@ -7,6 +7,7 @@ local servers = {
 	"sumneko_lua",
 	"pyright",
 	"rnix",
+  "elixirls",
 }
 
 for _, server in pairs(servers) do
