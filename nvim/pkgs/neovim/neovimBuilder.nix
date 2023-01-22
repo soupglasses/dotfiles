@@ -122,7 +122,7 @@ let
         ] ++ lib.optionals (binPath != "") [
           "--suffix" "PATH" ":" binPath
         ] ++ lib.optionals (extraBinPath != "") [
-          "--prefix" "PATH" ":" extraBinPath
+          "--suffix" "PATH" ":" extraBinPath
         ] ++ lib.optionals (luaEnv != null) [
           "--prefix" "LUA_PATH" ";" (neovim-unwrapped.lua.pkgs.luaLib.genLuaPathAbsStr luaEnv)
           "--prefix" "LUA_CPATH" ";" (neovim-unwrapped.lua.pkgs.luaLib.genLuaCPathAbsStr luaEnv)
