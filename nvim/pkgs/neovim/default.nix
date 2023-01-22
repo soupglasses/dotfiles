@@ -36,6 +36,7 @@
       # UI
       {plugin = indent-blankline-nvim;}
       {plugin = gitsigns-nvim;}
+      {plugin = lualine-nvim;}
 
       # LSP
       {plugin = nvim-lspconfig;}
