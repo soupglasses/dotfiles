@@ -9,16 +9,17 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixGL.url = "github:guibou/nixGL";
     nixGL.inputs.nixpkgs.follows = "nixpkgs-stable";
+    nvim.url = "github:imsofi/dotfiles?dir=nvim";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nixGL, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nixGL, nvim, ... }@inputs:
   let
     system = "x86_64-linux";
     username = "sofi";
     my_pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
-      overlays = [ self.overlays.extra self.overlays.nixgld nixGL.overlays.default ];
+      overlays = [ self.overlays.extra self.overlays.nixgld nixGL.overlays.default nvim.overlays.default ];
     };
   in {
     packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs-stable.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
