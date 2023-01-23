@@ -39,5 +39,7 @@
           ${self.packages.${system}.neovim}/bin/nvim -i NONE +quit! -e
         '';
       };
-    });
+    }) // {
+      overlays.default = (final: _prev: { nvim = self.packages.${final.system}.neovim; });
+    };
 }
