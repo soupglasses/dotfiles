@@ -48,11 +48,6 @@ local function lsp_keymaps(bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
 
-	nmap("<leader>e", vim.diagnostic.open_float)
-	nmap("<leader>q", vim.diagnostic.setloclist)
-	nmap("<leader>lj", vim.diagnostic.goto_next)
-	nmap("<leader>lk", vim.diagnostic.goto_prev)
-
   -- Create `:Format` for the local buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()

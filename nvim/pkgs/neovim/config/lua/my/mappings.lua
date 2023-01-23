@@ -6,7 +6,7 @@ local map = require("util").map
 -- config, as any mappings created before you have set it will point to
 -- the previous (default) leader.
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 
 -- Disable default actions for <Space>
 map("n", "<Space>", "<Nop>")
@@ -52,3 +52,9 @@ map("n", "<C-l>", "<C-w>l")
 
 -- Allow terminal mode to be exited with ESC
 map("t", "<Esc>", "<C-\\><C-n>")
+
+-- Diagnostic keybinds
+vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "[D]iagnostic [E]xpand" })
+vim.keymap.set("n", "<leader>dd", vim.diagnostic.setloclist, { desc = "[D]iagnostic List" })
+vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "[D]iagnostic [N]ext" })
+vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "[D]iagnostic [P]revious" })
