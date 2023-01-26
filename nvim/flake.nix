@@ -9,11 +9,11 @@
     nixpkgs,
     utils,
     ...
-  } @ inputs:
+  }:
     utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      packages = import ./pkgs { inherit pkgs inputs; };
+      packages = import ./pkgs { inherit pkgs nixpkgs; };
       checks = let
         nmt = pkgs.fetchFromGitLab {
           owner = "rycee";

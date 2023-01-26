@@ -1,11 +1,11 @@
 {
   pkgs,
-  inputs,
+  nixpkgs,
   ...
 }: let
   neovimBuilderWithDeps = pkgs.callPackage ./neovimBuilder.nix {
     inherit (pkgs) buildLuarocksPackage;
-    rubyPath = "${inputs.nixpkgs}/pkgs/applications/editors/neovim";
+    rubyPath = "${nixpkgs}/pkgs/applications/editors/neovim";
   };
 
   neovimConfig = neovimBuilderWithDeps.makeNeovimConfig {

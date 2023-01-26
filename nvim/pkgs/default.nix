@@ -1,3 +1,3 @@
-{ pkgs, inputs, ... }: {
-  neovim = import ./neovim/default.nix { inherit pkgs inputs; };
+{ pkgs, nixpkgs, ... }: {
+  neovim = import ./neovim/default.nix { inherit pkgs nixpkgs; };
 }
