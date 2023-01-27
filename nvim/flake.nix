@@ -13,7 +13,7 @@
     utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      packages = import ./pkgs { inherit pkgs nixpkgs; };
+      packages = import ./pkgs { inherit pkgs; };
       checks = let
         nmt = pkgs.fetchFromGitLab {
           owner = "rycee";
