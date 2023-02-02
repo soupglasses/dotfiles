@@ -22,8 +22,8 @@
     };
   in {
     packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
-    overlays.extra = (final: prev: import ./pkgs/extra-packages.nix { pkgs = prev; });
-    overlays.nixgld = (final: prev: { nixgld = import ./pkgs/nixgl-packages.nix { pkgs = prev; nixgl = nixGL.packages.${prev.system}; }; });
+    overlays.extra = (_final: prev: import ./pkgs/extra-packages.nix { pkgs = prev; });
+    overlays.nixgld = (_final: prev: { nixgld = import ./pkgs/nixgl-packages.nix { pkgs = prev; nixgl = nixGL.packages.${prev.system}; }; });
 
     homeConfigurations.${username} = import "${home-manager}/modules" rec {
       pkgs = my_pkgs;
@@ -51,6 +51,6 @@
         inputs.home-manager.packages.${system}.home-manager
         pkgs.nixUnstable
       ];
-    }; 
+    };
   };
 }
