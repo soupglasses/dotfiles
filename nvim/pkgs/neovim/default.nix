@@ -66,9 +66,8 @@
 
       # LSP servers
       elixir_ls
+      nil
       nodePackages.pyright
-      rnix-lsp
-      rust-analyzer
       sumneko-lua-language-server
     ];
   };

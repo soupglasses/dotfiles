@@ -6,7 +6,7 @@ end
 local servers = {
 	"sumneko_lua",
 	"pyright",
-	"rnix",
+  "nil_ls",
   "elixirls",
 }
 
