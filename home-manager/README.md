@@ -15,11 +15,11 @@ What is Home-Manager?
 You will need a reasonably up to date nix install. I have attempted to make
 this script as backwards compatible as possible.
 
-### Install Nix - Reccomended method
+### Install Nix - Recommended method
 
-I reccomend you use a distribution-spessific package for Nix. As it is currently
+I recommend you use a distribution-spessific package for Nix. As it is currently
 more up to date than the official methods for installing Nix. Plus it ships with
-extra helpers to get nix running nicely under non-NixOS enviroments.
+extra helpers to get nix running nicely under non-NixOS environments.
 This is especially true for SELinux-enabled distros like Fedora and CentOS.
 
 Follow the steps:
@@ -69,7 +69,7 @@ together with the `nix flake` subset of commands, which are for `flake.nix` and
 `flake.lock` files.
 
 
-### 2. Install home-manager 
+### 2. Install home-manager
 
 ONLY FOLLOW THIS IF YOU WANT HOME-MANAGER, WHICH GIVES YOU A DECLERATIVE DOTFILE
 MANAGEMENT SETUP.
@@ -83,7 +83,7 @@ Now, I need to give you a warning before we continue. This configuration is
 my own personal thing, so you cannot simply copy-paste the next few
 commands, as it will likely result in error messages and headaches.
 
-I would also reccomend you fork the project if you plan to keep this longer
+I would also recommend you fork the project if you plan to keep this longer
 term.
 
 So first you need to change the `flake.nix` file. In here there will be a
@@ -99,10 +99,10 @@ file. It helps helps you build a declarative configuration on a non-NixOS
 based distribution. But its also a nice to have on NixOS, but i will skip
 that for now.
 
-I would reccomend you to read trough its manual first,
-but the main change would be to hook into your shell. Might sound scary at 
+I would recommend you to read through its manual first,
+but the main change would be to hook into your shell. Might sound scary at
 first, but you will just move your config file away from its install location,
-then use the `initExtra` option to import it back in. Either using 
+then use the `initExtra` option to import it back in. Either using
 your shell's source command: `source ~/.dotfiles/.bashrc`. Or use
 nix's builtin `builtins.readFile ../.bashrc` which will write in your file's
 contents into its own.
@@ -175,12 +175,12 @@ nix-collect-garbage -d
 /run/current-system/bin/switch-to-configuration boot
 ```
 
-## Reccomended reading:
+## Recommended reading:
 
-If you are new to Nix, i highly reccomend you to spend an hour reading up on
+If you are new to Nix, i highly recommend you to spend an hour reading up on
 the topic. As it is wildly different from package managers that you are used
 to. If you want to avoid mistakes, and learn how to keep your Nix Store so that
-it wont start to eat up all the space on your computer? I can reccomend reading
+it won't start to eat up all the space on your computer? I can recommend reading
 about it now, and not learn about it later.
 
 "Nix in my development workflow" is a great introduction for those who just
@@ -194,6 +194,6 @@ of `nix-channel --update`.
 
 ### Further reading
 
-Then for those who are more interested in learning about Nix, i would reccomend 
+Then for those who are more interested in learning about Nix, i would recommend
 also looking at this meta resource with everything you should need to know:
 [https://github.com/nix-community/awesome-nix](https://github.com/nix-community/awesome-nix).
