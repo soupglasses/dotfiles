@@ -41,7 +41,7 @@ you that nix is creating its nix-build accounts. These get removed when you run
 If you are running on Fedora/CentOS, i can also recommend making this file to
 let `nixpkgs`'s version of OpenSSH to work without errors.
 
-```sshconfig
+```bash
 # /etc/ssh/ssh_config.d/10-nixpkgs-support.conf
 Match all
     IgnoreUnknown "rsaminsize,gssapikexalgorithms"
