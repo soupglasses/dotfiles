@@ -9,6 +9,8 @@
     nixGL.url = "github:guibou/nixGL";
     nixGL.inputs.nixpkgs.follows = "nixpkgs";
     nvim.url = "github:imsofi/dotfiles?dir=nvim";
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat.flake = false;
   };
 
   outputs = { self, nixpkgs, home-manager, nixGL, nvim, ... }@inputs:
