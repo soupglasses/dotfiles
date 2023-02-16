@@ -145,11 +145,11 @@
       },
       "locked": {
         "dir": "nvim",
-        "lastModified": 1675710056,
-        "narHash": "sha256-2t7MK+xHax74YGcNqFSuskMMD8wSH5q+NQ+m3oE94Sg=",
+        "lastModified": 1676544372,
+        "narHash": "sha256-CID6D29/zbJ92N0LbSb1hTmPSS1bnl97rStKBp8q8mU=",
         "owner": "imsofi",
         "repo": "dotfiles",
-        "rev": "8891891e3ffbf4b42cf75d12e32af09a6eff26a7",
+        "rev": "788c78fb2f0f658949a9743712a355c3b5464e7a",
         "type": "github"
       },
       "original": {
