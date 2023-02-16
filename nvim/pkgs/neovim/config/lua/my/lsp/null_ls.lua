@@ -11,7 +11,7 @@ null_ls.setup({
   debug = false,
   sources = {
     -- Generic
-    diagnostics.codespell,
+    diagnostics.codespell.with({ extra_args = { "-L crate" } }),
     diagnostics.trail_space,
     -- Elixir
     formatting.mix,
