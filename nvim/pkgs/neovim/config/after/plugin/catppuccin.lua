@@ -5,6 +5,7 @@ end
 
 catppuccin.setup {
   flavour = 'mocha', -- mocha, macchiato, frappe, latte
+  compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
   color_overrides = {
     latte = { base = '#ffffff' }
   }

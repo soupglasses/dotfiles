@@ -68,7 +68,7 @@
       elixir_ls
       nil
       nodePackages.pyright
-      sumneko-lua-language-server
+      lua-language-server
     ];
   };
 in

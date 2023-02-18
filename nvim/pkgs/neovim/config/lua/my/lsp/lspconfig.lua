@@ -4,7 +4,7 @@ if not ok then
 end
 
 local servers = {
-	"sumneko_lua",
+	"lua_ls",
 	"pyright",
   "nil_ls",
   "elixirls",
