@@ -157,16 +157,15 @@
     "nvim": {
       "inputs": {
         "flake-compat": "flake-compat_2",
-        "nixpkgs": "nixpkgs_3",
-        "utils": "utils_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "dir": "nvim",
-        "lastModified": 1676724549,
-        "narHash": "sha256-zPSrPONt38iL6QP2j6kXL6xBspmKlYLBwJXaM9bVV9c=",
+        "lastModified": 1676727192,
+        "narHash": "sha256-SnpHSF47uNpgmhUEXPimFAn0W9REJ59Fv2i4w1wleYo=",
         "owner": "imsofi",
         "repo": "dotfiles",
-        "rev": "8b5b298990aebd4897c096012f6c9e60fd1983e0",
+        "rev": "af91a93c5c84f1b6f4cff7c27aff2dea03987a82",
         "type": "github"
       },
       "original": {
@@ -193,21 +192,6 @@
         "owner": "numtide",
         "repo": "flake-utils",
         "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "utils_2": {
-      "locked": {
-        "lastModified": 1676283394,
-        "narHash": "sha256-XX2f9c3iySLCw54rJ/CZs+ZK6IQy7GXNY4nSOyu2QG4=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "3db36a8b464d0c4532ba1c7dda728f4576d6d073",
         "type": "github"
       },
       "original": {
