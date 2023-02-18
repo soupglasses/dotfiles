@@ -2,7 +2,6 @@
   description = "Nix flake including neovim configurations";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.utils.url = "github:numtide/flake-utils";
   inputs.flake-compat = {
     url = "github:edolstra/flake-compat";
     flake = false;
@@ -11,14 +10,24 @@
   outputs = {
     self,
     nixpkgs,
-    utils,
     ...
-  }:
-    utils.lib.eachDefaultSystem (system: let
+  }: let
+    supportedSystems = [
+      "aarch64-darwin"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "x86_64-linux"
+    ];
+    foldEachSystem = systems: f:
+      builtins.foldl' nixpkgs.lib.recursiveUpdate {}
+      (nixpkgs.lib.forEach systems f);
+  in
+    foldEachSystem supportedSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      packages = import ./pkgs { inherit pkgs; };
-      checks = let
+      packages.${system} = import ./pkgs {inherit pkgs;};
+      overlays.default = final: _prev: {nvim = self.packages.${final.system}.neovim;};
+      checks.${system} = let
         nmt = pkgs.fetchFromGitLab {
           owner = "rycee";
           repo = "nmt";
@@ -43,7 +52,5 @@
           ${self.packages.${system}.neovim}/bin/nvim -i NONE +quit! -e
         '';
       };
-    }) // {
-      overlays.default = (final: _prev: { nvim = self.packages.${final.system}.neovim; });
-    };
+    });
 }
