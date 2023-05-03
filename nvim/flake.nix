@@ -13,19 +13,18 @@
     ...
   }: let
     supportedSystems = [
-      "aarch64-darwin"
       "aarch64-linux"
-      "x86_64-darwin"
       "x86_64-linux"
     ];
-    foldEachSystem = systems: f:
-      builtins.foldl' nixpkgs.lib.recursiveUpdate {}
-      (nixpkgs.lib.forEach systems f);
-  in
-    foldEachSystem supportedSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      packages.${system} = import ./pkgs {inherit pkgs;};
-      overlays.default = final: _prev: {nvim = self.packages.${final.system}.neovim;};
-    });
+
+    eachSystem = f:
+      nixpkgs.lib.genAttrs supportedSystems (system:
+        f {
+          inherit system;
+          pkgs = nixpkgs.legacyPackages.${system};
+        });
+  in {
+    packages = eachSystem ({pkgs, ...}: import ./pkgs {inherit pkgs;});
+    overlays.default = final: _prev: {nvim = self.packages.${final.system}.neovim;};
+  };
 }
