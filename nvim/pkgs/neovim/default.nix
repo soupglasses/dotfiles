@@ -71,5 +71,10 @@
       lua-language-server
     ];
   };
-in
-  pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig
+
+  neovim-drv = (pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig).overrideAttrs (prev: {
+    passthru = prev.passthru // {
+      tests = pkgs.callPackage ./tests.nix { inherit neovim-drv; };
+    };
+  });
+in neovim-drv
