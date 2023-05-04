@@ -8,19 +8,18 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixGL.url = "github:guibou/nixGL";
     nixGL.inputs.nixpkgs.follows = "nixpkgs";
-    nvim.url = "github:imsofi/dotfiles?dir=nvim";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
   };
 
-  outputs = { self, nixpkgs, home-manager, nixGL, nvim, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixGL, ... }@inputs:
   let
     system = "x86_64-linux";
     username = "sofi";
     my_pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
-      overlays = [ self.overlays.extra self.overlays.nixgld nixGL.overlays.default nvim.overlays.default ];
+      overlays = [ self.overlays.extra self.overlays.nixgld nixGL.overlays.default ];
     };
   in {
     packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
