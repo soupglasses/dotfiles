@@ -2,12 +2,7 @@
   pkgs,
   ...
 }: let
-  neovimBuilderWithDeps = pkgs.callPackage ./neovimBuilder.nix {
-    inherit (pkgs) buildLuarocksPackage;
-    rubyPath = "${pkgs.path}/pkgs/applications/editors/neovim";
-  };
-
-  neovimConfig = neovimBuilderWithDeps.makeNeovimConfig {
+  neovimConfig = pkgs.neovimUtils.makeNeovimConfig {
     customRC = ''
       lua << EOF
         -- Remove per user configuration
@@ -50,29 +45,33 @@
     withRuby = false;
     withNodeJs = false;
     withPython3 = false;
-    extraRuntimeDeps = with pkgs; [
-      # Generic
-      codespell
-      # Elixir
-      elixir
-      # Lua
-      stylua
-      # Nix
-      alejandra
-      deadnix
-      statix
-      # Python
-      black
-
-      # LSP servers
-      elixir_ls
-      nil
-      nodePackages.pyright
-      lua-language-server
-    ];
   };
 
-  neovim-drv = (pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped neovimConfig).overrideAttrs (prev: {
+  extraPackages = with pkgs; [
+    # Generic
+    codespell
+    # Elixir
+    elixir
+    # Lua
+    stylua
+    # Nix
+    alejandra
+    deadnix
+    statix
+    # Python
+    black
+
+    # LSP servers
+    elixir_ls
+    nil
+    nodePackages.pyright
+    lua-language-server
+  ];
+  extraWrapperArgs = ''--suffix PATH : "${pkgs.lib.makeBinPath extraPackages}"'';
+
+  neovim-drv = (pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (neovimConfig // {
+    wrapperArgs = pkgs.lib.escapeShellArgs neovimConfig.wrapperArgs + " " + extraWrapperArgs;
+  })).overrideAttrs (prev: {
     passthru = prev.passthru // {
       tests = pkgs.callPackage ./tests.nix { inherit neovim-drv; };
     };
