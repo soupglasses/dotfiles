@@ -97,6 +97,10 @@ vicmd_symbol = "[V](green)"
 
 # Disabled Modules:
 
+[c]
+symbol = "c "
+disabled = true
+
 [vagrant]
 symbol = "vagrant "
 disabled = true

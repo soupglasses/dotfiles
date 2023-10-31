@@ -22,7 +22,10 @@
       overlays = [ self.overlays.extra self.overlays.nixgld nixGL.overlays.default ];
     };
   in {
-    packages.${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
+    packages = {
+      ${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
+      "aarch64-linux" = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages."aarch64-linux"; nixgl = nixGL.packages."aarch64-linux"; };
+    };
     overlays.extra = (_final: prev: import ./pkgs/extra-packages.nix { pkgs = prev; });
     overlays.nixgld = (_final: prev: { nixgld = import ./pkgs/nixgl-packages.nix { pkgs = prev; nixgl = nixGL.packages.${prev.system}; }; });
 
