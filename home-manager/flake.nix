@@ -19,15 +19,17 @@
     my_pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
-      overlays = [ self.overlays.extra self.overlays.nixgld nixGL.overlays.default ];
+      config.permittedInsecurePackages = [
+        "electron-25.9.0"
+      ];
+      overlays = [ self.overlays.default self.overlays.nixgld nixGL.overlays.default ];
     };
   in {
-    packages = {
-      ${system} = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages.${system}; nixgl = nixGL.packages.${system}; };
-      "aarch64-linux" = import ./pkgs/all-packages.nix { pkgs = nixpkgs.legacyPackages."aarch64-linux"; nixgl = nixGL.packages."aarch64-linux"; };
-    };
-    overlays.extra = (_final: prev: import ./pkgs/extra-packages.nix { pkgs = prev; });
-    overlays.nixgld = (_final: prev: { nixgld = import ./pkgs/nixgl-packages.nix { pkgs = prev; nixgl = nixGL.packages.${prev.system}; }; });
+    packages."x86_64-linux" = import ./packages/default.nix { pkgs = nixpkgs.legacyPackages."x86_64-linux"; };
+    packages."aarch64-linux" = import ./packages/default.nix { pkgs = nixpkgs.legacyPackages."aarch64-linux"; };
+
+    overlays.default = (_final: prev: import ./packages/default.nix { pkgs = prev; });
+    overlays.nixgld = (_final: prev: { nixgld = import ./packages/nixgl-packages.nix { pkgs = prev; nixgl = nixGL.packages.${prev.system}; }; });
 
     homeConfigurations.${username} = import "${home-manager}/modules" rec {
       pkgs = my_pkgs;
@@ -42,7 +44,7 @@
         _module.args.pkgs_i686 = nixpkgs.lib.mkForce { };
 
         imports = [
-          ./home.nix
+          ./home/default.nix
         ];
 
         home.homeDirectory = "/home/${username}";
