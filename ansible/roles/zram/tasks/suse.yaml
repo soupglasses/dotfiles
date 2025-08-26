@@ -1,0 +1,14 @@
+---
+- name: Check current resume option (Suse)
+  command: update-bootloader --get-option resume
+  register: current_resume
+  changed_when: false
+  failed_when: false
+  become: true
+
+- name: Update kernel args to resume=none (Suse)
+  command: update-bootloader --add-option resume=none
+  when:
+    - not current_resume.stdout.startswith("resume=none")
+  become: true
+# TODO: Somehow refresh /boot/efi/loader/entries?

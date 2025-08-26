@@ -1,0 +1,37 @@
+---
+- name: Ensure module loads on boot
+  ansible.builtin.lineinfile:
+    path: /etc/modules-load.d/zram.conf
+    line: "zram"
+    create: yes
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: Ensure udev rule for /dev/zram0
+  ansible.builtin.copy:
+    content: |
+      ACTION=="add", KERNEL=="zram0", ATTR{initstate}=="0", ATTR{comp_algorithm}="zstd", ATTR{disksize}="{{ zram_size }}", TAG+="systemd"
+    dest: /etc/udev/rules.d/99-zram.rules
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify:
+    - reload udev
+    - reload zram
+
+- name: Configure /dev/zram0 swap in fstab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "/dev/zram0 none swap defaults,discard,pri=100,x-systemd.makefs 0 0"
+    regexp: '.+\s+.+\s+swap\s'
+    insertafter: EOF
+    state: present
+    validate: findmnt --verbose --verify --fstab --tab-file %s
+  become: true
+
+- name: Update bootloader (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
