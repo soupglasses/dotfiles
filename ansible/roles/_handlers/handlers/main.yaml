@@ -9,22 +9,3 @@
     udevadm control --reload-rules
     udevadm trigger --settle
   become: true
-
-- name: reload zram
-  ansible.builtin.shell: |
-    set -ex
-
-    if swapon --show=NAME --noheadings | grep -q "^/dev/zram0$"; then
-      swapoff /dev/zram0
-      sleep 0.1
-    fi
-
-    if lsmod | grep -q "^zram "; then
-      modprobe -r zram
-    fi
-
-    modprobe zram
-    udevadm settle
-    mkswap /dev/zram0
-    swapon /dev/zram0
-  become: true
