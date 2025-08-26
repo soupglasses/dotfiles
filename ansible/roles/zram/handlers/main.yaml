@@ -1,3 +1,9 @@
+---
+- name: reload sysctl
+  ansible.builtin.shell: |
+    sysctl --system
+  become: true
+
 - name: reload udev
   ansible.builtin.shell: |
     udevadm control --reload-rules
