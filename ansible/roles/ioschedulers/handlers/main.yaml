@@ -1,0 +1,6 @@
+---
+- name: reload udev
+  ansible.builtin.shell: |
+    udevadm control --reload-rules
+    udevadm trigger --settle
+  become: true

@@ -2,4 +2,5 @@
   connection: local
   gather_facts: true
   roles:
+    - ioschedulers
     - zram
