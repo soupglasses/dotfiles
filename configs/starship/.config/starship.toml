@@ -40,6 +40,12 @@ format = '([$all_status$ahead_behind]($style))'
 [jobs]
 symbol = "j"
 
+[container]
+symbol = ""
+style = "bold red dimmed"
+format = '([($symbol )\[$name\]]($style) )'
+disabled = false
+
 [nix_shell]
 #format = '[$symbol( $state)( \[$name\])]($style) '
 format = '[$symbol( $state)]($style) '
@@ -47,6 +53,18 @@ style = "purple"
 impure_msg = ""
 pure_msg = "pure"
 symbol = "nix"
+
+[guix_shell]
+format = '[$symbol( $state)]($style) '
+style = "purple"
+symbol = "guix"
+
+[mise]
+format = '[$symbol( $health)]($style) '
+style = 'purple'
+symbol = 'mise'
+healthy_symbol = ''
+disabled = false
 
 [custom.virtualenv]
 command = 'printf "${VIRTUAL_ENV:+"venv"}"'
@@ -91,8 +109,8 @@ symbol = "E"
 disabled = false
 
 [character]
-success_symbol = "[%](dimmed white)"
-error_symbol = "[%](dimmed white)"
+success_symbol = '[\$](dimmed white)'
+error_symbol = '[\$](dimmed white)'
 vicmd_symbol = "[V](green)"
 
 # Disabled Modules:
