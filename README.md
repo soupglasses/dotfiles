@@ -11,7 +11,6 @@
 
 My own personal repo containing my dotfiles plus extras.
 
-
 ## **docs/**
 
 Holds program spessific READMEs.
@@ -20,7 +19,6 @@ Holds program spessific READMEs.
 - [Shell: zsh](docs/zsh.md)
 - [Terminal: kitty](docs/kitty.md)
 - [Configuration: home-manager](home-manager/README.md)
-
 
 ## **configs/**
 
@@ -59,7 +57,7 @@ Use `stow --delete --target=$HOME $FOLDER` to remove any installed stows.
 If you used `install.sh`, you can just use `remove.sh` to do the same
 automatically.
 
-### Help, i cant see code in my editor!
+### Help, i cant see code in my editor
 
 Some files under this repo are organized with [Vim Folds](https://vim.fandom.com/wiki/Folding).
 Vim folds allows code to be grouped into logical sections, like a `Font` fold,
@@ -69,29 +67,11 @@ name, letting you find important sections of a file quickly.
 If you have not used folds in vim before, its `zR` to open all folds, `zM` to
 close all folds. There is also `za` to toggle individual levels of folds.
 
-
-## **keyboard/**
-
-This is my custom keyboard remapping solution. It allows me to rebind keys like
-Capslock to become both ESC and CTRL depending on if i hold the key down or
-just tap it.
-
-Usually this is done keyboard side with software, for example with
-[QMK](https://qmk.fm/). But my keyboard is an old IBM Thinkpad travel keyboard,
-which does not have such niceties. So I am doing it trough software with
-[dual-function-keys](https://gitlab.com/interception/linux/plugins/dual-function-keys)
-and [interception-tools](https://gitlab.com/interception/linux/tools).
-This has the added benefit of working with any keyboard, including the built in
-one on my laptop.
-
-Notably, I'm changing Capslock to be Left Control and Escape. Which is extremely
-helpful for vim, as it commonly uses ESC for going out of its many modes.
-
 ### Requirements
 
-* [dual-function-keys](https://gitlab.com/interception/linux/plugins/dual-function-keys/)
-* [interception-tools](https://gitlab.com/interception/linux/tools)
-* [A running udevmon daemon](https://gitlab.com/interception/linux/tools#execution)
+- [dual-function-keys](https://gitlab.com/interception/linux/plugins/dual-function-keys/)
+- [interception-tools](https://gitlab.com/interception/linux/tools)
+- [A running udevmon daemon](https://gitlab.com/interception/linux/tools#execution)
 
 ### Installation
 
@@ -111,7 +91,6 @@ for how to find out your keyboard id/name if you want to make your configuration
 be per keyboard.
 
 After configuring to your keyboard, you can run `apply.sh` as root to install it.
-
 
 ## **ansible/**
 
