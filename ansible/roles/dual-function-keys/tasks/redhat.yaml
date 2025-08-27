@@ -1,0 +1,13 @@
+---
+- name: Enable Copr for Interception Tools (RedHat)
+  community.general.copr:
+    host: copr.fedorainfracloud.org
+    name: fszymanski/interception-tools
+    state: enabled
+  become: true
+
+- name: Install Interception Tools (RedHat)
+  ansible.builtin.dnf:
+    name: dual-function-keys
+    state: present
+  become: true
