@@ -1,1 +1,1 @@
-zram_size: 4G
+zram_size: "{{ ansible_memtotal_mb // 2 }}M"

@@ -7,8 +7,8 @@
   become: true
 
 - name: Update kernel args to resume=none (Suse)
-  command: update-bootloader --add-option resume=none
+  command: update-bootloader --del-option resume
   when:
-    - not current_resume.stdout.startswith("resume=none")
+    - current_resume.stdout.startswith("resume=")
   become: true
 # TODO: Somehow refresh /boot/efi/loader/entries?
