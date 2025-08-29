@@ -1,14 +1,38 @@
 ---
-- name: Check current resume option (Suse)
-  command: update-bootloader --get-option resume
+- name: Check if resume= option is set (Suse)
+  ansible.builtin.command: update-bootloader --get-option resume
   register: current_resume
   changed_when: false
   failed_when: false
   become: true
 
-- name: Update kernel args to resume=none (Suse)
-  command: update-bootloader --del-option resume
+- name: Update kernel args to remove resume= (Suse)
+  ansible.builtin.command: update-bootloader --del-option resume
   when:
     - current_resume.stdout.startswith("resume=")
   become: true
-# TODO: Somehow refresh /boot/efi/loader/entries?
+
+- name: Check boot-loader type
+  ansible.builtin.command: update-bootloader --show
+  register: boot_loader_type
+  changed_when: false
+  become: true
+
+- block:
+    - name: Find all systemd-boot loader entries
+      ansible.builtin.command: find /boot/efi/loader/entries -name "*.conf" -type f
+      register: loader_entries
+      changed_when: false
+      become: true
+
+    - name: Remove resume= parameters from all current boot entries (Suse)
+      # openSUSE has no native tool which can do this for us.
+      # Crazy? I know.
+      ansible.builtin.replace:
+        path: "{{ item }}"
+        regexp: '\sresume=[^\s]+'
+        replace: ""
+      loop: "{{ loader_entries.stdout_lines }}"
+      become: true
+  when:
+    - boot_loader_type.stdout.startswith("systemd-boot")

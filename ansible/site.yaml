@@ -2,6 +2,6 @@
   connection: local
   gather_facts: true
   roles:
-    - dual-function-keys
-    - ioschedulers
-    - zram
+    - { role: dual-function-keys, tags: ["dual-function-keys"] }
+    - { role: ioschedulers, tags: ["ioschedulers"] }
+    - { role: zram, tags: ["zram"] }
