@@ -12,14 +12,14 @@
     - current_resume.stdout.startswith("resume=")
   become: true
 
-- name: Check boot-loader type
+- name: Check boot-loader type (Suse)
   ansible.builtin.command: update-bootloader --show
   register: boot_loader_type
   changed_when: false
   become: true
 
 - block:
-    - name: Find all systemd-boot loader entries
+    - name: Find all systemd-boot loader entries (Suse)
       ansible.builtin.command: find /boot/efi/loader/entries -name "*.conf" -type f
       register: loader_entries
       changed_when: false
