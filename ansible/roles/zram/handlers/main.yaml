@@ -16,4 +16,5 @@
     udevadm settle
     mkswap /dev/zram0
     swapon /dev/zram0
+  timeout: 60
   become: true
