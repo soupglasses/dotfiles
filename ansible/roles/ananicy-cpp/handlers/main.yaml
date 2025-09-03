@@ -1,0 +1,5 @@
+---
+- name: restart ananicy-cpp
+  ansible.builtin.systemd:
+    name: ananicy-cpp
+    state: restarted

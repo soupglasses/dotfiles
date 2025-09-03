@@ -3,6 +3,7 @@
   gather_facts: true
   roles:
     - { role: adw-gtk3, tags: ["adw-gtk3"] }
+    - { role: ananicy-cpp, tags: ["ananicy-cpp"] }
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
     - { role: ioschedulers, tags: ["ioschedulers"] }
     - { role: zram, tags: ["zram"] }

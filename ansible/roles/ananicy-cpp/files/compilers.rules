@@ -1,0 +1,39 @@
+# family of tools designed to build, test and package software: https://cmake.org/
+{ "name": "cmake", "type": "compiler" }
+
+# make - GNU make utility to maintain groups of programs
+{ "name": "make", "type": "compiler" }
+{ "name": "gmake", "type": "compiler" }
+
+# C compilation
+{ "name": "gcc", "type": "compiler" }
+{ "name": "cc", "type": "compiler" }
+{ "name": "clang", "type": "compiler" }
+{ "name": "cc1", "type": "compiler" }
+{ "name": "c99", "type": "compiler" }
+{ "name": "c89", "type": "compiler" }
+
+# C++ compilation
+{ "name": "g++", "type": "compiler" }
+{ "name": "c++", "type": "compiler" }
+{ "name": "clang++", "type": "compiler" }
+{ "name": "cpp", "type": "compiler" }
+{ "name": "cc1plus", "type": "compiler" }
+
+# linking
+{ "name": "lto1", "type": "compiler" }
+{ "name": "lto-wrapper", "type": "compiler" }
+
+# other
+{ "name": "collect2", "type": "compiler" }
+{ "name": "go", "type": "compiler" }
+{ "name": "javac", "type": "compiler" }
+
+# http://mesonbuild.com - Meson is an open source build system.
+{ "name": "ninja", "type": "compiler" }
+{ "name": "meson", "type": "compiler" }
+
+# rust
+{ "name": "cargo", "type": "compiler" }
+{ "name": "rustc", "type": "compiler" }
+{ "name": "rust-analyzer", "type": "compiler" }
