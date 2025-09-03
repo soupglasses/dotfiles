@@ -1,0 +1,18 @@
+- name: Install adw-gtk3 (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Check if flatpak is installed
+  ansible.builtin.command: which flatpak
+  register: flatpak_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Install adw-gtk3 (Flatpak)
+  include_tasks: ./flatpak.yaml
+  when: flatpak_check.rc == 0
+
+- name: Set theme
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
+    value: "'adw-gtk3'"

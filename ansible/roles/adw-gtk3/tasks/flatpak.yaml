@@ -1,0 +1,13 @@
+- name: Add the flathub flatpak repository
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+  become: true
+
+- name: Install adw-gtk3 (Flatpak)
+  community.general.flatpak:
+    name:
+      - org.gtk.Gtk3theme.adw-gtk3
+      - org.gtk.Gtk3theme.adw-gtk3-dark
+  become: true
