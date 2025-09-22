@@ -1,0 +1,35 @@
+---
+- name: Install systemd-resolved (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Ensure systemd-resolved is started and enabled
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    state: started
+    enabled: true
+  become: true
+
+- name: Ensure systemd-resolved resolv.conf is configured
+  ansible.builtin.file:
+    src: /run/systemd/resolve/stub-resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+    force: true
+  become: true
+  notify:
+    - restart NetworkManager
+
+- name: Ensure systemd-resolved fallback DNS is configured
+  ansible.builtin.copy:
+    dest: /etc/systemd/resolved.conf.d/fallback.conf
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [Resolve]
+      FallbackDNS=194.242.2.4#base.dns.mullvad.net 2a07:e340::4#base.dns.mullvad.net
+      DNSOverTLS=opportunistic
+  become: true
+  notify:
+    - restart systemd-resolved

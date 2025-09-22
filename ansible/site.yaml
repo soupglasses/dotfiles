@@ -6,4 +6,5 @@
     - { role: ananicy-cpp, tags: ["ananicy-cpp"] }
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
     - { role: ioschedulers, tags: ["ioschedulers"] }
+    - { role: systemd-resolved, tags: ["systemd-resolved"] }
     - { role: zram, tags: ["zram"] }

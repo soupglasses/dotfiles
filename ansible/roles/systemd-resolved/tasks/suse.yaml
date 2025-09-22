@@ -1,0 +1,6 @@
+---
+- name: Ensure systemd-resolved is installed (Suse)
+  community.general.zypper:
+    name: systemd-resolved
+    state: present
+  become: true
