@@ -1,10 +1,4 @@
-- name: Ensure home:soupglasses repository is present (Suse)
-  community.general.zypper_repository:
-    repo: https://download.opensuse.org/repositories/home:/soupglasses/openSUSE_Tumbleweed/home:soupglasses.repo
-    auto_import_keys: true
-    state: present
-  become: true
-
+---
 - name: Ensure ananicy-cpp is installed (Suse)
   community.general.zypper:
     name: ananicy-cpp
