@@ -20,6 +20,9 @@
   notify:
     - restart NetworkManager
 
+# Allows us to use `127.0.0.53` as a valid DNS in Network Manager,
+# which uses DNS over TLS whenever possible. Easier than manually configuring
+# this for each connection.
 - name: Ensure systemd-resolved fallback DNS is configured
   ansible.builtin.copy:
     dest: /etc/systemd/resolved.conf.d/fallback.conf
@@ -33,3 +36,33 @@
   become: true
   notify:
     - restart systemd-resolved
+
+- name: Gather WireGuard connection information
+  ansible.builtin.shell: |
+    nmcli -t -f NAME,TYPE connection show | grep ':wireguard$' | cut -d: -f1
+  register: wireguard_connections
+  changed_when: false
+  failed_when: false
+
+- name: Get current DNS settings for WireGuard connections
+  ansible.builtin.shell: |
+    nmcli -t -f ipv4.dns-priority,ipv4.dns-search connection show "{{ item }}"
+  register: current_dns_settings
+  loop: "{{ wireguard_connections.stdout_lines }}"
+  when: wireguard_connections.stdout_lines | length > 0
+  changed_when: false
+  failed_when: false
+
+- name: Configure DNS to not leak for WireGuard connections
+  ansible.builtin.shell: |
+    nmcli connection modify "{{ item.item }}" \
+      ipv4.dns-priority -1 \
+      ipv4.dns-search "~."
+  loop: "{{ current_dns_settings.results }}"
+  when:
+    - wireguard_connections.stdout_lines | length > 0
+    - item.stdout is defined
+    - >
+      'ipv4.dns-priority:-1' not in item.stdout or
+      'ipv4.dns-search:~.' not in item.stdout
+  notify: restart NetworkManager
