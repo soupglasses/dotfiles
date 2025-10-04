@@ -1,0 +1,6 @@
+- name: Configure atuin for bash
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.bashrc.d/atuin.sh"
+    content: |
+      eval "$(atuin init bash --disable-up-arrow)"
+    mode: "0644"

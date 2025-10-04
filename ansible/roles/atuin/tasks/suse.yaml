@@ -1,0 +1,6 @@
+---
+- name: Ensure dual-function-keys is installed (Suse)
+  community.general.zypper:
+    name: atuin
+    state: present
+  become: true

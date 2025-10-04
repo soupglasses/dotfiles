@@ -1,0 +1,23 @@
+- name: Create .bashrc.d directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    state: directory
+    mode: "0755"
+
+- name: Add .bashrc.d sourcing block to .bashrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    block: |
+      if [ -d ~/.bashrc.d ]; then
+      	for rc in ~/.bashrc.d/*; do
+      		if [ -f "$rc" ]; then
+      			. "$rc"
+      		fi
+      	done
+      fi
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - bashrc.d"
+    create: true
+    mode: "0644"
+
+- name: Include bash-preexec.sh
+  include_tasks: ./bash-preexec.yaml

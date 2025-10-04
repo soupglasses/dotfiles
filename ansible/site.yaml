@@ -4,6 +4,8 @@
   roles:
     - { role: adw-gtk3, tags: ["adw-gtk3"] }
     - { role: ananicy-cpp, tags: ["ananicy-cpp"] }
+    - { role: atuin, tags: ["atuin"] }
+    - { role: bash, tags: ["bash"] }
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
     - { role: ioschedulers, tags: ["ioschedulers"] }
     - { role: systemd-resolved, tags: ["systemd-resolved"] }
