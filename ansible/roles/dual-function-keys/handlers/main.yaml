@@ -3,3 +3,4 @@
   ansible.builtin.systemd:
     name: udevmon
     state: restarted
+  become: true

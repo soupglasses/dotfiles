@@ -9,6 +9,7 @@
     owner: root
     group: root
     mode: "0755"
+  become: true
 
 - name: Deploy ananicy-cpp configs
   ansible.builtin.copy:
@@ -17,6 +18,7 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
   notify:
     - restart ananicy-cpp
 
@@ -25,3 +27,4 @@
     name: ananicy-cpp
     state: started
     enabled: true
+  become: true

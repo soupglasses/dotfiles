@@ -14,6 +14,7 @@
     owner: root
     group: root
     mode: "0755"
+  become: true
 
 - name: Deploy interception configs
   ansible.builtin.copy:
@@ -22,6 +23,7 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
   notify:
     - restart udevmon
 
@@ -30,3 +32,4 @@
     name: udevmon
     enabled: true
     state: started
+  become: true

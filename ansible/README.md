@@ -1,5 +1,11 @@
 # Ansible
 
+## Requirements
+
+```bash
+sudo zypper install ansible python3-psutil
+```
+
 ## Check facts for local machine
 
 ```bash
