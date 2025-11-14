@@ -1,6 +1,6 @@
 ---
-- name: Ensure atuin is installed (Suse)
+- name: Ensure direnv is installed (Suse)
   community.general.zypper:
-    name: atuin
+    name: direnv
     state: present
   become: true

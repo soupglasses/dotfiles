@@ -1,0 +1,11 @@
+---
+- name: Ensure neovim is installed (Suse)
+  community.general.zypper:
+    name:
+      - neovim
+      - cargo
+      - python3
+      - rubygems
+      - go
+    state: present
+  become: true

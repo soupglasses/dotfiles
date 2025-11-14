@@ -1,0 +1,13 @@
+---
+- name: Install (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Configure bash
+  include_tasks: bash.yaml
+
+- name: Stow starship.toml
+  dandyrow.linux.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [starship]

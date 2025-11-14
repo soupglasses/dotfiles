@@ -1,0 +1,10 @@
+---
+- name: Install (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Stow neovim
+  dandyrow.linux.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [neovim]

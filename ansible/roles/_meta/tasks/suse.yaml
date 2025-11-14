@@ -4,3 +4,9 @@
     auto_import_keys: true
     state: present
   become: true
+
+- name: Ensure stow is installed
+  community.general.zypper:
+    name: stow
+    state: present
+  become: true

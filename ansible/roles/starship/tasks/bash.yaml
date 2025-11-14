@@ -1,0 +1,6 @@
+- name: Configure starship for bash
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.bashrc.d/starship.sh"
+    content: |
+      eval "$(starship init bash)"
+    mode: "0644"

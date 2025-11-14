@@ -4,9 +4,14 @@
   roles:
     - { role: adw-gtk3, tags: ["adw-gtk3"] }
     - { role: ananicy-cpp, tags: ["ananicy-cpp"] }
-    - { role: atuin, tags: ["atuin"] }
-    - { role: bash, tags: ["bash"] }
+    - { role: atuin, tags: ["shell", "atuin"] }
+    - { role: bash, tags: ["shell", "bash"] }
+    - { role: direnv, tags: ["shell", "direnv"] }
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
     - { role: ioschedulers, tags: ["ioschedulers"] }
+    - { role: mise, tags: ["shell", "mise"] }
+    - { role: neovim, tags: ["neovim"] }
+    - { role: starship, tags: ["shell", "starship"] }
     - { role: systemd-resolved, tags: ["systemd-resolved"] }
+    - { role: zoxide, tags: ["shell", "zoxide"] }
     - { role: zram, tags: ["zram"] }

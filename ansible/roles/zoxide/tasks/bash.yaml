@@ -1,0 +1,6 @@
+- name: Configure mise for bash
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.bashrc.d/zoxide.sh"
+    content: |
+      eval "$(zoxide init bash)"
+    mode: "0644"
