@@ -1,0 +1,80 @@
+return {}
+--return {
+--  {
+--    "neovim/nvim-lspconfig",
+--    opts = {
+--      servers = {
+--        pyright = {
+--          settings = {
+--            python = {
+--              analysis = {
+--                typeCheckingMode = "off", -- Disable type checking in pyright
+--              },
+--            },
+--          },
+--        },
+--      },
+--    },
+--  },
+--  {
+--    "nvimtools/none-ls.nvim",
+--    optional = true,
+--    opts = function(_, opts)
+--      local nls = require("null-ls")
+--      opts.sources = opts.sources or {}
+--      table.insert(opts.sources, nls.builtins.diagnostics.mypy)
+--    end,
+--  },
+--  {
+--    "mason-org/mason.nvim",
+--    opts = { ensure_installed = { "mypy" } },
+--  },
+--}
+--return {
+--  {
+--        pylsp = {
+--          settings = {
+--            pylsp = {
+--              plugins = {
+--                -- Disable conflicting linters (let ruff handle these)
+--                pycodestyle = { enabled = false },
+--                mccabe = { enabled = false },
+--                pyflakes = { enabled = false },
+--                flake8 = { enabled = false },
+--                autopep8 = { enabled = false },
+--                yapf = { enabled = false },
+--                -- Enable mypy for type checking
+--                pylsp_mypy = {
+--                  enabled = true,
+--                  live_mode = true,
+--                  strict = true,
+--                },
+--                -- Keep useful features
+--                rope_autoimport = { enabled = false },
+--                rope_completion = { enabled = true },
+--                jedi_completion = { enabled = true },
+--                jedi_hover = { enabled = true },
+--                jedi_references = { enabled = true },
+--                jedi_signature_help = { enabled = true },
+--                jedi_symbols = { enabled = true },
+--              },
+--            },
+--          },
+--        },
+--      },
+--    },
+--  },
+--  --{
+--  --  "stevearc/conform.nvim",
+--  --  optional = true,
+--  --  opts = {
+--  --    formatters_by_ft = {
+--  --      python = { "ruff_format", "ruff_fix" },
+--  --    },
+--  --  },
+--  --},
+--  {
+--    "mason-org/mason.nvim",
+--    opts = { ensure_installed = { "python-lsp-server", "mypy" } },
+--  },
+--}
