@@ -1,0 +1,8 @@
+#export CMAKE_C_COMPILER="clang"
+#export CMAKE_CXX_COMPILER="clang++"
+#export CMAKE_BUILD_TYPE="Debug"
+#export CMAKE_GENERATOR="Ninja"
+#export CMAKE_C_COMPILER_LAUNCHER="ccache"
+#export CMAKE_CXX_COMPILER_LAUNCHER="ccache"
+#export CMAKE_C_LINKER_LAUNCHER="mold;-run"
+#export CMAKE_CXX_LINKER_LAUNCHER="mold;-run"
