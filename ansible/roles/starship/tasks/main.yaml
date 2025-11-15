@@ -6,7 +6,7 @@
 - name: Configure bash
   include_tasks: bash.yaml
 
-- name: Stow starship.toml
+- name: Stow starship
   dandyrow.linux.stow:
     src: "{{ role_path }}/files"
     dest: "{{ ansible_env.HOME }}"
