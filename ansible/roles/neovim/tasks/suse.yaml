@@ -6,6 +6,7 @@
       - cargo
       - python3
       - rubygems
+      - ruby-devel
       - go
     state: present
   become: true
