@@ -8,6 +8,7 @@
     - { role: bash, tags: ["shell", "bash"] }
     - { role: direnv, tags: ["shell", "direnv"] }
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
+    - { role: fonts, tags: ["fonts"] }
     - { role: ioschedulers, tags: ["ioschedulers"] }
     - { role: mise, tags: ["shell", "mise"] }
     - { role: neovim, tags: ["neovim"] }

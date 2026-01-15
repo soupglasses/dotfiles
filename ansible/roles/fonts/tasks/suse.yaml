@@ -1,0 +1,13 @@
+---
+- name: Ensure indic-fonts is uninstalled (Suse)
+  community.general.zypper:
+    name: indic-fonts
+    state: absent
+    clean_deps: true
+  become: true
+
+- name: Ensure all noto fonts are installed (Suse)
+  community.general.zypper:
+    name: google-noto-fonts
+    state: present
+  become: true

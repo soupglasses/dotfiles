@@ -21,5 +21,11 @@ ansible-galaxy collection install -r requirements.yml
 ## Run all locally
 
 ```bash
-ansible-playbook site.yaml --ask-become-pass
+ansible-playbook site.yaml
+```
+
+## Run single locally
+
+```bash
+ansible-playbook site.yaml --tags "fonts"
 ```
