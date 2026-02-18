@@ -1,0 +1,50 @@
+- name: Stow bash
+  dandyrow.linux.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [bash]
+
+- name: Ensure ~/.gnupg directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.gnupg"
+    state: directory
+    mode: "0700"
+
+- name: Stow gpg
+  dandyrow.linux.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [gpg]
+
+- name: Ensure ~/.ssh directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: "0700"
+
+- name: Stow ssh
+  dandyrow.linux.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [ssh]
+
+- name: Enable and start gpg-agent.socket (user)
+  ansible.builtin.systemd:
+    name: gpg-agent.socket
+    enabled: true
+    state: started
+    scope: user
+
+- name: Enable and start gpg-agent-ssh.socket (user)
+  ansible.builtin.systemd:
+    name: gpg-agent-ssh.socket
+    enabled: true
+    state: started
+    scope: user
+
+- name: Add ssh keygrip to ~/.gnupg/sshcontrol
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.gnupg/sshcontrol"
+    line: 5E97FFBB4FB0C33693DFDB6078E8258ECD0D665B
+    create: true
+    mode: "0600"

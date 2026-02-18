@@ -17,5 +17,5 @@ vim.o.listchars = "nbsp:_,tab:>-,trail:🞄,extends:>,precedes:<"
 
 -- File Spessific
 vim.cmd("autocmd FileType html setlocal ts=2 sw=2 sts=2")
-vim.cmd("autocmd FileType lua setlocal ts=2 sw=2 sts=2")
+vim.cmd("autocmd FileType lua setlocal ts=4 sw=4 sts=4")
 vim.cmd("autocmd FileType nix setlocal ts=2 sw=2 sts=2")
