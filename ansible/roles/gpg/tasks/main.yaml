@@ -1,3 +1,7 @@
+- name: Install (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
 - name: Stow bash
   dandyrow.linux.stow:
     src: "{{ role_path }}/files"

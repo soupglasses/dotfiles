@@ -1,0 +1,10 @@
+---
+- name: Ensure gpg is installed (Suse)
+  community.general.zypper:
+    name:
+      - gnupg
+      - opensc
+      - pcsc-lite
+      - yubikey-manager
+    state: present
+  become: true
