@@ -1,0 +1,6 @@
+---
+- name: restart gpg-agent
+  ansible.builtin.systemd:
+    name: gpg-agent.service
+    state: restarted
+    scope: user

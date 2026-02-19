@@ -1,0 +1,6 @@
+---
+- name: Ensure direnv is installed (Suse)
+  ansible.builtin.dnf:
+    name: direnv
+    state: present
+  become: true

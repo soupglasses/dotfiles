@@ -1,0 +1,6 @@
+---
+- name: Ensure atuin is installed (Suse)
+  ansible.builtin.dnf:
+    name: atuin
+    state: present
+  become: true

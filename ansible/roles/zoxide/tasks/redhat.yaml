@@ -1,0 +1,6 @@
+---
+- name: Ensure zoxide is installed (RedHat)
+  ansible.builtin.dnf:
+    name: zoxide
+    state: present
+  become: true

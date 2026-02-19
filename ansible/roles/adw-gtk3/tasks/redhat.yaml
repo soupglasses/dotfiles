@@ -1,0 +1,6 @@
+---
+- name: Ensure adw-gtk3 is installed (RedHat)
+  ansible.builtin.dnf:
+    name: adw-gtk3-theme
+    state: present
+  become: true

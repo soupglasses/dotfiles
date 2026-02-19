@@ -1,3 +1,7 @@
+- name: Install (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
 - name: Install (Suse)
   include_tasks: ./suse.yaml
   when: ansible_facts['os_family'] == "Suse"
@@ -7,6 +11,8 @@
     src: "{{ role_path }}/files"
     dest: "{{ ansible_env.HOME }}"
     package: [bash]
+  notify:
+    - restart gpg-agent
 
 - name: Ensure ~/.gnupg directory exists
   ansible.builtin.file:
@@ -19,6 +25,8 @@
     src: "{{ role_path }}/files"
     dest: "{{ ansible_env.HOME }}"
     package: [gpg]
+  notify:
+    - restart gpg-agent
 
 - name: Ensure ~/.ssh directory exists
   ansible.builtin.file:
@@ -52,3 +60,5 @@
     line: 5E97FFBB4FB0C33693DFDB6078E8258ECD0D665B
     create: true
     mode: "0600"
+  notify:
+    - restart gpg-agent

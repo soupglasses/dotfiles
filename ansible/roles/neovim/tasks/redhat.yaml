@@ -1,0 +1,12 @@
+---
+- name: Ensure neovim is installed (RedHat)
+  ansible.builtin.dnf:
+    name:
+      - neovim
+      - cargo
+      - python3
+      - rubygems
+      - ruby-devel
+      - go
+    state: present
+  become: true

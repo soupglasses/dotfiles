@@ -1,0 +1,11 @@
+---
+- name: Ensure starship is installed (RedHat)
+  block:
+    - community.general.copr:
+        host: copr.fedorainfracloud.org
+        name: atim/starship
+        state: enabled
+    - ansible.builtin.dnf:
+        name: starship
+        state: present
+  become: true

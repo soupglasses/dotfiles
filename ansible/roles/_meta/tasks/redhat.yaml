@@ -1,0 +1,5 @@
+- name: Ensure stow is installed
+  ansible.builtin.dnf:
+    name: stow
+    state: present
+  become: true

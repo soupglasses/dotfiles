@@ -27,6 +27,7 @@
       		fi
       	done
       fi
+      unset rc
     marker: "# {mark} ANSIBLE MANAGED BLOCK - bashrc.d"
     create: true
     mode: "0644"
