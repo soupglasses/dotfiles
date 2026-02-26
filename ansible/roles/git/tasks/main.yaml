@@ -1,0 +1,54 @@
+- name: Load sops-encrypted vars
+  community.sops.load_vars:
+    file: "{{ role_path }}/vars/work.sops.yaml"
+
+- name: Configure (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Configure (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Create .config/git directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config/git"
+    state: directory
+    mode: "0755"
+
+- name: Ensure .ignore_me exists for stow logic
+  ansible.builtin.copy:
+    content: ""
+    dest: "{{ ansible_env.HOME }}/.config/git/.ignore_me"
+    mode: "0644"
+
+- name: Stow git
+  dandyrow.linux.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [git]
+
+- name: Add include sourcing block to ~/.config/git/config
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.config/git/config"
+    block: |
+      [include]
+          path = base
+          path = delta
+          path = personal
+          path = aliases
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - include"
+    create: true
+    mode: "0644"
+
+- name: Add work sourcing block to ~/.config/git/config
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.config/git/config"
+    block: "{{ secret_git_work_include_block }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - work"
+
+- name: Create ~/.config/git/work file
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.config/git/work"
+    content: "{{ secret_git_work_file }}"
+    mode: "0644"

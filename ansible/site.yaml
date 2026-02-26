@@ -9,6 +9,7 @@
     - { role: direnv, tags: ["shell", "direnv"] }
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
     - { role: fonts, tags: ["fonts"] }
+    - { role: git, tags: ["git"] }
     - { role: gpg, tags: ["gpg"] }
     - { role: ioschedulers, tags: ["ioschedulers"] }
     - { role: mise, tags: ["shell", "mise"] }

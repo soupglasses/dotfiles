@@ -1,5 +1,7 @@
-- name: Ensure stow is installed
+- name: Ensure ansible dependencies are installed
   ansible.builtin.dnf:
-    name: stow
+    name:
+      - stow
+      - sops
     state: present
   become: true

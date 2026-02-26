@@ -1,0 +1,8 @@
+- name: Ensure git dependencies are installed
+  community.general.zypper:
+    name:
+      - git
+      - git-credential-libsecret
+      - git-delta
+    state: present
+  become: true

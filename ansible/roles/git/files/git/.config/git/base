@@ -1,0 +1,49 @@
+# vi: ft=gitconfig
+[core]
+    fsMonitor = true
+    untrackedCache = true
+
+[credential]
+    helper = cache --timeout 21600
+    helper = libsecret
+
+[color]
+    ui = auto
+
+[column]
+    ui = auto
+
+[init]
+    defaultBranch = main
+
+[fetch]
+    writeCommitGraph = true
+
+[push]
+    autoSetupRemote = true
+
+[pull]
+    rebase = true
+
+[branch]
+    sort = -committerdate
+
+[rerere]
+    enabled = true
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+
+[log]
+    showSignature = true
+
+[merge]
+    conflictstyle = diff3
+    tool = nvimdiff
+
+[diff]
+    colorMoved = default
+
+[blame]
+    coloring = highlightRecent
+    date = relative

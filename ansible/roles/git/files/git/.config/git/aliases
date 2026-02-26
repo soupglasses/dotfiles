@@ -1,0 +1,39 @@
+# vi: ft=gitconfig
+[alias]
+    # Quality of Life
+    alias = "!f() {\
+      if [ -z \"$1\" ]; then\
+        git config --get-regexp \"^alias\\.\" | sed \"s/^alias\\.//\";\
+      else\
+        matches=$(git config --get-regexp \"^alias\\.\" | sed \"s/^alias\\.//\" | grep -i \"$1\");\
+        exact=$(echo \"$matches\" | grep -E \"^$1 \");\
+        count=$(echo \"$matches\" | grep -c \"^\");\
+        if [ -n \"$exact\" ] && [ \"$count\" -eq 1 ]; then\
+          echo \"$exact\" | sed \"s/^$1 //\";\
+        else\
+          echo \"$matches\";\
+        fi;\
+      fi;\
+    }; f"
+    aliases = alias
+    amend = commit --amend
+    fix = commit --amend --no-edit --date=now
+    force = push --force-with-lease --force-if-includes
+    hist = log --pretty='%C(auto)%h - %s %C(green)(%ar) %C(bold blue)<%an>%C(auto)%d' --graph --no-show-signature
+    main = !f() { set -o pipefail; git switch `git branch -l main master --format '%(refname:short)' | head -n1 || git ls-remote --symref origin HEAD | awk 'NR==1 { print $2; }' | sed 's!^refs/heads/!!'`; }; f
+    parts = add --patch
+    rank = shortlog --summary --numbered --no-merges
+    redate = rebase --committer-date-is-author-date
+    retriggerchecks = !f() { git commit -m 'Retriggering checks' --allow-empty && git push; }; f
+    root = rev-parse --show-toplevel
+    stash-rename = !f() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m "$2" $rev; }; f
+    unstage = restore --staged
+    upstream = config --get remote.origin.url
+    whoami = "!f() { name=$(git config user.name) && email=$(git config user.email) && echo \"$name${email:+ <${email}>}\"; }; f"
+    yeet = push
+    yoink = pull
+    # Shorthands
+    cd = "!f() { cd \"$(ghq root)/$(ghq list | fzf --query=\"$1\" --select-1 --exact)\" && exec $SHELL; }; f"
+    get = !ghq get --look -p
+    po = !git push origin `git branch --show-current`
+    st = status --short --branch

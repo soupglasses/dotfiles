@@ -1,0 +1,17 @@
+# vi: ft=gitconfig
+[user]
+    email = sofie+git@finnes.dev
+    name = Sofie Finnes
+    signingKey = 516522D0036CD9F1
+    useConfigOnly = true
+
+[commit]
+    gpgSign = true
+
+[tag]
+    gpgSign = true
+
+[sendemail]
+    smtpserver = msmtp
+    smtpserveroption = --account git
+    annotate = yes

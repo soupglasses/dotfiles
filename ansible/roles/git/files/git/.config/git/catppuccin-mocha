@@ -1,0 +1,81 @@
+# vi: ft=gitconfig
+
+# Catppuccin Mocha theme for delta
+# Based on the Catppuccin Mocha color palette
+# https://github.com/catppuccin/catppuccin
+#
+# To use, include this file in your gitconfig:
+#
+#   [include]
+#       path = catppuccin-mocha
+#
+# Then activate the theme:
+#
+#   [delta]
+#       features = catppuccin-mocha
+
+[delta "catppuccin-mocha"]
+    # author: generated from Catppuccin Mocha bat/sublime theme
+    dark = true
+    syntax-theme = "Catppuccin Mocha"
+
+    # File labels
+    file-added-label = [+]
+    file-copied-label = [==]
+    file-modified-label = [*]
+    file-removed-label = [-]
+    file-renamed-label = [->]
+
+    # File header — Peach bold, Teal underline
+    file-style = "#fab387" bold
+    file-decoration-style = "#94e2d5" ul
+
+    # Hunk header — Mauve box underline, filenames in Blue
+    hunk-header-decoration-style = "#cba6f7" ul
+    hunk-header-file-style = "#89b4fa" bold
+    hunk-header-line-number-style = "#eba0ac" bold
+    hunk-header-style = file line-number syntax
+
+    # Line numbers — Red for minus, Green for plus, Overlay0 for zero/gutter
+    line-numbers = true
+    line-numbers-left-format = "{nm:>3} │"
+    line-numbers-right-format = "{np:>3} │"
+    line-numbers-left-style = "#6c7086"
+    line-numbers-right-style = "#6c7086"
+    line-numbers-minus-style = "#f38ba8"
+    line-numbers-plus-style = "#a6e3a1"
+    line-numbers-zero-style = "#6c7086" italic
+
+    # Diff content — deleted lines in Red tones, added in Green tones
+    minus-style = syntax "#3d1228"
+    minus-emph-style = syntax bold "#6b1e35"
+    minus-non-emph-style = syntax "#3d1228"
+    minus-empty-line-marker-style = normal "#3d1228"
+
+    plus-style = syntax "#1a3a2a"
+    plus-emph-style = syntax bold "#1e5c3a"
+    plus-non-emph-style = syntax "#1a3a2a"
+    plus-empty-line-marker-style = normal "#1a3a2a"
+
+    # Unchanged lines
+    zero-style = syntax
+
+    # Whitespace errors — Red background
+    whitespace-error-style = "#f38ba8" reverse
+
+    # Commit decoration — Mauve box
+    commit-decoration-style = "#cba6f7" box
+    commit-style = "#cdd6f4" bold
+
+    # Blame
+    blame-code-style = syntax
+    blame-format = "{author:<18} ({commit:>7}) {timestamp:^16} "
+    blame-palette = "#1e1e2e" "#181825" "#313244" "#45475a" "#585b70"
+
+    # Merge conflicts — Yellow/Peach headers
+    merge-conflict-begin-symbol = ~
+    merge-conflict-end-symbol = ~
+    merge-conflict-ours-diff-header-style = "#f9e2af" bold
+    merge-conflict-ours-diff-header-decoration-style = "#45475a" box
+    merge-conflict-theirs-diff-header-style = "#f9e2af" bold
+    merge-conflict-theirs-diff-header-decoration-style = "#45475a" box

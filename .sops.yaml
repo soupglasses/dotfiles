@@ -1,0 +1,6 @@
+keys:
+  - &sofie 3808B7519E356CD3D916AF01516522D0036CD9F1
+creation_rules:
+  - path_regex: '.*\.sops(\.(ya?ml|json))?$'
+    pgp:
+      - *sofie
