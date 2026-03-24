@@ -1,0 +1,6 @@
+---
+- name: Ensure mise is installed (Archlinux)
+  community.general.pacman:
+    name: mise
+    state: present
+  become: true

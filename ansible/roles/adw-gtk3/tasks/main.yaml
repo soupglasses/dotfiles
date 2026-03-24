@@ -6,6 +6,10 @@
   include_tasks: ./suse.yaml
   when: ansible_facts['os_family'] == "Suse"
 
+- name: Install adw-gtk3 (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
 - name: Check if flatpak is installed
   ansible.builtin.command: which flatpak
   register: flatpak_check

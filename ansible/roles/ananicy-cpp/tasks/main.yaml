@@ -2,6 +2,10 @@
   include_tasks: ./suse.yaml
   when: ansible_facts['os_family'] == "Suse"
 
+- name: Install ananicy-cpp (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
 - name: Ensure /etc/ananicy.d/ directory exists
   ansible.builtin.file:
     path: /etc/ananicy.d

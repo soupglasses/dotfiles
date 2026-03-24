@@ -8,5 +8,7 @@
       - rubygems
       - ruby-devel
       - go
+      - npm
+      - "@development-tools"
     state: present
   become: true

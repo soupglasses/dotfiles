@@ -1,0 +1,8 @@
+- name: Ensure ansible dependencies are installed (Archlinux)
+  community.general.pacman:
+    name:
+      - stow
+      - sops
+      - bash-completion
+    state: present
+  become: true

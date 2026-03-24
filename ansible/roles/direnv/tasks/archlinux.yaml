@@ -1,0 +1,6 @@
+---
+- name: Ensure direnv is installed (Archlinux)
+  community.general.pacman:
+    name: direnv
+    state: present
+  become: true

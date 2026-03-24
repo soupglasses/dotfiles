@@ -5,3 +5,7 @@
 - name: Configure (Suse)
   include_tasks: ./suse.yaml
   when: ansible_facts['os_family'] == "Suse"
+
+- name: Configure (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"

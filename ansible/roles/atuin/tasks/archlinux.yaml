@@ -1,0 +1,6 @@
+---
+- name: Ensure atuin is installed (Archlinux)
+  community.general.pacman:
+    name: atuin
+    state: present
+  become: true

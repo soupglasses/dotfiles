@@ -1,0 +1,3 @@
+---
+# systemd-resolved is part of the base systemd package on Arch Linux,
+# no separate installation is needed.

@@ -1,0 +1,10 @@
+---
+- name: Ensure gpg is installed (Archlinux)
+  community.general.pacman:
+    name:
+      - gnupg
+      - opensc
+      - pcsclite
+      - yubikey-manager
+    state: present
+  become: true

@@ -1,0 +1,6 @@
+---
+- name: Ensure zoxide is installed (Archlinux)
+  community.general.pacman:
+    name: zoxide
+    state: present
+  become: true

@@ -1,4 +1,10 @@
 ---
+- name: restart pcscd
+  ansible.builtin.systemd:
+    name: pcscd.service
+    state: restarted
+  become: true
+
 - name: restart gpg-agent
   ansible.builtin.systemd:
     name: gpg-agent.service

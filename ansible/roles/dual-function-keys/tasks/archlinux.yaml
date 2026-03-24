@@ -1,0 +1,6 @@
+---
+- name: Ensure interception-dual-function-keys is installed (Archlinux)
+  community.general.pacman:
+    name: interception-dual-function-keys
+    state: present
+  become: true

@@ -1,0 +1,6 @@
+---
+- name: Ensure adw-gtk3 is installed (Archlinux)
+  community.general.pacman:
+    name: adw-gtk-theme
+    state: present
+  become: true

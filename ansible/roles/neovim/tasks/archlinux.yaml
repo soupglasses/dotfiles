@@ -1,0 +1,14 @@
+---
+- name: Ensure neovim is installed (Archlinux)
+  community.general.pacman:
+    name:
+      - neovim
+      - rust
+      - python
+      - ruby
+      - go
+      - npm
+      - tree-sitter
+      - base-devel
+    state: present
+  become: true

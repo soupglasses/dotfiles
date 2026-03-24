@@ -10,6 +10,10 @@
   include_tasks: ./suse.yaml
   when: ansible_facts['os_family'] == "Suse"
 
+- name: Configure (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
 - name: Create .config/git directory
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.config/git"

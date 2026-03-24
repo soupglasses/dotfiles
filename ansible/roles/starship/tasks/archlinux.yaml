@@ -1,0 +1,6 @@
+---
+- name: Ensure starship is installed (Archlinux)
+  community.general.pacman:
+    name: starship
+    state: present
+  become: true

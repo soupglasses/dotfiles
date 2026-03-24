@@ -1,0 +1,6 @@
+---
+- name: Ensure ananicy-cpp is installed (Archlinux)
+  community.general.pacman:
+    name: ananicy-cpp
+    state: present
+  become: true

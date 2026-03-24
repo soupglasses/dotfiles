@@ -1,0 +1,6 @@
+---
+- name: Ensure all noto fonts are installed (Archlinux)
+  community.general.pacman:
+    name: noto-fonts
+    state: present
+  become: true
