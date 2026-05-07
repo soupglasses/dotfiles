@@ -2,7 +2,6 @@
   connection: local
   gather_facts: true
   roles:
-    - { role: paluh.augeas, tags: ["always"] }
     - { role: adw-gtk3, tags: ["adw-gtk3"] }
     - { role: ananicy-cpp, tags: ["ananicy-cpp"] }
     - { role: atuin, tags: ["shell", "atuin"] }
