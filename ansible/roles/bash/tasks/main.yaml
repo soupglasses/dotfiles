@@ -1,3 +1,4 @@
+---
 - name: Create .bashrc.d directory
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.bashrc.d"
@@ -32,5 +33,17 @@
     create: true
     mode: "0644"
 
-- name: Include bash-preexec.sh
-  include_tasks: ./bash-preexec.yaml
+- name: Install dependencies (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install dependencies (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install dependencies (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Include ble.sh setup
+  include_tasks: ./blesh.yaml

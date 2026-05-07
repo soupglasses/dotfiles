@@ -1,0 +1,9 @@
+---
+- name: Ensure git and make are installed (Fedora)
+  ansible.builtin.dnf:
+    name:
+      - git
+      - make
+      - gawk
+    state: present
+  become: true
