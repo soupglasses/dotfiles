@@ -1,0 +1,6 @@
+- name: Ensure claude dependencies are installed
+  ansible.builtin.dnf:
+    name:
+      - python3-augeas
+    state: present
+  become: true

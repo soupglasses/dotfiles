@@ -1,0 +1,6 @@
+- name: Ensure claude dependencies are installed
+  community.general.zypper:
+    name:
+      - python3-augeas
+    state: present
+  become: true

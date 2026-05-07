@@ -1,0 +1,7 @@
+---
+- name: Ensure claude dependencies are installed (Archlinux)
+  community.general.pacman:
+    name:
+      - python-augeas
+    state: present
+  become: true

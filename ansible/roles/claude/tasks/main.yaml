@@ -1,0 +1,42 @@
+---
+- name: Install (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Create ~/.claude directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.claude"
+    state: directory
+    mode: "0755"
+
+- name: Stow claude
+  dandyrow.linux.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [claude]
+
+- name: Ensure ~/.claude/settings.json exists
+  ansible.builtin.copy:
+    content: "{}\n"
+    dest: "{{ ansible_env.HOME }}/.claude/settings.json"
+    force: false
+    mode: "0644"
+
+- name: Configure statusLine in ~/.claude/settings.json
+  augeas:
+    lens: Json.lns
+    file: "{{ ansible_env.HOME }}/.claude/settings.json"
+    commands: |
+      set 'dict/entry[.="statusLine"]' "statusLine"
+      set 'dict/entry[.="statusLine"]/dict/entry[.="type"]' "type"
+      set 'dict/entry[.="statusLine"]/dict/entry[.="type"]/string' "command"
+      set 'dict/entry[.="statusLine"]/dict/entry[.="command"]' "command"
+      set 'dict/entry[.="statusLine"]/dict/entry[.="command"]/string' "bash {{ ansible_env.HOME }}/.claude/statusline-command.sh"

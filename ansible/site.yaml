@@ -2,10 +2,12 @@
   connection: local
   gather_facts: true
   roles:
+    - { role: paluh.augeas, tags: ["always"] }
     - { role: adw-gtk3, tags: ["adw-gtk3"] }
     - { role: ananicy-cpp, tags: ["ananicy-cpp"] }
     - { role: atuin, tags: ["shell", "atuin"] }
     - { role: bash, tags: ["shell", "bash"] }
+    - { role: claude, tags: ["claude"] }
     - { role: direnv, tags: ["shell", "direnv"] }
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
     - { role: fonts, tags: ["fonts"] }
