@@ -1,0 +1,55 @@
+---
+- name: Install (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Install (Darwin)
+  include_tasks: ./darwin.yaml
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Create ~/.claude directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.claude"
+    state: directory
+    mode: "0755"
+
+- name: Stow claude
+  stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [claude]
+    # Claude Code writes settings.json, history and project state into
+    # ~/.claude, so the directory must not be folded into this repository.
+    folding: false
+
+# settings.json is Claude Code's own file and holds far more than the status
+# line, so it is read, merged and written back rather than templated over.
+- name: Read the existing ~/.claude/settings.json
+  ansible.builtin.slurp:
+    src: "{{ ansible_env.HOME }}/.claude/settings.json"
+  register: claude_settings_raw
+  failed_when: false
+
+- name: Merge the statusLine configuration into the existing settings
+  ansible.builtin.set_fact:
+    claude_settings: >-
+      {{ ((claude_settings_raw.content | b64decode | from_json)
+          if claude_settings_raw.content is defined else {})
+         | combine({'statusLine': {
+             'type': 'command',
+             'command': 'bash ' ~ ansible_env.HOME ~ '/.claude/statusline-command.sh'
+           }}, recursive=true) }}
+
+- name: Write ~/.claude/settings.json
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.claude/settings.json"
+    content: "{{ claude_settings | to_nice_json }}\n"
+    mode: "0644"

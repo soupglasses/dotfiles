@@ -1,0 +1,5 @@
+---
+- name: Ensure zoxide is installed (Darwin)
+  community.general.homebrew:
+    name: zoxide
+    state: present

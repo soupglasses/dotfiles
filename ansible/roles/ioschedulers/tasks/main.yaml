@@ -1,19 +1,4 @@
 ---
-- name: Ensure udev rule for ioschedulers
-  ansible.builtin.copy:
-    content: |
-      # HDD
-      ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
-
-      # SSD
-      ACTION=="add|change", KERNEL=="sd[a-z]*|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
-
-      # NVMe SSD
-      ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
-    dest: /etc/udev/rules.d/60-ioschedulers.rules
-    owner: root
-    group: root
-    mode: "0644"
-  become: true
-  notify:
-    - reload udev
+- name: Set up ioschedulers
+  ansible.builtin.include_tasks: ./setup.yaml
+  when: ansible_facts['os_family'] in role_platforms

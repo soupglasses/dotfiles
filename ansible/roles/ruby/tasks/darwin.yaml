@@ -1,0 +1,5 @@
+---
+- name: Ensure ruby is installed (Darwin)
+  community.general.homebrew:
+    name: ruby
+    state: present

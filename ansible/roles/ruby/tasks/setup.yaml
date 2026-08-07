@@ -1,0 +1,11 @@
+---
+# macOS-only. Linux ships no Ruby in /usr/bin that shadows a newer one, and the
+# Linux machines get Ruby from mise when a project needs it.
+
+- name: Install (Darwin)
+  include_tasks: ./darwin.yaml
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Configure zsh
+  include_tasks: zsh.yaml
+  when: ansible_facts['os_family'] == "Darwin"

@@ -1,0 +1,6 @@
+---
+- name: Ensure kitty is installed (Suse)
+  community.general.zypper:
+    name: kitty
+    state: present
+  become: true

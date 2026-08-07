@@ -1,0 +1,7 @@
+---
+# The status line script parses its JSON input with jq.
+- name: Ensure claude dependencies are installed (Darwin)
+  community.general.homebrew:
+    name:
+      - jq
+    state: present

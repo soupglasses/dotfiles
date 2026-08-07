@@ -1,0 +1,5 @@
+---
+- name: Ensure mise is installed (Darwin)
+  community.general.homebrew:
+    name: mise
+    state: present

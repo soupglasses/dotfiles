@@ -1,0 +1,5 @@
+---
+- name: Ensure fzf is installed (Darwin)
+  community.general.homebrew:
+    name: fzf
+    state: present

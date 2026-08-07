@@ -1,26 +1,4 @@
-- name: Install adw-gtk3 (RedHat)
-  include_tasks: ./redhat.yaml
-  when: ansible_facts['os_family'] == "RedHat"
-
-- name: Install adw-gtk3 (Suse)
-  include_tasks: ./suse.yaml
-  when: ansible_facts['os_family'] == "Suse"
-
-- name: Install adw-gtk3 (Archlinux)
-  include_tasks: ./archlinux.yaml
-  when: ansible_facts['os_family'] == "Archlinux"
-
-- name: Check if flatpak is installed
-  ansible.builtin.command: which flatpak
-  register: flatpak_check
-  ignore_errors: true
-  changed_when: false
-
-- name: Install adw-gtk3 (Flatpak)
-  include_tasks: ./flatpak.yaml
-  when: flatpak_check.rc == 0
-
-- name: Set theme
-  community.general.dconf:
-    key: "/org/gnome/desktop/interface/gtk-theme"
-    value: "'adw-gtk3'"
+---
+- name: Set up adw-gtk3
+  ansible.builtin.include_tasks: ./setup.yaml
+  when: ansible_facts['os_family'] in role_platforms

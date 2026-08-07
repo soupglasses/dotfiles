@@ -3,7 +3,10 @@
 ## Requirements
 
 ```bash
-sudo zypper install ansible python3-psutil
+sudo zypper install ansible python3-psutil   # openSUSE
+sudo dnf install ansible python3-psutil      # Fedora
+sudo pacman -S ansible python-psutil         # Arch
+brew install ansible                         # macOS
 ```
 
 ## Check facts for local machine
@@ -19,6 +22,9 @@ ansible-galaxy collection install -r requirements.yml
 ```
 
 ## Run all locally
+
+`site.yaml` runs on every machine. Each role declares its `role_platforms` and
+skips itself where unsupported, so the same list works on Linux and macOS.
 
 ```bash
 ansible-playbook site.yaml

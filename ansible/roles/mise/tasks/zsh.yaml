@@ -1,0 +1,10 @@
+- name: Configure mise for zsh
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.zshrc.d/50-mise.zsh"
+    content: |
+      # Managed by Ansible (roles/mise).
+      # Activated before other tools so shims are on $PATH for them.
+      if (( $+commands[mise] )); then
+        eval "$(mise activate zsh)"
+      fi
+    mode: "0644"

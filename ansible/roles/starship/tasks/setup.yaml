@@ -1,0 +1,33 @@
+---
+- name: Install (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Install (Darwin)
+  include_tasks: ./darwin.yaml
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Configure bash
+  include_tasks: bash.yaml
+  when: ansible_facts['system'] == "Linux"
+
+- name: Configure zsh
+  include_tasks: zsh.yaml
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Stow starship
+  stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [starship]
+    # starship.toml sits directly in ~/.config, which many other tools write
+    # into, so the directory must not be folded into this repository.
+    folding: false

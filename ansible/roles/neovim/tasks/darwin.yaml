@@ -1,0 +1,13 @@
+---
+# LazyVim builds treesitter parsers and installs LSP servers itself, so the
+# toolchains it shells out to are what is needed here.
+- name: Ensure neovim is installed (Darwin)
+  community.general.homebrew:
+    name:
+      - neovim
+      - go
+      - node
+      - tree-sitter
+      - ripgrep
+      - fd
+    state: present

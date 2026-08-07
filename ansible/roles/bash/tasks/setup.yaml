@@ -1,0 +1,48 @@
+---
+- name: Create .bashrc.d directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    state: directory
+    mode: "0755"
+
+- name: Stow bash
+  stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [bash]
+    # Other roles generate snippets directly into ~/.bashrc.d, so the directory
+    # must stay a real directory rather than a symlink into this repository.
+    folding: false
+
+- name: Add .bashrc.d sourcing block to .bashrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    # Sorted with -V so 9- comes before 10- and 98- before 100-, matching how
+    # the snippets are numbered.
+    block: |
+      if [ -d ~/.bashrc.d ]; then
+      	for rc in $(ls -1v ~/.bashrc.d/*.sh 2>/dev/null); do
+      		if [ -r "$rc" ]; then
+      			. "$rc"
+      		fi
+      	done
+      	unset rc
+      fi
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - bashrc.d"
+    create: true
+    mode: "0644"
+
+- name: Install dependencies (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install dependencies (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install dependencies (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Include ble.sh setup
+  include_tasks: ./blesh.yaml

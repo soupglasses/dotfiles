@@ -1,0 +1,34 @@
+- name: Install ananicy-cpp (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install ananicy-cpp (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Ensure /etc/ananicy.d/ directory exists
+  ansible.builtin.file:
+    path: /etc/ananicy.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Deploy ananicy-cpp configs
+  ansible.builtin.copy:
+    src: .
+    dest: /etc/ananicy.d/
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify:
+    - restart ananicy-cpp
+
+- name: Ensure ananicy-cpp is started and enabled
+  ansible.builtin.systemd_service:
+    name: ananicy-cpp
+    state: started
+    enabled: true
+  become: true

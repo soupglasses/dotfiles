@@ -1,0 +1,39 @@
+---
+# Only macOS uses zsh; the Linux machines use bash. See the shell role.
+- name: Install dependencies (Darwin)
+  include_tasks: ./darwin.yaml
+  when: ansible_facts['os_family'] == "Darwin"
+
+# Drop-ins load in numeric order, and other roles write here too:
+#   00 options   30 completion   95 autosuggestions
+#   10 env       40 aliases      98 compinit
+#   20 history   50-90 hooks     99 highlighting
+#   25 toolchains that must precede mise
+- name: Create .zshrc.d directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.zshrc.d"
+    state: directory
+    mode: "0755"
+
+- name: Stow zsh
+  stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [zsh]
+    # Other roles generate snippets directly into ~/.zshrc.d, so the directory
+    # must stay a real directory rather than a symlink into this repository.
+    folding: false
+
+- name: Add .zshrc.d sourcing block to .zshrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    block: |
+      if [[ -d ~/.zshrc.d ]]; then
+        for _rc in ~/.zshrc.d/*.zsh(Nn); do
+          [[ -r "$_rc" ]] && source "$_rc"
+        done
+        unset _rc
+      fi
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - zshrc.d"
+    create: true
+    mode: "0644"

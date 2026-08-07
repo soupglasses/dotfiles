@@ -2,9 +2,3 @@
 collections:
   - name: community.general
   - name: community.sops
-  - name: dandyrow.linux
-
-roles:
-  - name: paluh.augeas
-    src: https://github.com/paluh/ansible-augeas
-    scm: git

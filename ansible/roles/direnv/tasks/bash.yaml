@@ -1,6 +1,6 @@
 - name: Configure direnv for bash
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/direnv.sh"
+    dest: "{{ ansible_env.HOME }}/.bashrc.d/55-direnv.sh"
     content: |
       eval "$(direnv hook bash)"
     mode: "0644"

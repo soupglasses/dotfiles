@@ -1,0 +1,9 @@
+---
+- name: Ensure git dependencies are installed (Darwin)
+  community.general.homebrew:
+    name:
+      - git
+      - difftastic
+      # The personal identity signs commits with a GPG key.
+      - gnupg
+    state: present

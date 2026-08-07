@@ -1,6 +1,6 @@
 - name: Configure mise for bash
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/mise.sh"
+    dest: "{{ ansible_env.HOME }}/.bashrc.d/50-mise.sh"
     content: |
       eval "$(mise activate bash)"
     mode: "0644"

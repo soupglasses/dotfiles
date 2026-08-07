@@ -1,0 +1,10 @@
+- name: Configure starship for zsh
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.zshrc.d/90-starship.zsh"
+    content: |
+      # Managed by Ansible (roles/starship).
+      # Loaded late so the prompt is set after anything that might override it.
+      if (( $+commands[starship] )); then
+        eval "$(starship init zsh)"
+      fi
+    mode: "0644"

@@ -1,0 +1,14 @@
+# vi: ft=gitconfig
+# Structural diffing with difftastic: it parses the file and compares syntax
+# trees, so moved or reindented code reads as moved rather than rewritten.
+#
+# Set as diff.external, which git consults for `git diff` and `git show` but
+# not for `git add -p` or anything that needs a patch it can apply, so those
+# keep working normally.
+
+[diff]
+    external = difft
+
+[alias]
+    # Escape hatch: the plain textual diff, bypassing difftastic.
+    udiff = -c diff.external= diff

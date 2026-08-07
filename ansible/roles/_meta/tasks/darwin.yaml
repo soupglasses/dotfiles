@@ -1,0 +1,20 @@
+---
+- name: Check whether Homebrew is installed (Darwin)
+  ansible.builtin.command: brew --prefix
+  register: homebrew_check
+  changed_when: false
+  failed_when: false
+
+- name: Fail with installation instructions when Homebrew is missing (Darwin)
+  ansible.builtin.fail:
+    msg: >-
+      Homebrew was not found on $PATH. Install it first:
+      /bin/bash -c "$(curl -fsSL
+      https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when: homebrew_check.rc != 0
+
+- name: Ensure ansible dependencies are installed (Darwin)
+  community.general.homebrew:
+    name:
+      - stow
+    state: present

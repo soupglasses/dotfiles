@@ -1,0 +1,15 @@
+- name: Configure (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Configure (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Configure (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Configure (Darwin)
+  include_tasks: ./darwin.yaml
+  when: ansible_facts['os_family'] == "Darwin"

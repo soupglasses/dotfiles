@@ -1,0 +1,6 @@
+---
+- name: Ensure fzf is installed (RedHat)
+  ansible.builtin.dnf:
+    name: fzf
+    state: present
+  become: true

@@ -1,0 +1,6 @@
+---
+- name: Ensure fzf is installed (Suse)
+  community.general.zypper:
+    name: fzf
+    state: present
+  become: true

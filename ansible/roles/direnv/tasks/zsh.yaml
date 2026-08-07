@@ -1,0 +1,9 @@
+- name: Configure direnv for zsh
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.zshrc.d/55-direnv.zsh"
+    content: |
+      # Managed by Ansible (roles/direnv).
+      if (( $+commands[direnv] )); then
+        eval "$(direnv hook zsh)"
+      fi
+    mode: "0644"

@@ -1,0 +1,35 @@
+- name: Configure ruby for zsh
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.zshrc.d/25-ruby.zsh"
+    content: |
+      # Managed by Ansible (roles/ruby).
+      #
+      # macOS ships Bundler 1.17.2 in /usr/bin, bound to the vendored Ruby 2.6,
+      # and path_helper puts /usr/bin ahead of $HOMEBREW_PREFIX/bin. Homebrew's
+      # ruby formula deliberately does *not* link bundle/bundler into
+      # $HOMEBREW_PREFIX/bin -- its post_install removes them so a previous
+      # `gem install bundler` is not clobbered -- so `brew link` cannot win this
+      # and a hand-made symlink there is deleted on the next upgrade.
+      #
+      # Prepending the keg's own bin is the supported fix: it holds bundle and
+      # bundler alongside ruby and gem. Numbered before mise (50) so that a
+      # project pinning its own Ruby still takes precedence.
+      if [[ -d "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/ruby/bin" ]]; then
+        typeset -U path PATH
+
+        # Executables from `gem install` land here rather than in the Cellar, so
+        # they survive reinstalls. The directory only appears once a gem ships a
+        # binary; the (N) qualifier keeps that case quiet.
+        typeset -a _ruby_gemdir
+        _ruby_gemdir=( "${HOMEBREW_PREFIX:-/opt/homebrew}/lib/ruby/gems"/*(Nn[-1]) )
+
+        path=(
+          "${HOMEBREW_PREFIX:-/opt/homebrew}/opt/ruby/bin"
+          ${_ruby_gemdir:+"${_ruby_gemdir[1]}/bin"}
+          $path
+        )
+        export PATH
+
+        unset _ruby_gemdir
+      fi
+    mode: "0644"

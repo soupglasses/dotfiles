@@ -96,4 +96,9 @@ After configuring to your keyboard, you can run `apply.sh` as root to install it
 
 My Ansible setup scripts to configure my computer. Mainly only for my own use currently.
 
-Only supports Fedora. Run: `./run.sh` to install.
+Supports Fedora, openSUSE, Arch Linux and macOS. See [ansible/README.md](ansible/README.md).
+
+```bash
+cd ansible
+ansible-playbook site.yaml
+```

@@ -1,0 +1,11 @@
+---
+# zsh itself is the macOS default shell and is not installed from Homebrew, so
+# that the shell configured in /etc/shells stays the one Apple ships.
+- name: Ensure zsh line-editor plugins are installed (Darwin)
+  community.general.homebrew:
+    name:
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      # eza backs the ls aliases: BSD ls cannot group directories first.
+      - eza
+    state: present

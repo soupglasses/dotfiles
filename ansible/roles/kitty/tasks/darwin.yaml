@@ -1,0 +1,13 @@
+---
+- name: Ensure kitty is installed (Darwin)
+  community.general.homebrew_cask:
+    name: kitty
+    state: present
+    # kitty may already have been installed by hand from the upstream dmg;
+    # accept that rather than failing on the existing /Applications/kitty.app.
+    accept_external_apps: true
+
+- name: Ensure the terminal font is installed (Darwin)
+  community.general.homebrew_cask:
+    name: font-monofur-nerd-font
+    state: present

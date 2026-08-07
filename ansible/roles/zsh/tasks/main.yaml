@@ -1,0 +1,4 @@
+---
+- name: Set up zsh
+  ansible.builtin.include_tasks: ./setup.yaml
+  when: ansible_facts['os_family'] in role_platforms

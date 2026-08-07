@@ -3,6 +3,6 @@
     name:
       - git
       - git-credential-libsecret
-      - git-delta
+      - difftastic
     state: present
   become: true

@@ -1,0 +1,17 @@
+---
+# Pulls in whichever interactive shell this machine uses, so that tool roles
+# (starship, zoxide, direnv, mise, ...) can depend on "shell" instead of
+# naming bash or zsh directly.
+#
+# Both roles create the drop-in directory the tool roles write their snippets
+# into: ~/.bashrc.d on Linux, ~/.zshrc.d on macOS.
+
+- name: Configure bash as the interactive shell
+  ansible.builtin.include_role:
+    name: bash
+  when: ansible_facts['system'] == "Linux"
+
+- name: Configure zsh as the interactive shell
+  ansible.builtin.include_role:
+    name: zsh
+  when: ansible_facts['os_family'] == "Darwin"

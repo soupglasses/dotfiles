@@ -1,0 +1,87 @@
+- name: Install (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Stow bash
+  stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [bash]
+    # The bash role and every tool role also write into ~/.bashrc.d, so the
+    # directory must stay real rather than fold into this repository.
+    folding: false
+  notify:
+    - restart pcscd
+    - restart gpg-agent
+
+
+- name: Ensure ~/.gnupg directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.gnupg"
+    state: directory
+    mode: "0700"
+
+- name: Stow gpg
+  stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [gpg]
+    # gpg-agent writes its own state and sockets into ~/.gnupg.
+    folding: false
+  notify:
+    - restart pcscd
+    - restart gpg-agent
+
+- name: Ensure ~/.ssh directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: "0700"
+
+- name: Stow ssh
+  stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_env.HOME }}"
+    package: [ssh]
+    # ~/.ssh holds private keys and known_hosts, which must never be linked
+    # into a public repository.
+    folding: false
+
+- name: Enable and start pcscd.service
+  ansible.builtin.systemd:
+    name: pcscd.service
+    enabled: true
+    state: started
+  become: true
+
+- name: Enable and start gpg-agent.socket (user)
+  ansible.builtin.systemd:
+    name: gpg-agent.socket
+    enabled: true
+    state: started
+    scope: user
+
+- name: Enable and start gpg-agent-ssh.socket (user)
+  ansible.builtin.systemd:
+    name: gpg-agent-ssh.socket
+    enabled: true
+    state: started
+    scope: user
+
+- name: Add ssh keygrip to ~/.gnupg/sshcontrol
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.gnupg/sshcontrol"
+    line: 5E97FFBB4FB0C33693DFDB6078E8258ECD0D665B
+    create: true
+    mode: "0600"
+  notify:
+    - restart pcscd
+    - restart gpg-agent

@@ -1,0 +1,6 @@
+---
+- name: Ensure kitty is installed (RedHat)
+  ansible.builtin.dnf:
+    name: kitty
+    state: present
+  become: true

@@ -1,0 +1,6 @@
+---
+- name: Ensure fzf is installed (Archlinux)
+  community.general.pacman:
+    name: fzf
+    state: present
+  become: true

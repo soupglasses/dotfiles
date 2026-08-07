@@ -1,11 +1,4 @@
-- name: Configure (RedHat)
-  include_tasks: ./redhat.yaml
-  when: ansible_facts['os_family'] == "RedHat"
-
-- name: Configure (Suse)
-  include_tasks: ./suse.yaml
-  when: ansible_facts['os_family'] == "Suse"
-
-- name: Configure (Archlinux)
-  include_tasks: ./archlinux.yaml
-  when: ansible_facts['os_family'] == "Archlinux"
+---
+- name: Set up _meta
+  ansible.builtin.include_tasks: ./setup.yaml
+  when: ansible_facts['os_family'] in role_platforms

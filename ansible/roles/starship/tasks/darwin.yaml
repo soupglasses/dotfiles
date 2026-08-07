@@ -1,0 +1,5 @@
+---
+- name: Ensure starship is installed (Darwin)
+  community.general.homebrew:
+    name: starship
+    state: present

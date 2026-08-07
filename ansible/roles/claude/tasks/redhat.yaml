@@ -1,6 +1,6 @@
-- name: Ensure claude dependencies are installed
+- name: Ensure claude dependencies are installed (RedHat)
   ansible.builtin.dnf:
     name:
-      - python3-augeas
+      - jq
     state: present
   become: true

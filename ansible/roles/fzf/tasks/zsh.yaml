@@ -1,0 +1,17 @@
+- name: Configure fzf for zsh
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.zshrc.d/70-fzf.zsh"
+    content: |
+      # Managed by Ansible (roles/fzf).
+      if (( $+commands[fzf] )); then
+        source <(fzf --zsh)
+
+        export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border --info=inline'
+
+        # ripgrep honours .gitignore and is substantially faster than find.
+        if (( $+commands[rg] )); then
+          export FZF_DEFAULT_COMMAND='rg --files --hidden --glob !.git'
+          export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        fi
+      fi
+    mode: "0644"

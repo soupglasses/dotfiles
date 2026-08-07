@@ -3,9 +3,21 @@
     fsMonitor = true
     untrackedCache = true
 
-[credential]
-    helper = cache --timeout 21600
-    helper = libsecret
+# Credential storage is platform-specific and lives in credential-linux /
+# credential-darwin, included from config by the git role.
+
+# Always talk to forges over ssh, even when something hands us an https URL
+# (a README, `go get`, a tool that only knows the https form). Pushing over
+# https would prompt for a token; ssh just uses the agent.
+#
+# This applies to reading public repositories too, so every forge here needs a
+# working key in the agent.
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+[url "git@gitlab.com:"]
+    insteadOf = https://gitlab.com/
+[url "git@codeberg.org:"]
+    insteadOf = https://codeberg.org/
 
 [color]
     ui = auto

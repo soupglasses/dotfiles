@@ -5,17 +5,35 @@
     - { role: adw-gtk3, tags: ["adw-gtk3"] }
     - { role: ananicy-cpp, tags: ["ananicy-cpp"] }
     - { role: atuin, tags: ["shell", "atuin"] }
-    - { role: bash, tags: ["shell", "bash"] }
     - { role: claude, tags: ["claude"] }
     - { role: direnv, tags: ["shell", "direnv"] }
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
     - { role: fonts, tags: ["fonts"] }
+    - { role: fzf, tags: ["shell", "fzf"] }
     - { role: git, tags: ["git"] }
     - { role: gpg, tags: ["gpg"] }
     - { role: ioschedulers, tags: ["ioschedulers"] }
+    - { role: kitty, tags: ["kitty"] }
     - { role: mise, tags: ["shell", "mise"] }
     - { role: neovim, tags: ["neovim"] }
+    - { role: ruby, tags: ["shell", "ruby"] }
+    - { role: shell, tags: ["shell"] }
     - { role: starship, tags: ["shell", "starship"] }
     - { role: systemd-resolved, tags: ["systemd-resolved"] }
     - { role: zoxide, tags: ["shell", "zoxide"] }
     - { role: zram, tags: ["zram"] }
+
+  tasks:
+    - name: Check for work overlay
+      ansible.builtin.stat:
+        path: "{{ playbook_dir }}/roles/work/tasks/main.yaml"
+      register: work_overlay
+      tags: ["work"]
+
+    - name: Apply work overlay
+      ansible.builtin.include_role:
+        name: work
+        apply:
+          tags: ["work"]
+      tags: ["work"]
+      when: work_overlay.stat.exists

@@ -1,0 +1,39 @@
+---
+- name: Install dual-function-keys (Suse)
+  include_tasks: ./suse.yaml
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install dual-function-keys (RedHat)
+  include_tasks: ./redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install dual-function-keys (Archlinux)
+  include_tasks: ./archlinux.yaml
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Ensure /etc/interception directory exists
+  ansible.builtin.file:
+    path: /etc/interception
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Deploy interception configs
+  ansible.builtin.copy:
+    src: configs/
+    dest: /etc/interception/
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify:
+    - restart udevmon
+
+- name: Ensure udevmon service is enabled and started
+  ansible.builtin.systemd:
+    name: udevmon
+    enabled: true
+    state: started
+  become: true

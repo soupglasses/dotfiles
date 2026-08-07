@@ -1,0 +1,3 @@
+[submodule "ansible/roles/work"]
+	path = ansible/roles/work
+	url = git@github.com:sofi-lunar/dotfiles.git

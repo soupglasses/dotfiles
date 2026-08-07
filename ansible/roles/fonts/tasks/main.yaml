@@ -1,8 +1,4 @@
 ---
-- name: Install (Suse)
-  include_tasks: ./suse.yaml
-  when: ansible_facts['os_family'] == "Suse"
-
-- name: Install (Archlinux)
-  include_tasks: ./archlinux.yaml
-  when: ansible_facts['os_family'] == "Archlinux"
+- name: Set up fonts
+  ansible.builtin.include_tasks: ./setup.yaml
+  when: ansible_facts['os_family'] in role_platforms

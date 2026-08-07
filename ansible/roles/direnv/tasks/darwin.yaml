@@ -1,0 +1,5 @@
+---
+- name: Ensure direnv is installed (Darwin)
+  community.general.homebrew:
+    name: direnv
+    state: present
