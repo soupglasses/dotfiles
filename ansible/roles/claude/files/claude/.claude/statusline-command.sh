@@ -43,6 +43,18 @@ rate_color() {
   printf '\033[38;5;%dm' "$color_idx"
 }
 
+# Return an ANSI 256-color escape for a session cost, given the amount in whole
+# cents. Discrete thresholds (not a gradient — dollars have no upper bound):
+#   < $1 green · < $3 yellow · < $5 orange · ≥ $5 red
+cost_color() {
+  local cents="$1"
+  if   [ "$cents" -ge 500 ]; then printf '\033[38;5;196m'   # red
+  elif [ "$cents" -ge 300 ]; then printf '\033[38;5;208m'   # orange
+  elif [ "$cents" -ge 100 ]; then printf '\033[38;5;226m'   # yellow
+  else                            printf '\033[38;5;46m'    # green
+  fi
+}
+
 # Strip ANSI escape sequences to measure visible length
 visible_len() {
   printf '%s' "$1" | sed 's/\x1b\[[0-9;]*m//g' | wc -m
@@ -117,13 +129,57 @@ if [ -n "$week_resets_at" ]; then
   week_reset_str=$(date -d "@${week_resets_at}" "+%a %H:%M" 2>/dev/null || date -r "$week_resets_at" "+%a %H:%M" 2>/dev/null)
 fi
 
-# Context window usage — percentage only (no per-token field exposes current
-# window occupancy; used_percentage is pre-calculated by Claude Code itself)
+# Context window usage. used_percentage is pre-calculated by Claude Code; the
+# absolute token count is derived from it × the window size (current_usage
+# fields are often null, so we can't read tokens directly).
 ctx_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+ctx_size=$(echo "$input" | jq -r '.context_window.context_window_size // empty')
 
 # Session cost — lines added/removed
 lines_added=$(echo "$input" | jq -r '.cost.total_lines_added // 0')
 lines_removed=$(echo "$input" | jq -r '.cost.total_lines_removed // 0')
+
+# Session cost — USD (only meaningful under API pricing; a subscription reports
+# $0). total_cost_usd is cumulative across the transcript, so we subtract the
+# baseline captured on the first render of the conversation to show only what
+# this session spent. Keyed on transcript_path (stable per conversation) with a
+# PPID fallback, so a fresh conversation always starts its delta from zero.
+#
+# Claude Code omits total_cost_usd on some refreshes and can briefly report a
+# lower value, so the raw cumulative total is cached and kept monotonic (cost
+# only ever grows) to bridge the gaps. Visibility is gated on that cumulative
+# total (below), not the delta, so the segment shows for any API session and
+# hides only on a true subscription ($0).
+cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
+transcript_path=$(echo "$input" | jq -r '.transcript_path // empty')
+
+_cost_key=$(printf '%s' "${transcript_path:-${PPID}}" | cksum | cut -d' ' -f1)
+_baseline_file="/tmp/claude-cost-baseline-${_cost_key}"
+_last_file="/tmp/claude-cost-last-${_cost_key}"
+
+# Monotonic raw cumulative total, resilient to missing/dipping refreshes.
+if [ -f "$_last_file" ]; then
+  _last=$(cat "$_last_file")
+  if [ -z "$cost" ]; then
+    cost="$_last"
+  else
+    cost=$(awk -v c="$cost" -v l="$_last" 'BEGIN { print (c > l ? c : l) }')
+  fi
+fi
+
+cost_total=""
+if [ -n "$cost" ]; then
+  printf '%s' "$cost" > "$_last_file"
+  cost_total="$cost"
+  # Baseline captured on first render of this conversation → per-session delta.
+  if [ -f "$_baseline_file" ]; then
+    _cost_baseline=$(cat "$_baseline_file")
+  else
+    _cost_baseline="$cost"
+    printf '%s' "$_cost_baseline" > "$_baseline_file"
+  fi
+  cost=$(awk -v c="$cost" -v b="$_cost_baseline" 'BEGIN { v=c-b; printf "%.6f", (v>0?v:0) }')
+fi
 
 # ── Build LEFT parts (path:branch, ahead/behind) ────────────────────────────
 left_parts=()
@@ -177,8 +233,22 @@ if [ -n "$git_changes" ]; then
   left_parts+=("$(printf '%b%s%b' "$C_SYNC" "$git_changes" "$RESET")")
 fi
 
-# ── Build RIGHT parts (5h, 7d, ctx, model) ──────────────────────────────────
+# ── Build RIGHT parts (cost, 5h, 7d, ctx, model) ─────────────────────────────
 right_parts=()
+
+# Session cost — per-session delta, threshold-colored. Shown whenever the
+# conversation has any API cost at all (cost_total > $0), so a $0.00 delta
+# between renders keeps the segment visible; hidden only on a true subscription.
+# Sits left of the rate limits; both can appear together (e.g. after 5h rollover
+# onto API pricing).
+if [ -n "$cost_total" ]; then
+  total_cents=$(awk -v c="$cost_total" 'BEGIN { printf "%.0f", c * 100 }')
+  if [ "$total_cents" -gt 0 ] 2>/dev/null; then
+    cost_cents=$(awk -v c="$cost" 'BEGIN { printf "%.0f", c * 100 }')
+    color=$(cost_color "$cost_cents")
+    right_parts+=("$(printf '%b$%.2f%b' "$color" "$cost" "$RESET")")
+  fi
+fi
 
 # Rate limits — threshold-colored percentage
 if [ -n "$five_pct" ]; then
@@ -199,10 +269,21 @@ if [ -n "$week_pct" ]; then
   right_parts+=("$week_str")
 fi
 
-# Context window usage — threshold-colored percentage
+# Context window usage — threshold-colored, with absolute token count when the
+# window size is known: "ctx: 36k (18%)". Falls back to just the percentage.
 if [ -n "$ctx_pct" ]; then
   color=$(rate_color "$ctx_pct")
-  right_parts+=("ctx: $(printf '%b%.0f%%%b' "$color" "$ctx_pct" "$RESET")")
+  if [ -n "$ctx_size" ]; then
+    ctx_tokens=$(awk -v pct="$ctx_pct" -v size="$ctx_size" 'BEGIN { printf "%.0f", pct/100 * size }')
+    if [ "$ctx_tokens" -ge 1000000 ] 2>/dev/null; then
+      ctx_display=$(awk -v t="$ctx_tokens" 'BEGIN { printf "%.1fm", t/1000000 }')
+    else
+      ctx_display=$(awk -v t="$ctx_tokens" 'BEGIN { printf "%.0fk", t/1000 }')
+    fi
+    right_parts+=("ctx: $(printf '%b%s (%.0f%%)%b' "$color" "$ctx_display" "$ctx_pct" "$RESET")")
+  else
+    right_parts+=("ctx: $(printf '%b%.0f%%%b' "$color" "$ctx_pct" "$RESET")")
+  fi
 fi
 
 # Model — steel blue
