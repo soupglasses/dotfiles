@@ -11,12 +11,13 @@
 [tag]
     gpgSign = true
 
-# Default ssh auth key: personal (soupglasses). This file is included
-# unconditionally, so it sets the default; a work include overrides it in work
-# contexts. Self-contained (-F /dev/null) so a work key pinned to github.com in
-# ~/.ssh/config cannot leak in and authenticate as the wrong account.
+# Default SSH authentication key: the personal OpenPGP authentication subkey
+# exposed by gpg-agent. This file is included unconditionally, so it sets the
+# default; a work include overrides it in work contexts. Self-contained
+# (-F /dev/null) so a work key pinned to github.com in ~/.ssh/config cannot leak
+# in and authenticate as the wrong account.
 [core]
-    sshCommand = ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/personal -o UserKnownHostsFile=~/.ssh/known_hosts
+    sshCommand = ssh -F /dev/null -o IdentitiesOnly=yes -i ~/.ssh/gpg.pub -o UserKnownHostsFile=~/.ssh/known_hosts
 
 [sendemail]
     smtpserver = msmtp
