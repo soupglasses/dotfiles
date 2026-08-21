@@ -5,6 +5,12 @@
     dest: "{{ ansible_env.HOME }}/.local/share/blesh-src"
     version: master
     depth: 1
+  # The managed global Git config rewrites GitHub HTTPS URLs to SSH. ble.sh is
+  # public and is needed while bootstrapping, so do not make this clone depend
+  # on a machine-specific SSH identity being present.
+  environment:
+    GIT_CONFIG_GLOBAL: /dev/null
+    GIT_CONFIG_NOSYSTEM: "1"
   register: blesh_clone
 
 - name: Build ble.sh
