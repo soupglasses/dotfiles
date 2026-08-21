@@ -30,6 +30,15 @@ skips itself where unsupported, so the same list works on Linux and macOS.
 ansible-playbook site.yaml
 ```
 
+To replace existing files or symlinks that conflict with any stow package for
+one run, enable the play-wide stow override:
+
+```bash
+ansible-playbook site.yaml --extra-vars stow_force=true
+```
+
+Directories are never removed by this override.
+
 ## Run single locally
 
 ```bash

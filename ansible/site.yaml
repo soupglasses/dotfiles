@@ -1,6 +1,11 @@
 - hosts: localhost
   connection: local
   gather_facts: true
+  module_defaults:
+    # Pass `-e stow_force=true` for a one-off run that replaces conflicting
+    # files for every stow task. Conflict replacement stays opt-in by default.
+    stow:
+      force: "{{ stow_force | default(false) | bool }}"
   roles:
     - { role: adw-gtk3, tags: ["adw-gtk3"] }
     - { role: ananicy-cpp, tags: ["ananicy-cpp"] }
