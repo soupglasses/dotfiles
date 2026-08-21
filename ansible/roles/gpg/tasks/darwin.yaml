@@ -1,0 +1,8 @@
+---
+- name: Ensure gpg is installed (Darwin)
+  community.general.homebrew:
+    name:
+      - gnupg
+      - pinentry-mac
+      - ykman
+    state: present

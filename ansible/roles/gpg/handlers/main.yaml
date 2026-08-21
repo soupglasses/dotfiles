@@ -4,9 +4,16 @@
     name: pcscd.service
     state: restarted
   become: true
+  when: ansible_facts['system'] == "Linux"
 
-- name: restart gpg-agent
+- name: restart gpg-agent (linux)
   ansible.builtin.systemd:
     name: gpg-agent.service
     state: restarted
     scope: user
+  when: ansible_facts['system'] == "Linux"
+
+# No service manager for gpg-agent on macOS; it respawns on the next gpg call.
+- name: restart gpg-agent (darwin)
+  ansible.builtin.command: gpgconf --kill gpg-agent
+  when: ansible_facts['os_family'] == "Darwin"

@@ -1,2 +1,14 @@
 ---
-role_platforms: [RedHat, Suse, Archlinux]
+role_platforms: [RedHat, Suse, Archlinux, Darwin]
+
+# gpg-agent.conf takes an absolute path for pinentry-program, so it cannot fall
+# back to $PATH. Darwin assumes Apple silicon Homebrew.
+gpg_pinentry_programs:
+  Linux: /usr/bin/pinentry-gnome3
+  Darwin: /opt/homebrew/bin/pinentry-mac
+gpg_pinentry_program: "{{ gpg_pinentry_programs[ansible_facts['system']] }}"
+
+# Primary certify key. The signing, encryption and authentication subkeys live
+# on the YubiKey, but gpg only builds secret-key stubs for them once this
+# public key is in the keyring.
+gpg_key_fingerprint: 3808B7519E356CD3D916AF01516522D0036CD9F1

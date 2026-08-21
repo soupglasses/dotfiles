@@ -1,0 +1,13 @@
+- name: Configure gpg for zsh
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.zshrc.d/25-gpg.zsh"
+    content: |
+      # Managed by Ansible (roles/gpg).
+      export GPG_TTY="${TTY:-$(tty)}"
+
+      # SSH_AUTH_SOCK is deliberately left alone here, unlike the bash drop-in:
+      # pointing it at gpg-agent takes over ssh authentication for the whole
+      # session, and this machine has its own ssh keys and agent.
+
+      alias gpg-relearn-card='gpg-connect-agent "scd serialno" "learn --force" /bye'
+    mode: "0644"

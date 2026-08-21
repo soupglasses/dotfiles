@@ -1,0 +1,35 @@
+---
+# gpg-agent as the ssh agent, driven by systemd sockets. macOS has neither
+# pcscd nor these units, and the Mac keeps its own ssh agent.
+
+- name: Enable and start pcscd.service
+  ansible.builtin.systemd:
+    name: pcscd.service
+    enabled: true
+    state: started
+  become: true
+
+- name: Enable and start gpg-agent.socket (user)
+  ansible.builtin.systemd:
+    name: gpg-agent.socket
+    enabled: true
+    state: started
+    scope: user
+
+- name: Enable and start gpg-agent-ssh.socket (user)
+  ansible.builtin.systemd:
+    name: gpg-agent-ssh.socket
+    enabled: true
+    state: started
+    scope: user
+
+- name: Add ssh keygrip to ~/.gnupg/sshcontrol
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.gnupg/sshcontrol"
+    line: 5E97FFBB4FB0C33693DFDB6078E8258ECD0D665B
+    create: true
+    mode: "0600"
+  notify:
+    - restart pcscd
+    - restart gpg-agent (linux)
+    - restart gpg-agent (darwin)

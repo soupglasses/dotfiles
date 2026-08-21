@@ -10,6 +10,10 @@
   include_tasks: ./archlinux.yaml
   when: ansible_facts['os_family'] == "Archlinux"
 
+- name: Install (Darwin)
+  include_tasks: ./darwin.yaml
+  when: ansible_facts['os_family'] == "Darwin"
+
 - name: Stow bash
   stow:
     src: "{{ role_path }}/files"
@@ -18,10 +22,15 @@
     # The bash role and every tool role also write into ~/.bashrc.d, so the
     # directory must stay real rather than fold into this repository.
     folding: false
+  when: ansible_facts['system'] == "Linux"
   notify:
     - restart pcscd
-    - restart gpg-agent
+    - restart gpg-agent (linux)
+    - restart gpg-agent (darwin)
 
+- name: Configure zsh
+  include_tasks: zsh.yaml
+  when: ansible_facts['os_family'] == "Darwin"
 
 - name: Ensure ~/.gnupg directory exists
   ansible.builtin.file:
@@ -38,7 +47,20 @@
     folding: false
   notify:
     - restart pcscd
-    - restart gpg-agent
+    - restart gpg-agent (linux)
+    - restart gpg-agent (darwin)
+
+- name: Write ~/.gnupg/gpg-agent.conf
+  ansible.builtin.template:
+    src: gpg-agent.conf.j2
+    dest: "{{ ansible_env.HOME }}/.gnupg/gpg-agent.conf"
+    mode: "0600"
+    # Earlier revisions stowed this file. Without this the template would write
+    # through the leftover symlink into the repository.
+    follow: false
+  notify:
+    - restart gpg-agent (linux)
+    - restart gpg-agent (darwin)
 
 - name: Ensure ~/.ssh directory exists
   ansible.builtin.file:
@@ -55,33 +77,40 @@
     # into a public repository.
     folding: false
 
-- name: Enable and start pcscd.service
-  ansible.builtin.systemd:
-    name: pcscd.service
-    enabled: true
-    state: started
-  become: true
+- name: Configure gpg-agent sockets (Linux)
+  include_tasks: ./linux.yaml
+  when: ansible_facts['system'] == "Linux"
 
-- name: Enable and start gpg-agent.socket (user)
-  ansible.builtin.systemd:
-    name: gpg-agent.socket
-    enabled: true
-    state: started
-    scope: user
+- name: Check whether the public key is in the keyring
+  ansible.builtin.command: gpg --list-keys {{ gpg_key_fingerprint }}
+  register: gpg_public_key
+  changed_when: false
+  failed_when: false
+  check_mode: false
 
-- name: Enable and start gpg-agent-ssh.socket (user)
-  ansible.builtin.systemd:
-    name: gpg-agent-ssh.socket
-    enabled: true
-    state: started
-    scope: user
+- name: Import the public key
+  ansible.builtin.command: gpg --recv-keys {{ gpg_key_fingerprint }}
+  when: gpg_public_key.rc != 0
 
-- name: Add ssh keygrip to ~/.gnupg/sshcontrol
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.gnupg/sshcontrol"
-    line: 5E97FFBB4FB0C33693DFDB6078E8258ECD0D665B
-    create: true
-    mode: "0600"
-  notify:
-    - restart pcscd
-    - restart gpg-agent
+- name: Read ownertrust
+  ansible.builtin.command: gpg --export-ownertrust
+  register: gpg_ownertrust
+  changed_when: false
+  check_mode: false
+
+# Own key, so ultimate trust. Without it gpg reports its own signatures as made
+# by an untrusted key and git shows them as unverified.
+- name: Trust the public key ultimately
+  ansible.builtin.command: gpg --import-ownertrust
+  args:
+    stdin: "{{ gpg_key_fingerprint }}:6:"
+  when: (gpg_key_fingerprint ~ ":6:") not in gpg_ownertrust.stdout
+
+# Reading the card is what makes gpg create the secret-key stubs pointing at
+# it. No-op when the YubiKey is not plugged in.
+- name: Refresh the card key stubs
+  ansible.builtin.command: gpg --card-status
+  register: gpg_card_status
+  changed_when: false
+  failed_when: false
+  check_mode: false

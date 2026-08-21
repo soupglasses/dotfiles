@@ -1,0 +1,13 @@
+# Managed by Ansible (roles/gpg).
+#
+# https://github.com/drduh/config/blob/main/gpg-agent.conf
+# https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html
+#
+# Templated rather than stowed because pinentry-program takes an absolute path
+# that differs per platform, and a pinentry that cannot open its prompt makes
+# every signature fail.
+enable-ssh-support
+ttyname $GPG_TTY
+pinentry-program {{ gpg_pinentry_program }}
+default-cache-ttl 60
+max-cache-ttl 120
