@@ -27,6 +27,15 @@
 # Allows us to use `127.0.0.53` as a valid DNS in Network Manager,
 # which uses DNS over TLS whenever possible. Easier than manually configuring
 # this for each connection.
+- name: Ensure systemd-resolved drop-in directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/resolved.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
 - name: Ensure systemd-resolved fallback DNS is configured
   ansible.builtin.copy:
     dest: /etc/systemd/resolved.conf.d/fallback.conf
