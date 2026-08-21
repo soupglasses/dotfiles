@@ -16,7 +16,7 @@
   when: ansible_facts['os_family'] == "Darwin"
 
 - name: Stow neovim
-  stow:
+  soupglasses.stow.stow:
     # This repository owns all of ~/.config/nvim, so folding stays on: one
     # directory symlink, and lazy-lock.json edits land straight back in the
     # repository. Neovim's runtime state lives in ~/.local/share/nvim, outside

@@ -4,7 +4,7 @@
   module_defaults:
     # Pass `-e stow_force=true` for a one-off run that replaces conflicting
     # files for every stow task. Conflict replacement stays opt-in by default.
-    stow:
+    soupglasses.stow.stow:
       force: "{{ stow_force | default(false) | bool }}"
   roles:
     - { role: adw-gtk3, tags: ["adw-gtk3"] }

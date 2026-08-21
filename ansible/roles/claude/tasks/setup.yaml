@@ -22,7 +22,7 @@
     mode: "0755"
 
 - name: Stow claude
-  stow:
+  soupglasses.stow.stow:
     src: "{{ role_path }}/files"
     dest: "{{ ansible_env.HOME }}"
     package: [claude]

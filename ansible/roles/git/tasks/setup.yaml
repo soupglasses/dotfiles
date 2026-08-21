@@ -21,7 +21,7 @@
     mode: "0755"
 
 - name: Stow git
-  stow:
+  soupglasses.stow.stow:
     src: "{{ role_path }}/files"
     dest: "{{ ansible_env.HOME }}"
     package: [git]

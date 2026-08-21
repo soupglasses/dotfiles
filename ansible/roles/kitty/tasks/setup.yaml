@@ -16,7 +16,7 @@
   when: ansible_facts['os_family'] == "Darwin"
 
 - name: Stow kitty
-  stow:
+  soupglasses.stow.stow:
     src: "{{ role_path }}/files"
     dest: "{{ ansible_env.HOME }}"
     package: [kitty]
