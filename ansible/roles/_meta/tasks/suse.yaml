@@ -9,6 +9,5 @@
   community.general.zypper:
     name:
       - stow
-      - sops
     state: present
   become: true

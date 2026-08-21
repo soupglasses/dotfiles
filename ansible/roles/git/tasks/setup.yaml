@@ -65,24 +65,3 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK - include"
     create: true
     mode: "0644"
-
-# Only on Linux. The Mac is a work machine whose work identity comes from
-# machine-local includeIf rules kept outside this repository.
-- name: Configure work identity
-  when: ansible_facts['system'] == "Linux"
-  block:
-    - name: Load sops-encrypted vars
-      community.sops.load_vars:
-        file: "{{ role_path }}/vars/work.sops.yaml"
-
-    - name: Add work sourcing block to the git config
-      ansible.builtin.blockinfile:
-        path: "{{ git_config_file }}"
-        block: "{{ secret_git_work_include_block }}"
-        marker: "# {mark} ANSIBLE MANAGED BLOCK - work"
-
-    - name: Create ~/.config/git/work file
-      ansible.builtin.copy:
-        dest: "{{ ansible_env.HOME }}/.config/git/work"
-        content: "{{ secret_git_work_file }}"
-        mode: "0644"
