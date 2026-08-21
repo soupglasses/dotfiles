@@ -11,13 +11,13 @@
   include_tasks: ./archlinux.yaml
   when: ansible_facts['os_family'] == "Archlinux"
 
-- name: Check if atuin is already configured
+- name: Check if atuin has completed its first-time setup
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.local/share/atuin/session"
-  register: atuin_session
+    path: "{{ ansible_env.HOME }}/.local/share/atuin/key"
+  register: atuin_key_file
 
 - name: Prompt for Atuin credentials (first time setup)
-  when: not atuin_session.stat.exists
+  when: not atuin_key_file.stat.exists
   block:
     - name: Prompt for username
       ansible.builtin.pause:
