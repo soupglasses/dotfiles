@@ -5,6 +5,14 @@ elif ls --group-directories-first /dev/null >/dev/null 2>&1; then
   alias ls='ls --group-directories-first'
 fi
 
+if (( $+commands[pbcopy] )); then
+  alias copy='pbcopy'
+  alias paste='pbpaste'
+elif (( $+commands[wl-copy] )); then
+  alias copy='wl-copy'
+  alias paste='wl-paste'
+fi
+
 if diff --color=auto /dev/null /dev/null >/dev/null 2>&1; then
   alias diff='diff --color=auto'
 fi
