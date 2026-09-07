@@ -1,5 +1,6 @@
 add_newline = false
 format = "$directory$all$character"
+command_timeout = 1000
 
 [username]
 disabled = true
