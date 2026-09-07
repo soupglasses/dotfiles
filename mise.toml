@@ -22,7 +22,6 @@ run = "ansible-playbook ansible/site.yaml"
 
 [tasks.role]
 description = "Run one or more Ansible roles by tag"
-silent = true
 usage = 'arg "<roles>" var=#true help="Roles or tags to run"'
 run = '''
 #!/usr/bin/env bash
