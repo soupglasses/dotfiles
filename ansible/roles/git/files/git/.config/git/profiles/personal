@@ -18,12 +18,14 @@
 
 # Use the personal OpenPGP authentication subkey through gpg-agent. The .pub
 # file is only a public-key hint for signatures; passing it as IdentityFile
-# makes OpenSSH try to load a public key as a private key. This file is included
-# unconditionally, so it sets the default; a work include overrides it in work
-# contexts. Self-contained (-F /dev/null) so a work key pinned to github.com in
-# ~/.ssh/config cannot leak in and authenticate as the wrong account.
+# makes OpenSSH try to load a public key as a private key. Ask gpgconf for the
+# socket instead of assuming the default path, while deliberately not using
+# SSH_AUTH_SOCK: the work profile reserves that variable for its single work
+# identity. This file is included unconditionally, so it sets the default; a
+# work include overrides it in work contexts. Self-contained (-F /dev/null) so
+# ~/.ssh/config cannot leak another identity into the connection.
 [core]
-    sshCommand = ssh -F /dev/null -o IdentitiesOnly=no -o IdentityAgent=~/.gnupg/S.gpg-agent.ssh -o UserKnownHostsFile=~/.ssh/known_hosts
+    sshCommand = ssh -F /dev/null -o IdentitiesOnly=no -o IdentityAgent=\"$(gpgconf --list-dirs agent-ssh-socket)\" -o UserKnownHostsFile=~/.ssh/known_hosts
 
 [sendemail]
     smtpserver = msmtp
