@@ -45,7 +45,7 @@
           if claude_settings_raw.content is defined else {})
          | combine({'statusLine': {
              'type': 'command',
-             'command': 'bash ' ~ ansible_env.HOME ~ '/.claude/statusline-command.sh'
+             'command': ansible_env.HOME ~ '/.local/bin/claude-statusline'
            }}, recursive=true) }}
 
 - name: Write ~/.claude/settings.json
