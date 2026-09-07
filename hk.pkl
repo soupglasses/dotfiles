@@ -1,0 +1,24 @@
+amends "package://github.com/jdx/hk/releases/download/v1.58.1/hk@1.58.1#/Config.pkl"
+
+import "package://github.com/jdx/hk/releases/download/v1.58.1/hk@1.58.1#/Builtins.pkl"
+
+local checks = new Mapping<String, Step> {
+  ["ansible-syntax"] {
+    check = "cd ansible && ansible-playbook --syntax-check site.yaml"
+  }
+  ["yamllint"] = Builtins.yamllint
+  ["shell-syntax"] {
+    glob = List("**/*.sh", "**/.local/bin/*")
+    check = "bash -n {{files}}"
+  }
+  ["zsh-syntax"] {
+    glob = "**/*.zsh"
+    check = "zsh -n {{files}}"
+  }
+  ["gitleaks"] = Builtins.gitleaks
+}
+
+hooks {
+  ["pre-commit"] { steps = checks }
+  ["check"] { steps = checks }
+}

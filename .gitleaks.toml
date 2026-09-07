@@ -1,0 +1,11 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "OpenPGP public key fingerprint"
+regexTarget = "match"
+regexes = ['''gpg_key_fingerprint:\s+[0-9A-F]{40}''']
+
+[[allowlists]]
+description = "Private work-role checkout"
+paths = ['''^ansible/roles/work/''']

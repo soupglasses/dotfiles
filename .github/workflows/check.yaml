@@ -1,0 +1,22 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v4
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install --yes zsh
+      - name: Install Ansible collections
+        run: mise run setup
+      - name: Run checks
+        run: mise run check

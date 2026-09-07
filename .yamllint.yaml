@@ -1,0 +1,20 @@
+extends: default
+
+ignore: |
+  ansible/roles/work/
+
+rules:
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+  commas:
+    max-spaces-after: 2
+  comments: disable
+  comments-indentation: disable
+  document-start: disable
+  empty-lines:
+    max-end: 1
+  indentation:
+    indent-sequences: whatever
+  line-length: disable
+  truthy: disable
