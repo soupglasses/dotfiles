@@ -20,6 +20,16 @@
     state: directory
     mode: "0755"
 
+- name: Add global ignore patterns
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.config/git/ignore"
+    block: |
+      .DS_Store
+      .claude/
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - global ignores"
+    create: true
+    mode: "0644"
+
 - name: Stow git
   soupglasses.stow.stow:
     src: "{{ role_path }}/files"
