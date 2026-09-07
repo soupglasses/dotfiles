@@ -1,22 +1,33 @@
 # Restore the personal profile whenever a configured remote belongs to the
 # personal account. This file is included after any machine-local default.
+# Each rule also permits an optional machine-specific override; Git silently
+# ignores that include when the file is absent.
 [includeIf "hasconfig:remote.*.url:git@github.com:soupglasses/**"]
     path = ~/.config/git/profiles/personal
+    path = ~/.config/git/personal-machine
 [includeIf "hasconfig:remote.*.url:https://github.com/soupglasses/**"]
     path = ~/.config/git/profiles/personal
+    path = ~/.config/git/personal-machine
 [includeIf "hasconfig:remote.*.url:ssh://git@github.com/soupglasses/**"]
     path = ~/.config/git/profiles/personal
+    path = ~/.config/git/personal-machine
 
 [includeIf "hasconfig:remote.*.url:git@gitlab.com:soupglasses/**"]
     path = ~/.config/git/profiles/personal
+    path = ~/.config/git/personal-machine
 [includeIf "hasconfig:remote.*.url:https://gitlab.com/soupglasses/**"]
     path = ~/.config/git/profiles/personal
-[includeIf "hasconfig:remote.*.url:ssh://git@gitlab.com/soupglasses/**"]
+    path = ~/.config/git/personal-machine
+[includeIf "hasconfig:remote.*.url:ssh://git@gitlab.com:soupglasses/**"]
     path = ~/.config/git/profiles/personal
+    path = ~/.config/git/personal-machine
 
 [includeIf "hasconfig:remote.*.url:git@codeberg.org:soupglasses/**"]
     path = ~/.config/git/profiles/personal
+    path = ~/.config/git/personal-machine
 [includeIf "hasconfig:remote.*.url:https://codeberg.org/soupglasses/**"]
     path = ~/.config/git/profiles/personal
-[includeIf "hasconfig:remote.*.url:ssh://git@codeberg.org/soupglasses/**"]
+    path = ~/.config/git/personal-machine
+[includeIf "hasconfig:remote.*.url:ssh://git@codeberg.org:soupglasses/**"]
     path = ~/.config/git/profiles/personal
+    path = ~/.config/git/personal-machine
