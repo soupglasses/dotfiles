@@ -65,5 +65,5 @@ mise run role git shell
 The direct Ansible equivalent is:
 
 ```bash
-ansible-playbook site.yaml --tags "fonts"
+ansible-playbook --inventory 'localhost,' site.yaml --tags "fonts"
 ```
