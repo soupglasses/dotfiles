@@ -30,5 +30,7 @@ set -euo pipefail
 
 eval "roles=(${usage_roles?})"
 IFS=,
-ansible-playbook --inventory 'localhost,' ansible/site.yaml --tags "${roles[*]}"
+tags="${roles[*]}"
+printf '+ ansible-playbook --inventory %q ansible/site.yaml --tags %q\\n' 'localhost,' "$tags"
+exec ansible-playbook --inventory 'localhost,' ansible/site.yaml --tags "$tags"
 '''
