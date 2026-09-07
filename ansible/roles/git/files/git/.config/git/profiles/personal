@@ -11,6 +11,11 @@
 [tag]
     gpgSign = true
 
+# A machine-local default may use SSH signing; restore OpenPGP with the rest of
+# the personal identity.
+[gpg]
+    format = openpgp
+
 # Default SSH authentication key: the personal OpenPGP authentication subkey
 # exposed by gpg-agent. This file is included unconditionally, so it sets the
 # default; a work include overrides it in work contexts. Self-contained

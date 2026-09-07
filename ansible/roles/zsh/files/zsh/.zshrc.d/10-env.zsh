@@ -3,6 +3,8 @@
 export EDITOR=nvim
 export VISUAL=nvim
 export MANPAGER="nvim +Man!"
+# Let Git discover manuals for user-installed subcommands such as git-profile.
+export MANPATH="$HOME/.local/share/man:${MANPATH:-}"
 
 # Keep $HOME tidy by preferring the XDG locations.
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"

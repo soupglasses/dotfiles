@@ -31,37 +31,39 @@
     folding: false
 
 
-# git reads ~/.config/git/config only when ~/.gitconfig is absent, and it is
-# ~/.gitconfig that `git config --global` creates once anything has written
-# there. On a machine where that already happened, a block in the XDG file
-# would be silently ignored, so the block goes wherever git will actually read
-# it from.
-- name: Check whether ~/.gitconfig takes precedence
-  ansible.builtin.stat:
+# Git gives ~/.gitconfig precedence over the XDG config. Remove that legacy
+# location so every machine consistently uses ~/.config/git/config.
+- name: Remove legacy ~/.gitconfig
+  ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.gitconfig"
-  register: git_home_config
+    state: absent
 
-- name: Select the git config file to manage
-  ansible.builtin.set_fact:
-    git_config_file: >-
-      {{ ansible_env.HOME ~ ('/.gitconfig' if git_home_config.stat.exists
-                             else '/.config/git/config') }}
-
-# Only the include lines are managed. The rest of the file is left alone, so
-# anything written by `git config --global` or by machine-specific tooling
-# survives a re-run. The include paths are absolute because a relative path
-# resolves against the including file's own directory, which differs between
-# ~/.gitconfig and ~/.config/git/config.
+# Only the include lines are managed. The rest of the XDG config is left alone,
+# so settings written by `git config --global` or machine-specific tooling
+# survive a re-run.
 - name: Add include sourcing block to the git config
   ansible.builtin.blockinfile:
-    path: "{{ git_config_file }}"
+    path: "{{ ansible_env.HOME }}/.config/git/config"
     block: |
       [include]
           path = {{ ansible_env.HOME }}/.config/git/base
           path = {{ ansible_env.HOME }}/.config/git/difftastic
           path = {{ ansible_env.HOME }}/.config/git/aliases
           path = {{ ansible_env.HOME }}/.config/git/{{ 'credential-darwin' if ansible_facts['os_family'] == 'Darwin' else 'credential-linux' }}
-          path = {{ ansible_env.HOME }}/.config/git/personal
+          path = {{ ansible_env.HOME }}/.config/git/profiles/personal
     marker: "# {mark} ANSIBLE MANAGED BLOCK - include"
+    create: true
+    mode: "0644"
+
+# Keep personal-owner routing last. A machine-local role may insert a different
+# default profile before this block; remotes owned by the personal account must
+# still restore the personal profile afterwards.
+- name: Add personal remote profile overrides
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.config/git/config"
+    block: |
+      [include]
+          path = {{ ansible_env.HOME }}/.config/git/personal-remotes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - personal-remotes"
     create: true
     mode: "0644"

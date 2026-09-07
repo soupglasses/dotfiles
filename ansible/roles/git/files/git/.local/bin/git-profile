@@ -1,0 +1,113 @@
+#!/bin/sh
+set -eu
+
+profiles_dir="$HOME/.config/git/profiles"
+
+die() {
+    printf 'git profile: %s\n' "$*" >&2
+    exit 1
+}
+
+ensure_repository() {
+    git rev-parse --git-dir >/dev/null 2>&1 || die "must be run inside a Git repository"
+}
+
+profile_path() {
+    name=$1
+    case "$name" in
+        ""|*[!A-Za-z0-9._-]*) die "invalid profile name '$name'" ;;
+    esac
+    printf '%s/%s' "$profiles_dir" "$name"
+}
+
+clear_selection() {
+    git config --local --get-all include.path 2>/dev/null |
+        while IFS= read -r include; do
+            case "$include" in
+                "$profiles_dir"/*)
+                    git config --local --fixed-value --unset-all include.path "$include" 2>/dev/null || :
+                    ;;
+            esac
+        done
+    return 0
+}
+
+explicit_profile() {
+    git config --local --get-all include.path 2>/dev/null |
+        awk -v prefix="$profiles_dir/" '
+            index($0, prefix) == 1 {
+                sub("^" prefix, "")
+                print
+                exit
+            }
+        '
+    return 0
+}
+
+current_profile() {
+    selected=$(explicit_profile)
+    printf '%s' "${selected:-default}"
+}
+
+show_profile() {
+    selected=$(current_profile)
+    previous=$(git config --local profile.previous 2>/dev/null || true)
+    if [ -n "$previous" ]; then
+        printf '%s\n' "profile: $selected; previous: $previous ($(git config user.name) <$(git config user.email)>)"
+    else
+        printf '%s\n' "profile: $selected ($(git config user.name) <$(git config user.email)>)"
+    fi
+}
+
+switch_profile() {
+    target=$1
+    current=$(current_profile)
+
+    if [ "$target" != default ]; then
+        selected_profile=$(profile_path "$target")
+        [ -f "$selected_profile" ] || die "unknown profile '$target' (try 'git profile list')"
+    fi
+
+    # Selecting the current profile is a no-op and must not destroy useful
+    # history, especially `git profile reset` while already on default.
+    if [ "$target" = "$current" ]; then
+        show_profile
+        return
+    fi
+
+    clear_selection
+    if [ "$target" != default ]; then
+        git config --local --add include.path "$selected_profile"
+    fi
+    git config --local profile.previous "$current"
+    show_profile
+}
+
+list_profiles() {
+    for profile in "$profiles_dir"/*; do
+        [ -f "$profile" ] || continue
+        basename "$profile"
+    done | sort
+}
+
+command=${1:-show}
+ensure_repository
+case "$command" in
+    show)
+        show_profile
+        ;;
+    list)
+        list_profiles
+        ;;
+    unset|default|reset)
+        switch_profile default
+        ;;
+    -)
+        previous=$(git config --local profile.previous 2>/dev/null || true)
+        [ -n "$previous" ] || die "no previous profile in this repository"
+        switch_profile "$previous"
+        ;;
+    *)
+        switch_profile "$command"
+        ;;
+esac

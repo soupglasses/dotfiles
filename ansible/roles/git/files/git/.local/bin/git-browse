@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+remote=$(git config --get "branch.$(git branch --show-current).remote" 2>/dev/null || true)
+if [ -z "$remote" ] || [ "$remote" = "." ]; then
+    remote=origin
+fi
+
+url=$(git remote get-url "$remote" 2>/dev/null) || {
+    printf "git browse: cannot resolve remote '%s'\n" "$remote" >&2
+    exit 1
+}
+
+case "$url" in
+    git@github.com:*|ssh://git@github.com/*|https://github.com/*|http://github.com/*)
+        exec gh browse "$@"
+        ;;
+    *)
+        printf "git browse: remote '%s' is not hosted on github.com (%s)\n" "$remote" "$url" >&2
+        exit 1
+        ;;
+esac

@@ -1,0 +1,73 @@
+.TH GIT-PROFILE 1
+.SH NAME
+git-profile \- select a Git identity for the current repository
+.SH SYNOPSIS
+.B git profile
+.RI [ profile | command ]
+.SH DESCRIPTION
+Selects a named Git profile for the current repository, or returns it to
+automatic profile selection. With no argument, displays the explicit profile,
+previous profile, and effective identity.
+.PP
+Profiles are ordinary Git configuration files stored in:
+.PP
+.nf
+~/.config/git/profiles/
+.fi
+.PP
+The filename is the profile name. For example:
+.PP
+.nf
+~/.config/git/profiles/personal
+~/.config/git/profiles/work
+~/.config/git/profiles/fedora
+.fi
+.SH LOCAL CONFIGURATION
+Selecting
+.B git profile fedora
+adds the profile include and remembers the prior selection in that repository's
+.BR .git/config :
+.PP
+.nf
+[include]
+    path = ~/.config/git/profiles/fedora
+[profile]
+    previous = default
+.fi
+.PP
+.B default
+is a built-in pseudo-profile meaning that no local profile include is present.
+It exposes the identity selected by the global defaults and remote-owner rules.
+.PP
+Only
+.B include.path
+values inside the profiles directory are managed. Unrelated local includes and
+settings are left untouched. The single
+.B profile.previous
+value exists only to implement previous-profile switching; no global history or
+state file is maintained.
+.SH COMMANDS
+.TP
+.I profile
+Select the named profile. Any file in the profiles directory can be selected.
+.TP
+.B list
+List available profiles.
+.TP
+.B \-
+Switch to the previous profile in this repository. The profile being left
+becomes the new previous profile, so repeated invocations toggle between the
+two most recent selections.
+.TP
+.BR default , " reset" , " unset"
+Switch to the built-in default profile by removing the repository-local profile
+include. The profile being reset remains available through
+.BR "git profile \-" .
+.TP
+.B show
+Display the explicit and previous profiles. The explicit profile is
+.B default
+when profile selection is automatic.
+.SH SEE ALSO
+.BR git-config (1),
+.BR git-whoami (1)

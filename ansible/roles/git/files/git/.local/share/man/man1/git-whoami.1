@@ -1,0 +1,32 @@
+.TH GIT-WHOAMI 1
+.SH NAME
+git-whoami \- show the effective Git identity and its configuration source
+.SH SYNOPSIS
+.B git whoami
+.SH DESCRIPTION
+Displays the effective
+.B user.name
+and
+.B user.email
+for the current Git context as a single line, followed by the configuration
+scope and file that supplied them.
+.SH OUTPUT
+.nf
+Example User <user@example.com> (global: ~/.config/git/profiles/personal)
+.fi
+.PP
+If the name and email come from different places, both sources are shown on
+the same line.
+.PP
+Possible scopes are the scopes reported by
+.BR "git config --show-scope" ,
+such as
+.BR system ,
+.BR global ,
+.BR local ,
+.BR worktree ,
+and
+.BR command .
+.SH SEE ALSO
+.BR git-config (1),
+.BR git-profile (1)

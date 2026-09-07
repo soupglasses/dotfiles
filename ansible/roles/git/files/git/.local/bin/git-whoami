@@ -1,0 +1,57 @@
+#!/bin/sh
+set -eu
+
+if [ "$#" -ne 0 ]; then
+    printf "git whoami: no arguments accepted (try 'git whoami --help')\n" >&2
+    exit 1
+fi
+
+config_record() {
+    git config --show-scope --show-origin --get "$1"
+}
+
+record_scope() {
+    printf '%s\n' "$1" | awk -F '\t' '{ print $1 }'
+}
+
+record_origin() {
+    printf '%s\n' "$1" | awk -F '\t' '{ print $2 }'
+}
+
+record_value() {
+    printf '%s\n' "$1" | cut -f 3-
+}
+
+format_origin() {
+    origin=${1#file:}
+    case "$origin" in
+        "$HOME"/*) printf '~/%s' "${origin#"$HOME"/}" ;;
+        *) printf '%s' "$origin" ;;
+    esac
+}
+
+name_record=$(config_record user.name) || {
+    printf 'git whoami: user.name is not configured\n' >&2
+    exit 1
+}
+email_record=$(config_record user.email) || {
+    printf 'git whoami: user.email is not configured\n' >&2
+    exit 1
+}
+
+name=$(record_value "$name_record")
+email=$(record_value "$email_record")
+name_scope=$(record_scope "$name_record")
+email_scope=$(record_scope "$email_record")
+name_origin=$(record_origin "$name_record")
+email_origin=$(record_origin "$email_record")
+
+if [ "$name_scope" = "$email_scope" ] && [ "$name_origin" = "$email_origin" ]; then
+    printf '%s <%s> (%s: %s)\n' \
+        "$name" "$email" "$name_scope" "$(format_origin "$name_origin")"
+else
+    printf '%s <%s> (name: %s %s; email: %s %s)\n' \
+        "$name" "$email" \
+        "$name_scope" "$(format_origin "$name_origin")" \
+        "$email_scope" "$(format_origin "$email_origin")"
+fi
