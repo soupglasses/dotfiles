@@ -53,7 +53,16 @@ ansible-playbook site.yaml --extra-vars stow_force=true
 
 Directories are never removed by this override.
 
-## Run single locally
+## Run a single role locally
+
+Use Mise to run a role by its Ansible tag:
+
+```bash
+mise run role fonts
+mise run role git
+```
+
+The direct Ansible equivalent is:
 
 ```bash
 ansible-playbook site.yaml --tags "fonts"

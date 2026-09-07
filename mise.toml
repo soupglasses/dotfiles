@@ -15,3 +15,12 @@ run = "ansible-galaxy collection install -r ansible/requirements.yml"
 [tasks.check]
 description = "Run all repository checks"
 run = "hk check --all"
+
+[tasks.playbook]
+description = "Run the complete Ansible playbook"
+run = "ansible-playbook ansible/site.yaml"
+
+[tasks.role]
+description = "Run one Ansible role by tag"
+usage = 'arg "<role>" help="Role or tag to run"'
+run = 'ansible-playbook ansible/site.yaml --tags "${usage_role?}"'
