@@ -30,6 +30,16 @@
     # into this repository.
     folding: false
 
+- name: Remove legacy personal remote include file
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config/git/personal-remotes"
+    state: absent
+
+- name: Remove legacy personal remote include block
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.config/git/config"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - personal-remotes"
+    state: absent
 
 # Git gives ~/.gitconfig precedence over the XDG config. Remove that legacy
 # location so every machine consistently uses ~/.config/git/config.
@@ -55,15 +65,15 @@
     create: true
     mode: "0644"
 
-# Keep personal-owner routing last. A machine-local role may insert a different
-# default profile before this block; remotes owned by the personal account must
-# still restore the personal profile afterwards.
-- name: Add personal remote profile overrides
+# Keep remote-based routing last. A machine-local role may insert a different
+# default profile before this block; matching remotes can then restore or refine
+# the selected profile.
+- name: Add remote profile routing
   ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.config/git/config"
     block: |
       [include]
-          path = {{ ansible_env.HOME }}/.config/git/personal-remotes
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - personal-remotes"
+          path = {{ ansible_env.HOME }}/.config/git/remotes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - remote-profiles"
     create: true
     mode: "0644"
