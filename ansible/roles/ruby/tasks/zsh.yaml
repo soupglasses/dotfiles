@@ -1,6 +1,6 @@
 - name: Configure ruby for zsh
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/25-ruby.zsh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/25-ruby.zsh"
     content: |
       # Managed by Ansible (roles/ruby).
       #

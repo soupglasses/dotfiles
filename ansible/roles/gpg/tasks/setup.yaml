@@ -17,7 +17,7 @@
 - name: Stow bash
   soupglasses.stow.stow:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_env.HOME }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
     package: [bash]
     # The bash role and every tool role also write into ~/.bashrc.d, so the
     # directory must stay real rather than fold into this repository.
@@ -34,14 +34,14 @@
 
 - name: Ensure ~/.gnupg directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.gnupg"
+    path: "{{ ansible_facts['env']['HOME'] }}/.gnupg"
     state: directory
     mode: "0700"
 
 - name: Stow gpg
   soupglasses.stow.stow:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_env.HOME }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
     package: [gpg]
     # gpg-agent writes its own state and sockets into ~/.gnupg.
     folding: false
@@ -53,7 +53,7 @@
 - name: Write ~/.gnupg/gpg-agent.conf
   ansible.builtin.template:
     src: gpg-agent.conf.j2
-    dest: "{{ ansible_env.HOME }}/.gnupg/gpg-agent.conf"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.gnupg/gpg-agent.conf"
     mode: "0600"
     # Earlier revisions stowed this file. Without this the template would write
     # through the leftover symlink into the repository.
@@ -64,14 +64,14 @@
 
 - name: Ensure ~/.ssh directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.ssh"
+    path: "{{ ansible_facts['env']['HOME'] }}/.ssh"
     state: directory
     mode: "0700"
 
 - name: Stow ssh
   soupglasses.stow.stow:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_env.HOME }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
     package: [ssh]
     # ~/.ssh holds private keys and known_hosts, which must never be linked
     # into a public repository.

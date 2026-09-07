@@ -1,6 +1,6 @@
 - name: Configure fzf for zsh
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/70-fzf.zsh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/70-fzf.zsh"
     content: |
       # Managed by Ansible (roles/fzf).
       if (( $+commands[fzf] )); then

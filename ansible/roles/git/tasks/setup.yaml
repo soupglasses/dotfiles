@@ -16,14 +16,14 @@
 
 - name: Create .config/git directory
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config/git"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/git"
     state: directory
     mode: "0755"
 
 - name: Stow git
   soupglasses.stow.stow:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_env.HOME }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
     package: [git]
     # ~/.config/git/config is a local file that git itself writes to (any
     # `git config --global`), so this directory must never become a symlink
@@ -32,12 +32,12 @@
 
 - name: Remove legacy personal remote include file
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config/git/personal-remotes"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/git/personal-remotes"
     state: absent
 
 - name: Remove legacy personal remote include block
   ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.config/git/config"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/git/config"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - personal-remotes"
     state: absent
 
@@ -46,14 +46,14 @@
 # migrated into ~/.config/git/config.
 - name: Inspect legacy ~/.gitconfig
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.gitconfig"
+    path: "{{ ansible_facts['env']['HOME'] }}/.gitconfig"
   register: legacy_gitconfig
 
 - name: Refuse to overwrite a non-empty legacy ~/.gitconfig
   ansible.builtin.fail:
     msg: >-
-      {{ ansible_env.HOME }}/.gitconfig exists and is not empty. Move its
-      settings into {{ ansible_env.HOME }}/.config/git/config, then remove it
+      {{ ansible_facts['env']['HOME'] }}/.gitconfig exists and is not empty. Move its
+      settings into {{ ansible_facts['env']['HOME'] }}/.config/git/config, then remove it
       before running this role again.
   when:
     - legacy_gitconfig.stat.exists
@@ -61,7 +61,7 @@
 
 - name: Remove empty legacy ~/.gitconfig
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.gitconfig"
+    path: "{{ ansible_facts['env']['HOME'] }}/.gitconfig"
     state: absent
   when: legacy_gitconfig.stat.exists
 
@@ -70,14 +70,14 @@
 # survive a re-run.
 - name: Add include sourcing block to the git config
   ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.config/git/config"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/git/config"
     block: |
       [include]
-          path = {{ ansible_env.HOME }}/.config/git/base
-          path = {{ ansible_env.HOME }}/.config/git/difftastic
-          path = {{ ansible_env.HOME }}/.config/git/aliases
-          path = {{ ansible_env.HOME }}/.config/git/{{ 'credential-darwin' if ansible_facts['os_family'] == 'Darwin' else 'credential-linux' }}
-          path = {{ ansible_env.HOME }}/.config/git/profiles/personal
+          path = {{ ansible_facts['env']['HOME'] }}/.config/git/base
+          path = {{ ansible_facts['env']['HOME'] }}/.config/git/difftastic
+          path = {{ ansible_facts['env']['HOME'] }}/.config/git/aliases
+          path = {{ ansible_facts['env']['HOME'] }}/.config/git/{{ 'credential-darwin' if ansible_facts['os_family'] == 'Darwin' else 'credential-linux' }}
+          path = {{ ansible_facts['env']['HOME'] }}/.config/git/profiles/personal
     marker: "# {mark} ANSIBLE MANAGED BLOCK - include"
     create: true
     mode: "0644"
@@ -87,10 +87,10 @@
 # the selected profile.
 - name: Add remote profile routing
   ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.config/git/config"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/git/config"
     block: |
       [include]
-          path = {{ ansible_env.HOME }}/.config/git/remotes
+          path = {{ ansible_facts['env']['HOME'] }}/.config/git/remotes
     marker: "# {mark} ANSIBLE MANAGED BLOCK - remote-profiles"
     create: true
     mode: "0644"

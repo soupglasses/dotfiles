@@ -22,5 +22,5 @@
     # repository. Neovim's runtime state lives in ~/.local/share/nvim, outside
     # the linked tree.
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_env.HOME }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
     package: [neovim]

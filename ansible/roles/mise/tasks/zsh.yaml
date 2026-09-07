@@ -1,6 +1,6 @@
 - name: Configure mise for zsh
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/50-mise.zsh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/50-mise.zsh"
     content: |
       # Managed by Ansible (roles/mise).
       # Activated before other tools so shims are on $PATH for them.

@@ -1,6 +1,6 @@
 - name: Configure zoxide for bash
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/60-zoxide.sh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/60-zoxide.sh"
     content: |
       eval "$(zoxide init bash)"
     mode: "0644"

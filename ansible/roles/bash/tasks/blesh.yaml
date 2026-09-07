@@ -2,7 +2,7 @@
 - name: Clone ble.sh repository
   ansible.builtin.git:
     repo: https://github.com/akinomyoga/ble.sh.git
-    dest: "{{ ansible_env.HOME }}/.local/share/blesh-src"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/blesh-src"
     version: master
     depth: 1
   # The managed global Git config rewrites GitHub HTTPS URLs to SSH. ble.sh is
@@ -16,30 +16,30 @@
 - name: Build ble.sh
   ansible.builtin.command:
     cmd: make
-    chdir: "{{ ansible_env.HOME }}/.local/share/blesh-src"
+    chdir: "{{ ansible_facts['env']['HOME'] }}/.local/share/blesh-src"
   when: blesh_clone.changed
 
 - name: Configure bash for ble.sh (load early with --noattach)
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/00-blesh.sh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/00-blesh.sh"
     content: |
       [[ $- == *i* ]] && source ~/.local/share/blesh-src/out/ble.sh --noattach
     mode: "0644"
 
 - name: Configure ble.sh attach (after atuin)
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/99-blesh-attach.sh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/99-blesh-attach.sh"
     content: |
       [[ ! ${BLE_VERSION-} ]] || ble-attach
     mode: "0644"
 
 - name: Remove legacy bash-preexec.sh if it exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.bash-preexec.sh"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bash-preexec.sh"
     state: absent
 
 - name: Remove legacy bash-preexec line from .bashrc
   ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
     line: "[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh"
     state: absent

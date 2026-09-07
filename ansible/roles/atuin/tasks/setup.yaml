@@ -13,7 +13,7 @@
 
 - name: Check if atuin has completed its first-time setup
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.local/share/atuin/key"
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/share/atuin/key"
   register: atuin_key_file
 
 - name: Prompt for Atuin credentials (first time setup)

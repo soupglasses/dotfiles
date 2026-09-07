@@ -17,14 +17,14 @@
 
 - name: Create ~/.claude directory
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.claude"
+    path: "{{ ansible_facts['env']['HOME'] }}/.claude"
     state: directory
     mode: "0755"
 
 - name: Stow claude
   soupglasses.stow.stow:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_env.HOME }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
     package: [claude]
     # Claude Code writes settings.json, history and project state into
     # ~/.claude, so the directory must not be folded into this repository.
@@ -34,7 +34,7 @@
 # line, so it is read, merged and written back rather than templated over.
 - name: Read the existing ~/.claude/settings.json
   ansible.builtin.slurp:
-    src: "{{ ansible_env.HOME }}/.claude/settings.json"
+    src: "{{ ansible_facts['env']['HOME'] }}/.claude/settings.json"
   register: claude_settings_raw
   failed_when: false
 
@@ -45,11 +45,11 @@
           if claude_settings_raw.content is defined else {})
          | combine({'statusLine': {
              'type': 'command',
-             'command': ansible_env.HOME ~ '/.local/bin/claude-statusline'
+             'command': ansible_facts['env']['HOME'] ~ '/.local/bin/claude-statusline'
            }}, recursive=true) }}
 
 - name: Write ~/.claude/settings.json
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.claude/settings.json"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.claude/settings.json"
     content: "{{ claude_settings | to_nice_json }}\n"
     mode: "0644"

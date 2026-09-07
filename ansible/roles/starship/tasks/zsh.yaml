@@ -1,6 +1,6 @@
 - name: Configure starship for zsh
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/90-starship.zsh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/90-starship.zsh"
     content: |
       # Managed by Ansible (roles/starship).
       # Loaded late so the prompt is set after anything that might override it.

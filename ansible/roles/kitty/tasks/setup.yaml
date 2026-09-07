@@ -18,7 +18,7 @@
 - name: Stow kitty
   soupglasses.stow.stow:
     src: "{{ role_path }}/files"
-    dest: "{{ ansible_env.HOME }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
     package: [kitty]
     # kitty writes into ~/.config/kitty itself (kitten themes, and the session
     # state it saves), so the directory stays real and only the tracked files
