@@ -1,0 +1,39 @@
+# Operating-system metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100/
+.Trashes/
+.fseventsd/
+.TemporaryItems/
+.DocumentRevisions-V100/
+._*
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.directory
+.Trash-*/
+.fuse_hidden*
+.nfs*
+
+# Editor and patch leftovers
+*~
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej
+
+# Local AI-agent state and caches
+.claude/
+.codex/
+.pi/
+.aider.input.history
+.aider.chat.history.md
+.aider.llm.history
+.aider.tags.cache.v*
+gemini-debug.log
+.gemini-clipboard/
+CLAUDE.local.md
