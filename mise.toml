@@ -21,6 +21,13 @@ description = "Run the complete Ansible playbook"
 run = "ansible-playbook ansible/site.yaml"
 
 [tasks.role]
-description = "Run one Ansible role by tag"
-usage = 'arg "<role>" help="Role or tag to run"'
-run = 'ansible-playbook ansible/site.yaml --tags "${usage_role?}"'
+description = "Run one or more Ansible roles by tag"
+usage = 'arg "<roles>" var=#true help="Roles or tags to run"'
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+eval "roles=(${usage_roles?})"
+IFS=,
+ansible-playbook ansible/site.yaml --tags "${roles[*]}"
+'''

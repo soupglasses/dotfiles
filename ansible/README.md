@@ -59,7 +59,7 @@ Use Mise to run a role by its Ansible tag:
 
 ```bash
 mise run role fonts
-mise run role git
+mise run role git work
 ```
 
 The direct Ansible equivalent is:
