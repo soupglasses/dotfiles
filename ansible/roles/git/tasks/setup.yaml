@@ -41,12 +41,29 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK - personal-remotes"
     state: absent
 
-# Git gives ~/.gitconfig precedence over the XDG config. Remove that legacy
-# location so every machine consistently uses ~/.config/git/config.
-- name: Remove legacy ~/.gitconfig
+# Git gives ~/.gitconfig precedence over the XDG config. An empty legacy file
+# is safe to remove, but never discard configuration that may not have been
+# migrated into ~/.config/git/config.
+- name: Inspect legacy ~/.gitconfig
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.gitconfig"
+  register: legacy_gitconfig
+
+- name: Refuse to overwrite a non-empty legacy ~/.gitconfig
+  ansible.builtin.fail:
+    msg: >-
+      {{ ansible_env.HOME }}/.gitconfig exists and is not empty. Move its
+      settings into {{ ansible_env.HOME }}/.config/git/config, then remove it
+      before running this role again.
+  when:
+    - legacy_gitconfig.stat.exists
+    - legacy_gitconfig.stat.size | int > 0
+
+- name: Remove empty legacy ~/.gitconfig
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.gitconfig"
     state: absent
+  when: legacy_gitconfig.stat.exists
 
 # Only the include lines are managed. The rest of the XDG config is left alone,
 # so settings written by `git config --global` or machine-specific tooling
