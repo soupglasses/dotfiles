@@ -20,7 +20,13 @@ run = "hk check --all"
 description = "Run the complete Ansible playbook"
 run = "ansible-playbook ansible/site.yaml"
 
+[tasks.playbook.env]
+ANSIBLE_CONFIG = "ansible/ansible.cfg"
+
 [tasks.role]
 description = "Run one or more Ansible roles by tag"
 usage = 'arg "<roles>" var=#true help="Roles or tags to run"'
 run = 'ansible-playbook --inventory "localhost," ansible/site.yaml --tags "{{ usage.roles | join(sep=",") }}"'
+
+[tasks.role.env]
+ANSIBLE_CONFIG = "ansible/ansible.cfg"
