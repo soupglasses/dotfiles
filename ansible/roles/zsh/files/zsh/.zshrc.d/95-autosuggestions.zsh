@@ -1,4 +1,5 @@
-# zsh-autosuggestions, installed by the zsh role from Homebrew.
+# Stage 95: load widget plugins after completion-aware tool initialization.
+# zsh-autosuggestions is installed by the zsh role from Homebrew.
 
 _p="${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 if [[ -r "$_p" ]]; then

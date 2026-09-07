@@ -1,7 +1,8 @@
-# Completion.
+# Stage 30: configure completion and register completion search paths.
 #
-# compinit is deliberately not called here: it must run after every consumer
-# has added to $fpath, so 98-compinit.zsh owns it.
+# Do not call compinit here. Every $fpath producer belongs in stages 30-79;
+# 80-compinit.zsh initializes the system once after all of them have loaded.
+# Tools whose generated init code calls compdef belong in stages 81-98 instead.
 
 # Homebrew's completions are not on $fpath by default.
 if (( $+commands[brew] )); then

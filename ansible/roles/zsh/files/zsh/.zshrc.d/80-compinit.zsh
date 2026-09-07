@@ -1,7 +1,9 @@
-# Initialise the completion system.
+# Stage 80: initialise the completion system exactly once.
 #
-# This runs late on purpose: every snippet that adds to $fpath must have been
-# sourced already, or its completions will be missing.
+# Files in stages 00-79 may configure completion or add directories to $fpath.
+# They must all run before this file so compinit can discover their functions.
+# Files in stages 81-98 may call compdef directly because this file defines it.
+# Stage 99 remains reserved for syntax highlighting, which must load last.
 
 autoload -Uz compinit
 

@@ -1,9 +1,16 @@
+- name: Remove zoxide snippet from before the compinit boundary
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.zshrc.d/60-zoxide.zsh"
+    state: absent
+
 - name: Configure zoxide for zsh
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/60-zoxide.zsh"
+    dest: "{{ ansible_env.HOME }}/.zshrc.d/85-zoxide.zsh"
     content: |
       # Managed by Ansible (roles/zoxide).
-      # Provides `z` for frecency-based directory jumping.
+      # Stage 85 runs after 80-compinit.zsh because `zoxide init zsh` registers
+      # completion with compdef. Before that boundary, `z` still works but its
+      # completion registration is silently skipped.
       if (( $+commands[zoxide] )); then
         eval "$(zoxide init zsh)"
       fi
