@@ -3,7 +3,7 @@
   connection: local
 
   tasks:
-  - name: Install Flathub repo 
+  - name: Install Flathub repo
     community.general.flatpak_remote:
       name: flathub
       state: present

@@ -1,12 +1,26 @@
 # Ansible
 
-## Requirements
+## Bootstrap
+
+Install [Mise](https://mise.jdx.dev/), then run these commands from the
+repository root:
 
 ```bash
-sudo zypper install ansible python3-psutil   # openSUSE
-sudo dnf install ansible python3-psutil      # Fedora
-sudo pacman -S ansible python-psutil         # Arch
-brew install ansible                         # macOS
+mise install
+mise run setup
+```
+
+Mise supplies Ansible and the repository's check tools. Ansible installs
+machine-level packages such as Stow through the native package manager; no
+separate Python or `python3-psutil` package is required.
+
+## Checks
+
+[hk](https://hk.jdx.dev/) installs the shared pre-commit hook during
+`mise install`. Run the same full check used by GitHub Actions with:
+
+```bash
+mise run check
 ```
 
 ## Check facts for local machine

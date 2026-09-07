@@ -16,7 +16,7 @@
     community.general.dconf:
       key: "/org/gnome/desktop/interface/clock-format"
       value: "'12h'"
-      
+
   - name: Set weekday to true
     community.general.dconf:
       key: "/org/gnome/desktop/interface/clock-show-weekday"
@@ -52,26 +52,26 @@
       key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
       value: "{{ item.value | string }}"
     with_items:
-      - { key: "maximize",                      value: "['<Super>w']" }
-      - { key: "unmaximize",                    value: "['<Super>s']" }
-      - { key: "switch-windows",                value: "['<Alt>Tab']" }
-      - { key: "switch-windows-backward",       value: "['<Shift><Alt>Tab']" }
-      - { key: "switch-applications",           value: "@as []" }
-      - { key: "switch-applications-backward",  value: "@as []" }
+      - { key: "maximize", value: "['<Super>w']" }
+      - { key: "unmaximize", value: "['<Super>s']" }
+      - { key: "switch-windows", value: "['<Alt>Tab']" }
+      - { key: "switch-windows-backward", value: "['<Shift><Alt>Tab']" }
+      - { key: "switch-applications", value: "@as []" }
+      - { key: "switch-applications-backward", value: "@as []" }
 
   - name: Mutter keybindings
     community.general.dconf:
       key: "/org/gnome/mutter/keybindings/{{ item.key }}"
       value: "{{ item.value | string }}"
     with_items:
-      - { key: "toggle-tiled-left",   value: "['<Super>a']" }
-      - { key: "toggle-tiled-right",  value: "['<Super>d']" }
+      - { key: "toggle-tiled-left", value: "['<Super>a']" }
+      - { key: "toggle-tiled-right", value: "['<Super>d']" }
 
   - name: Shell keybindings
     community.general.dconf:
       key: "/org/gnome/shell/keybindings/{{ item.key }}"
       value: "{{ item.value | string }}"
     with_items:
-      - { key: "toggle-application-view",  value: "@as []" }
-      - { key: "toggle-overview",          value: "@as []" }
+      - { key: "toggle-application-view", value: "@as []" }
+      - { key: "toggle-overview", value: "@as []" }
 
