@@ -23,13 +23,4 @@ run = "ansible-playbook ansible/site.yaml"
 [tasks.role]
 description = "Run one or more Ansible roles by tag"
 usage = 'arg "<roles>" var=#true help="Roles or tags to run"'
-run = '''
-#!/usr/bin/env bash
-set -euo pipefail
-
-eval "roles=(${usage_roles?})"
-IFS=,
-tags="${roles[*]}"
-printf '+ ansible-playbook --inventory %q ansible/site.yaml --tags %q\\n' 'localhost,' "$tags"
-exec ansible-playbook --inventory 'localhost,' ansible/site.yaml --tags "$tags"
-'''
+run = 'ansible-playbook --inventory "localhost," ansible/site.yaml --tags "{{ usage.roles | join(sep=",") }}"'
