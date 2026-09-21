@@ -14,15 +14,15 @@ macOS machines.
 
 ## Bootstrap
 
-Install [Mise](https://mise.jdx.dev/), then run these commands from the
+Install [Mise](https://mise.jdx.dev/), then run this command from the
 repository root:
 
 ```bash
 mise install
-mise run setup
 ```
 
-Mise supplies Ansible and the repository's check tools. Ansible installs
+Mise supplies Ansible and the repository's check tools, installs the required
+Ansible collections, and configures the shared Git hook. Ansible installs
 machine-level packages such as Stow through the native package manager; no
 separate Python or `python3-psutil` package is required.
 
@@ -41,23 +41,26 @@ mise run check
 ansible all -c local -i localhost, -m setup -a "filter=*os_family*"
 ```
 
-## Update dependencies
+## Install repository dependencies
+
+`mise install` runs this automatically. Run it directly after changing
+`requirements.yml` or when repairing an incomplete setup:
 
 ```bash
-ansible-galaxy collection install -r requirements.yml
+mise run setup
 ```
 
-## Run all locally
+## Apply the configuration
 
 `site.yaml` runs on every machine. Each role declares its `role_platforms` and
 skips itself where unsupported, so the same list works on Linux and macOS.
 
 ```bash
-ansible-playbook site.yaml
+mise run apply
 ```
 
 To replace existing files or symlinks that conflict with any stow package for
-one run, enable the play-wide stow override:
+one run, use Ansible directly with the play-wide stow override:
 
 ```bash
 ansible-playbook site.yaml --extra-vars stow_force=true
@@ -65,13 +68,11 @@ ansible-playbook site.yaml --extra-vars stow_force=true
 
 Directories are never removed by this override.
 
-## Run a single role locally
+To limit the run to one or more roles or tags, pass them to the same task:
 
-Use Mise to run a role by its Ansible tag:
-
-```bash
-mise run role fonts
-mise run role git shell
+```console
+mise run apply fonts
+mise run apply git shell
 ```
 
 The direct Ansible equivalent is:

@@ -6,7 +6,7 @@ pipx = "1.17.2"
 yamllint = "1.38.0"
 
 [hooks]
-postinstall = "hk install --mise"
+postinstall = ["mise run --skip-tools setup", "hk install --mise"]
 
 [tasks.setup]
 description = "Install Ansible collections"
@@ -16,17 +16,12 @@ run = "ansible-galaxy collection install -r requirements.yml"
 description = "Run all repository checks"
 run = "hk check --all"
 
-[tasks.playbook]
-description = "Run the complete Ansible playbook"
-run = "ansible-playbook site.yaml"
+[tasks.apply]
+description = "Apply the complete configuration, optionally limited to roles or tags"
+usage = 'arg "[roles]" var=#true help="Roles or tags to apply"'
+run = '''
+ansible-playbook --inventory "localhost," site.yaml{% if usage.roles | length > 0 %} --tags {{ usage.roles | join(sep=",") | quote }}{% endif %}
+'''
 
-[tasks.playbook.env]
-ANSIBLE_CONFIG = "ansible.cfg"
-
-[tasks.role]
-description = "Run one or more Ansible roles by tag"
-usage = 'arg "<roles>" var=#true help="Roles or tags to run"'
-run = 'ansible-playbook --inventory "localhost," site.yaml --tags "{{ usage.roles | join(sep=",") }}"'
-
-[tasks.role.env]
+[tasks.apply.env]
 ANSIBLE_CONFIG = "ansible.cfg"
