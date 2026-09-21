@@ -3,3 +3,6 @@
 
 # chore: restructure home-manager repo
 689b2250610f7268309497210db4f36234e6ea4a
+
+# refactor: promote ansible project to repository root
+6ecb651e2d851dbe821ee79676bf79fbb17f051d
