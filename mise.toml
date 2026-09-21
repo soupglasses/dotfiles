@@ -2,7 +2,7 @@
 ansible = "14.3.1"
 gitleaks = "8.30.1"
 hk = "1.58.1"
-pipx = "1.17.2"
+uv = "0.12.17"
 yamllint = "1.38.0"
 
 [hooks]
