@@ -1,6 +1,8 @@
 ---
 - name: Ensure kitty is installed (Suse)
   community.general.zypper:
-    name: kitty
+    name:
+      - adobe-sourcecodepro-fonts
+      - kitty
     state: present
   become: true

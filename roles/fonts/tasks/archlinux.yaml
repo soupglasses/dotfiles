@@ -1,6 +1,9 @@
 ---
-- name: Ensure all noto fonts are installed (Archlinux)
+- name: Ensure configured font families are installed (Archlinux)
   community.general.pacman:
-    name: noto-fonts
+    name:
+      - noto-fonts
+      - noto-fonts-cjk
+      - noto-fonts-emoji
     state: present
   become: true

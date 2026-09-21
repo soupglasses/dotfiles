@@ -1,0 +1,7 @@
+---
+- name: Ensure configured font families are installed (RedHat)
+  ansible.builtin.dnf:
+    name:
+      - google-noto-fonts-all
+    state: present
+  become: true

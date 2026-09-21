@@ -1,6 +1,8 @@
 ---
 - name: Ensure kitty is installed (RedHat)
   ansible.builtin.dnf:
-    name: kitty
+    name:
+      - adobe-source-code-pro-fonts
+      - kitty
     state: present
   become: true

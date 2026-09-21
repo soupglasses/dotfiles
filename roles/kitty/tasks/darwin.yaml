@@ -7,7 +7,7 @@
     # accept that rather than failing on the existing /Applications/kitty.app.
     accept_external_apps: true
 
-- name: Ensure the terminal font is installed (Darwin)
+- name: Ensure Kitty's configured font is installed (Darwin)
   community.general.homebrew_cask:
-    name: font-monofur-nerd-font
+    name: font-source-code-pro
     state: present
