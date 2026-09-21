@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""Set GNOME folder icons from likely cover images."""
+
+import argparse
+import re
+import sys
+from collections.abc import Iterable
+from itertools import chain
+from pathlib import Path
+
+import gi
+
+gi.require_version("Gio", "2.0")
+
+from gi.repository import Gio, GLib
+
+
+THUMBNAIL = re.compile(
+    r"^(thumb|thumbnail|cover|album|albumart|disc|front|insert|folder)\.(jpe?g|png)$",
+    re.IGNORECASE,
+)
+COMIC_COVER = re.compile(r"^0*1(?:-.+)?\.(jpe?g|png)$", re.IGNORECASE)
+PHOTO = re.compile(r"^.+\.(jpe?g|png)$", re.IGNORECASE)
+
+
+def matching_files(folder: Path, pattern: re.Pattern[str]) -> Iterable[Path]:
+    return (path for path in sorted(folder.iterdir()) if path.is_file() and pattern.match(path.name))
+
+
+def find_icon(folder: Path) -> Path | None:
+    return next(
+        chain(
+            matching_files(folder, THUMBNAIL),
+            matching_files(folder, COMIC_COVER),
+            matching_files(folder, PHOTO),
+        ),
+        None,
+    )
+
+
+def candidate_folders(roots: list[Path], recursive: bool) -> Iterable[Path]:
+    for root in roots:
+        yield root
+        if recursive and root.is_dir():
+            yield from sorted(path for path in root.rglob("*") if path.is_dir())
+
+
+def set_icon(folder: Path, icon: Path) -> None:
+    Gio.File.new_for_path(str(folder.resolve())).set_attribute_string(
+        "metadata::custom-icon",
+        icon.resolve().as_uri(),
+        Gio.FileQueryInfoFlags.NONE,
+        None,
+    )
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("folder", nargs="+", type=Path, help="folder to update")
+    parser.add_argument("-r", "--recursive", action="store_true", help="include subfolders")
+    parser.add_argument("-v", "--verbose", action="store_true", help="print changed folders")
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    failed = False
+
+    for folder in candidate_folders(args.folder, args.recursive):
+        if not folder.is_dir():
+            print(f"gnome-foldericons: not a directory: {folder}", file=sys.stderr)
+            failed = True
+            continue
+
+        icon = find_icon(folder)
+        if icon is None:
+            if args.verbose:
+                print(f"gnome-foldericons: no suitable image: {folder}", file=sys.stderr)
+            continue
+
+        try:
+            set_icon(folder, icon)
+        except GLib.Error as error:
+            print(f"gnome-foldericons: {folder}: {error.message}", file=sys.stderr)
+            failed = True
+        else:
+            if args.verbose:
+                print(f"{folder}: {icon}")
+
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

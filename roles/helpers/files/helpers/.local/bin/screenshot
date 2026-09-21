@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+	printf 'Usage: %s {area|window|screen|delay|maim}\n' "${0##*/}" >&2
+}
+
+mode="${1:-}"
+if [[ -z "$mode" ]]; then
+	usage
+	exit 2
+fi
+
+screenshot_root="${HOME}/Pictures/Screenshots"
+screenshot_dir="${screenshot_root}/$(date +%Y)/$(date '+%m %B')"
+screenshot_file="${screenshot_dir}/$(date '+%d %a %H:%M:%S').png"
+
+mkdir -p -- "$screenshot_dir"
+
+case "$mode" in
+	area)
+		gnome-screenshot -a -f "$screenshot_file"
+		;;
+	window)
+		gnome-screenshot -w -f "$screenshot_file"
+		;;
+	screen)
+		gnome-screenshot -f "$screenshot_file"
+		;;
+	delay)
+		gnome-screenshot --delay=1 -f "$screenshot_file"
+		;;
+	maim)
+		maim --select --bordersize=3 --hidecursor "$screenshot_file"
+		;;
+	*)
+		usage
+		exit 2
+		;;
+esac
+
+[[ -f "$screenshot_file" ]] || exit 1
+
+if [[ ${XDG_SESSION_TYPE:-} == x11 ]] && command -v xclip >/dev/null 2>&1; then
+	xclip -selection clipboard -t image/png -i "$screenshot_file"
+elif command -v wl-copy >/dev/null 2>&1; then
+	wl-copy <"$screenshot_file"
+fi
+
+ln -sfn -- "$screenshot_file" "$screenshot_root/latest.png"
+rm -f -- "$screenshot_root/low.png"
+
+if command -v gnome-recent-add >/dev/null 2>&1; then
+	gnome-recent-add "$screenshot_file"
+fi

@@ -1,0 +1,44 @@
+---
+- name: Install helper dependencies (RedHat)
+  ansible.builtin.dnf:
+    name:
+      - gnome-screenshot
+      - gtk3
+      - python3-gobject
+      - wl-clipboard
+      - xclip
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install helper dependencies (Suse)
+  community.general.zypper:
+    name:
+      - gnome-screenshot
+      - gtk3
+      - python3-gobject-Gdk
+      - wl-clipboard
+      - xclip
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install helper dependencies (Archlinux)
+  community.general.pacman:
+    name:
+      - gnome-screenshot
+      - gtk3
+      - python-gobject
+      - wl-clipboard
+      - xclip
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Stow desktop helpers
+  soupglasses.stow.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
+    package: [helpers]
+    # ~/.local/bin is shared with package managers and other roles.
+    folding: false
