@@ -15,8 +15,11 @@
     - { role: dual-function-keys, tags: ["dual-function-keys"] }
     - { role: fonts, tags: ["fonts"] }
     - { role: fzf, tags: ["shell", "fzf"] }
+    - { role: gamemode, tags: ["gamemode"] }
     - { role: git, tags: ["git"] }
+    - { role: gnome, tags: ["gnome"] }
     - { role: gpg, tags: ["gpg"] }
+    - { role: helpers, tags: ["helpers"] }
     - { role: ioschedulers, tags: ["ioschedulers"] }
     - { role: kitty, tags: ["kitty"] }
     - { role: mise, tags: ["shell", "mise"] }

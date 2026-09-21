@@ -1,0 +1,81 @@
+---
+- name: Install dconf (RedHat)
+  ansible.builtin.dnf:
+    name: dconf
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install dconf (Suse)
+  community.general.zypper:
+    name: dconf
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install dconf (Archlinux)
+  community.general.pacman:
+    name: dconf
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Configure GNOME preferences
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: /org/gnome/desktop/wm/preferences/button-layout
+      value: "'appmenu:minimize,maximize,close'"
+    - key: /org/gnome/desktop/peripherals/mouse/accel-profile
+      value: "'flat'"
+    - key: /org/gnome/desktop/interface/clock-format
+      value: "'12h'"
+    - key: /org/gnome/desktop/interface/clock-show-weekday
+      value: "true"
+    - key: /org/gnome/desktop/calendar/show-weekdate
+      value: "true"
+    - key: /org/gnome/nautilus/preferences/search-filter-time-type
+      value: "'last_modified'"
+    - key: /org/gnome/desktop/input-sources/sources
+      value: "[('xkb', 'no+nodeadkeys')]"
+    - key: /org/gnome/desktop/input-sources/xkb-options
+      value: "['lv3:ralt_switch', 'nbsp:none']"
+
+- name: Configure GNOME window-manager keybindings
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: maximize
+      value: "['<Super>w']"
+    - key: unmaximize
+      value: "['<Super>s']"
+    - key: switch-windows
+      value: "['<Alt>Tab']"
+    - key: switch-windows-backward
+      value: "['<Shift><Alt>Tab']"
+    - key: switch-applications
+      value: "@as []"
+    - key: switch-applications-backward
+      value: "@as []"
+
+- name: Configure Mutter keybindings
+  community.general.dconf:
+    key: "/org/gnome/mutter/keybindings/{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: toggle-tiled-left
+      value: "['<Super>a']"
+    - key: toggle-tiled-right
+      value: "['<Super>d']"
+
+- name: Configure GNOME Shell keybindings
+  community.general.dconf:
+    key: "/org/gnome/shell/keybindings/{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: toggle-application-view
+      value: "@as []"
+    - key: toggle-overview
+      value: "@as []"

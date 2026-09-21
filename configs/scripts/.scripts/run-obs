@@ -1,3 +1,0 @@
-#!/bin/bash
-nvidia-settings -a allowFlipping=0 && obs &> /dev/null
-nvidia-settings -a allowFlipping=1
