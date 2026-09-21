@@ -1,0 +1,28 @@
+---
+- name: Install GameMode (RedHat)
+  ansible.builtin.dnf:
+    name: gamemode
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Install GameMode (Suse)
+  community.general.zypper:
+    name: gamemode
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "Suse"
+
+- name: Install GameMode (Archlinux)
+  community.general.pacman:
+    name: gamemode
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Stow GameMode configuration
+  soupglasses.stow.stow:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_facts['env']['HOME'] }}"
+    package: [gamemode]
+    folding: false
