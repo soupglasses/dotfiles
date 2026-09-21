@@ -10,7 +10,7 @@ postinstall = "hk install --mise"
 
 [tasks.setup]
 description = "Install Ansible collections"
-run = "ansible-galaxy collection install -r ansible/requirements.yml"
+run = "ansible-galaxy collection install -r requirements.yml"
 
 [tasks.check]
 description = "Run all repository checks"
@@ -18,15 +18,15 @@ run = "hk check --all"
 
 [tasks.playbook]
 description = "Run the complete Ansible playbook"
-run = "ansible-playbook ansible/site.yaml"
+run = "ansible-playbook site.yaml"
 
 [tasks.playbook.env]
-ANSIBLE_CONFIG = "ansible/ansible.cfg"
+ANSIBLE_CONFIG = "ansible.cfg"
 
 [tasks.role]
 description = "Run one or more Ansible roles by tag"
 usage = 'arg "<roles>" var=#true help="Roles or tags to run"'
-run = 'ansible-playbook --inventory "localhost," ansible/site.yaml --tags "{{ usage.roles | join(sep=",") }}"'
+run = 'ansible-playbook --inventory "localhost," site.yaml --tags "{{ usage.roles | join(sep=",") }}"'
 
 [tasks.role.env]
-ANSIBLE_CONFIG = "ansible/ansible.cfg"
+ANSIBLE_CONFIG = "ansible.cfg"

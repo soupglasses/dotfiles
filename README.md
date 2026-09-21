@@ -9,96 +9,73 @@
 
 # dotfiles
 
-My own personal repo containing my dotfiles plus extras.
+My personal Ansible setup for configuring Fedora, openSUSE, Arch Linux, and
+macOS machines.
 
-## **docs/**
+## Bootstrap
 
-Holds program spessific READMEs.
-
-- [Editor: neovim](docs/nvim.md)
-- [Shell: zsh](docs/zsh.md)
-- [Terminal: kitty](docs/kitty.md)
-- [Configuration: home-manager](home-manager/README.md)
-
-## **configs/**
-
-This folder holds my configuration files, (also called dotfiles) together with
-mangement scripts to help install/remove them.
-
-My configuration files use [GNU Stow](https://www.gnu.org/software/stow/) for
-management. You will need to install `stow` first with your preferred package
-manager.
-
-### Installation
-
-Clone the repo to your computer, I prefer it to be located in `~/.dotfiles`.
-Which can be done with the following commands:
+Install [Mise](https://mise.jdx.dev/), then run these commands from the
+repository root:
 
 ```bash
-git clone https://github.com/imsofi/dotfiles ~/.dotfiles && \
-cd ~/.dotfiles/configs
+mise install
+mise run setup
 ```
 
-You can now use `stow --verbose --stow --target=$HOME FOLDER_NAME` to
-manually apply any of the available folders.
+Mise supplies Ansible and the repository's check tools. Ansible installs
+machine-level packages such as Stow through the native package manager; no
+separate Python or `python3-psutil` package is required.
 
-I use the `install.sh` and `remove.sh` that will do this automatically with
-the folders defined in the `enabled` file. This file holds my currently used
-configurations for my computer.
+## Checks
 
-NOTE: Not every folder in here is used anymore and kept around for archival
-purpouses, I reccomend to see the `enabled` for which ones are currently used
-and up to date.
-
-### Removal
-
-Use `stow --delete --target=$HOME $FOLDER` to remove any installed stows.
-
-If you used `install.sh`, you can just use `remove.sh` to do the same
-automatically.
-
-### Help, i cant see code in my editor
-
-Some files under this repo are organized with [Vim Folds](https://vim.fandom.com/wiki/Folding).
-Vim folds allows code to be grouped into logical sections, like a `Font` fold,
-or a `Keyboard Shortcuts` fold. These folds will give an overview by each folds
-name, letting you find important sections of a file quickly.
-
-If you have not used folds in vim before, its `zR` to open all folds, `zM` to
-close all folds. There is also `za` to toggle individual levels of folds.
-
-### Requirements
-
-- [dual-function-keys](https://gitlab.com/interception/linux/plugins/dual-function-keys/)
-- [interception-tools](https://gitlab.com/interception/linux/tools)
-- [A running udevmon daemon](https://gitlab.com/interception/linux/tools#execution)
-
-### Installation
-
-Either follow each README in the requirements above, or if you have Fedora you can run
-my `install-fedora.sh` script which will install the needed dependencies, enable them,
-and run `apply.sh` to install configurations from `keyboard/configs/`.
-
-### Configuration
-
-Per keyboard configuration is held in `keyboard/configs/`. See
-[dual-function-keys examples](https://gitlab.com/interception/linux/plugins/dual-function-keys/-/blob/master/doc/examples.md)
-for how to create your own.
-
-You can also follow the
-[dual-function-keys README](https://gitlab.com/interception/linux/plugins/dual-function-keys/-/blob/master/README.md)
-for how to find out your keyboard id/name if you want to make your configurations
-be per keyboard.
-
-After configuring to your keyboard, you can run `apply.sh` as root to install it.
-
-## **ansible/**
-
-My Ansible setup scripts to configure my computer. Mainly only for my own use currently.
-
-Supports Fedora, openSUSE, Arch Linux and macOS. See [ansible/README.md](ansible/README.md).
+[hk](https://hk.jdx.dev/) installs the shared pre-commit hook during
+`mise install`. Run the same full check used by GitHub Actions with:
 
 ```bash
-cd ansible
+mise run check
+```
+
+## Check facts for local machine
+
+```bash
+ansible all -c local -i localhost, -m setup -a "filter=*os_family*"
+```
+
+## Update dependencies
+
+```bash
+ansible-galaxy collection install -r requirements.yml
+```
+
+## Run all locally
+
+`site.yaml` runs on every machine. Each role declares its `role_platforms` and
+skips itself where unsupported, so the same list works on Linux and macOS.
+
+```bash
 ansible-playbook site.yaml
+```
+
+To replace existing files or symlinks that conflict with any stow package for
+one run, enable the play-wide stow override:
+
+```bash
+ansible-playbook site.yaml --extra-vars stow_force=true
+```
+
+Directories are never removed by this override.
+
+## Run a single role locally
+
+Use Mise to run a role by its Ansible tag:
+
+```bash
+mise run role fonts
+mise run role git shell
+```
+
+The direct Ansible equivalent is:
+
+```bash
+ansible-playbook --inventory 'localhost,' site.yaml --tags "fonts"
 ```
