@@ -1,2 +1,2 @@
 # TODO, guard this.
-export PATH="~/.mix/escripts:$PATH"
+export PATH="$HOME/.mix/escripts:$PATH"
